@@ -2873,253 +2873,222 @@
             }
         }
 
-// ================= ЕДИНЫЙ ЦЕНТРАЛИЗОВАННЫЙ МОСТ СИНХРОНИЗАЦИИ =================
+// ================= ТОЧНЫЙ МОСТ СИНХРОНИЗАЦИИ С БЭКЕНДОМ =================
 const BACKEND_URL = "https://cs-market-backend.onrender.com";
 
-// Получение профиля пользователя
-function getAppUser() {
-    const tgUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
-    return {
-        userId: tgUser?.id || 707417409,
-        username: (tgUser?.username || "bukashka_37").replace("@", ""),
-        firstName: tgUser?.first_name || "Алексей"
-    };
-}
-
-// 1. Главная синхронизация (вызывается при старте и каждые 15 секунд)
+// 1. Главная синхронизация состояния с базой данных на Render
 async function syncWithBackend() {
-    const user = getAppUser();
-
-    // Считываем старые данные из памяти текущего устройства для автомиграции
-    const localTasks = JSON.parse(localStorage.getItem("userTasksStatus") || "{}");
-    const localOrders = JSON.parse(localStorage.getItem("marketOrders") || "[]");
+    const currentUserId = user.id || '707417409';
+    const currentUsername = (user.username || 'bukashka_37').replace('@', '');
+    const currentFirstName = user.first_name || 'Алексей';
 
     try {
         const res = await fetch(`${BACKEND_URL}/api/sync`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                userId: user.userId,
-                username: user.username,
-                firstName: user.firstName,
-                migrateTasks: localTasks,
-                migrateOrders: localOrders
+                userId: currentUserId,
+                username: currentUsername,
+                firstName: currentFirstName,
+                migrateTasks: tasksState,
+                migrateOrders: marketOrdersList
             })
         });
 
         const data = await res.json();
         if (data.ok) {
-            // Применяем задания из единой базы данных
-            if (data.tasks) {
-                Object.keys(data.tasks).forEach(taskKey => {
-                    userTasksStatus[taskKey] = data.tasks[taskKey].status;
+            // Синхронизируем задания текущего пользователя
+            if (data.tasksState) {
+                Object.keys(data.tasksState).forEach(k => {
+                    tasksState[k] = { ...tasksState[k], ...data.tasksState[k] };
                 });
-                // Сохраняем в локальную память для быстрого кэша
-                localStorage.setItem("userTasksStatus", JSON.stringify(userTasksStatus));
-                if (typeof renderTasksGrid === "function") renderTasksGrid();
+                saveTasksState();
+                updateTaskCardsStatusUI();
             }
 
-            // Отрисовываем единую лайв-ленту всех пользователей
-            if (data.liveFeed) {
-                renderServerLiveFeed(data.liveFeed);
+            // Синхронизируем общую лайв-ленту всех пользователей
+            if (data.liveFeed && Array.isArray(data.liveFeed)) {
+                liveActivityLog = data.liveFeed;
+                try { localStorage.setItem('csgo_market_live_feed', JSON.stringify(liveActivityLog)); } catch(e) {}
+                renderLiveFeedUI();
             }
 
-            // Отрисовываем заказы Маркета в админке
-            if (data.orders) {
-                renderServerOrders(data.orders);
+            // Синхронизируем входящие заказы маркета для админки
+            if (data.marketOrders && Array.isArray(data.marketOrders)) {
+                marketOrdersList = data.marketOrders;
+                try { localStorage.setItem('csgo_market_orders', JSON.stringify(marketOrdersList)); } catch(e) {}
             }
+
+            // Синхронизируем статус Ozon ссылки
+            if (data.ozonCard) {
+                ozonCardData = data.ozonCard;
+                try { localStorage.setItem('csgo_market_ozon', JSON.stringify(ozonCardData)); } catch(e) {}
+            }
+
+            updateAdminDashboardUI();
         }
     } catch (e) {
-        console.warn("Синхронизация временно недоступна, работаем из кэша:", e);
+        console.warn("Синхронизация временно недоступна:", e);
     }
 }
 
-// Отрисовка единой лайв-ленты
-function renderServerLiveFeed(feedList) {
-    const containers = [
-        document.getElementById("adminLiveFeed"),
-        document.querySelector(".live-feed-list"),
-        document.querySelector("[data-live-feed]")
-    ];
-
-    const html = feedList.map(item => `
-        <div class="flex items-center justify-between py-2 border-b border-white/5 text-xs">
-            <div class="flex items-center gap-2">
-                <span class="text-white/40 font-mono">${item.created_at}</span>
-                <span class="text-cyan-400 font-medium">@${item.username}:</span>
-                <span class="text-white/80">${item.title}</span>
-            </div>
-        </div>
-    `).join("");
-
-    containers.forEach(c => {
-        if (c) c.innerHTML = html;
-    });
-}
-
-// Отрисовка заказов Маркета в админке
-function renderServerOrders(orders) {
-    const badge = document.getElementById("marketOrdersCount") || document.querySelector(".orders-badge");
-    const activeOrders = orders.filter(o => o.status === "pending");
-    if (badge) badge.innerText = activeOrders.length;
-
-    const ordersContainer = document.getElementById("adminOrdersContainer") || document.querySelector(".market-orders-list");
-    if (!ordersContainer) return;
-
-    if (activeOrders.length === 0) {
-        ordersContainer.innerHTML = `<div class="text-center text-white/40 py-6 text-sm">Пока нет активных заказов</div>`;
-        return;
-    }
-
-    ordersContainer.innerHTML = activeOrders.map(o => `
-        <div class="p-4 rounded-xl bg-white/5 border border-white/10 mb-3">
-            <div class="flex justify-between items-start mb-2">
-                <div>
-                    <div class="font-bold text-white text-sm">${o.title}</div>
-                    <div class="text-xs text-cyan-400">@${o.username} (ID: ${o.user_id})</div>
-                </div>
-                <span class="text-xs text-white/40 font-mono">${o.created_at}</span>
-            </div>
-            <div class="text-xs text-white/70 bg-black/30 p-2 rounded-lg mb-3">
-                💬 ${o.comment || "Без комментария"}
-            </div>
-            <div class="flex gap-2">
-                <a href="https://t.me/${o.username}" target="_blank" class="flex-1 py-2 text-center text-xs bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium transition">
-                    Написать в ЛС
-                </a>
-                <button onclick="completeMarketOrder(${o.id})" class="flex-1 py-2 text-center text-xs bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition">
-                    ✓ Выполнено
-                </button>
-            </div>
-        </div>
-    `).join("");
-}
-
-// Завершение заказа админом
-async function completeMarketOrder(orderId) {
-    try {
-        await fetch(`${BACKEND_URL}/api/admin/order/complete`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ orderId })
-        });
-        showCustomToast("Заказ отмечен выполненным!");
-        syncWithBackend();
-    } catch (e) {
-        showCustomToast("Ошибка обновления");
-    }
-}
-
-// 2. Полная замена старой функции отправки (БЕЗ ЗАКРЫТИЯ МИНИ-АППА)
+// 2. Отправка любых действий на сервер без закрытия приложения
 async function sendPayloadToBot(payload, modalToClose) {
-    const user = getAppUser();
+    const currentUserId = user.id || '707417409';
+    const currentUsername = (user.username || 'bukashka_37').replace('@', '');
+    const currentFirstName = user.first_name || 'Алексей';
 
     if (modalToClose) {
         closeModal(modalToClose);
     }
 
     try {
-        // Если это заказ из Маркета (Steam, донат и т.д.)
-        if (payload.action === "order" || payload.action === "buy" || payload.itemTitle || payload.title) {
+        // Оформление услуги маркета (Пополнение Steam, донат и т.д.)
+        if (payload.action === 'service_order') {
             await fetch(`${BACKEND_URL}/api/order/create`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    userId: user.userId,
-                    username: user.username,
-                    title: payload.itemTitle || payload.title || "Товар",
-                    comment: payload.comment || "Без комментария"
+                    userId: currentUserId,
+                    username: currentUsername,
+                    firstName: currentFirstName,
+                    serviceKey: payload.serviceKey,
+                    serviceTitle: payload.serviceTitle,
+                    comment: payload.comment
                 })
             });
-            showCustomToast("✅ Заказ оформлен и передан админу!");
             syncWithBackend();
             return;
         }
 
-        // Если это отправка скриншота на проверку
-        if (payload.screenshot) {
-            showCustomToast("⏳ Отправка скриншота...");
-            await fetch(`${BACKEND_URL}/api/task/submit`, {
+        // Отправка скриншота задания на проверку
+        if (payload.action === 'task_screenshot_submit') {
+            showCustomToast('⏳ Отправка скриншота на сервер...');
+            await fetch(`${BACKEND_URL}/api/task/submit_proof`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    userId: user.userId,
-                    username: user.username,
-                    taskKey: payload.taskKey || "task",
-                    taskTitle: payload.taskTitle || "Задание",
+                    userId: currentUserId,
+                    username: currentUsername,
+                    taskKey: payload.taskKey,
+                    taskTitle: payload.taskTitle,
                     screenshot: payload.screenshot
                 })
             });
-            userTasksStatus[payload.taskKey] = "pending";
-            if (typeof renderTasksGrid === "function") renderTasksGrid();
-            showCustomToast("✅ Скриншот принят на проверку!");
             syncWithBackend();
             return;
         }
 
-        // Любое другое действие по заданию (взять в работу / завершить)
-        const tStatus = payload.status || (payload.action === "complete" ? "completed" : "in_progress");
-        await fetch(`${BACKEND_URL}/api/task/action`, {
+        // Любые другие статусы заданий (VPN, карты, идеи, сброс)
+        let newStatus = 'in_progress';
+        if (payload.action === 'task_abort') newStatus = 'idle';
+        if (payload.action === 'claim_reward') newStatus = 'accepted';
+
+        await fetch(`${BACKEND_URL}/api/task/update`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                userId: user.userId,
-                username: user.username,
-                taskKey: payload.taskKey || "task",
-                taskTitle: payload.taskTitle || payload.title || "Задание",
-                status: tStatus
+                userId: currentUserId,
+                taskKey: payload.taskKey,
+                status: newStatus,
+                ideaTitle: payload.ideaTitle || '',
+                ideaDesc: payload.ideaDescription || '',
+                rewardRequested: payload.action === 'claim_reward'
             })
         });
-
-        userTasksStatus[payload.taskKey] = tStatus;
-        if (typeof renderTasksGrid === "function") renderTasksGrid();
-        showCustomToast("✅ Статус обновлен!");
         syncWithBackend();
 
     } catch (e) {
-        console.error("Ошибка запроса к бэкенду:", e);
-        showCustomToast("⚠️ Сохранено локально");
+        console.error("Ошибка передачи данных на бэкенд:", e);
     }
 }
 
-// Проверка реферала через серверную базу данных
-async function verifyReferralUser(username) {
-    try {
-        const res = await fetch(`${BACKEND_URL}/api/check_referral`, {
+// 3. Синхронизация действий админа с сервером
+const originalAdminApprove = adminApproveTask;
+adminApproveTask = async function(taskKey) {
+    originalAdminApprove(taskKey);
+    await fetch(`${BACKEND_URL}/api/task/update`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: user.id, taskKey: taskKey, status: 'accepted' })
+    });
+    syncWithBackend();
+};
+
+const originalAdminReject = adminRejectTask;
+adminRejectTask = async function(taskKey) {
+    const reasonInput = document.getElementById(`admin-reject-reason-${taskKey}`);
+    const reason = (reasonInput && reasonInput.value.trim()) || 'Условия задания были выполнены не полностью.';
+    originalAdminReject(taskKey);
+    await fetch(`${BACKEND_URL}/api/task/update`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: user.id, taskKey: taskKey, status: 'rejected', reason: reason })
+    });
+    syncWithBackend();
+};
+
+const originalAdminCompleteTask = adminCompleteTask;
+adminCompleteTask = async function(taskKey) {
+    originalAdminCompleteTask(taskKey);
+    await fetch(`${BACKEND_URL}/api/task/update`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: user.id, taskKey: taskKey, status: 'completed' })
+    });
+    syncWithBackend();
+};
+
+const originalAdminCompleteOrder = adminCompleteOrder;
+adminCompleteOrder = async function(idx) {
+    const order = marketOrdersList[idx];
+    if (order && order.id) {
+        await fetch(`${BACKEND_URL}/api/order/complete`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username: username })
+            body: JSON.stringify({ orderId: order.id })
         });
-        return await res.json();
-    } catch (e) {
-        return { exists: false };
     }
-}
+    originalAdminCompleteOrder(idx);
+    syncWithBackend();
+};
 
-// Всплывающее уведомление (Toast)
-function showCustomToast(text) {
-    const toast = document.getElementById('toast-notify');
-    const toastText = document.getElementById('toast-text');
-    if (!toast || !toastText) return;
-    toastText.innerText = text;
-    toast.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-20');
-    toast.classList.add('opacity-100', 'translate-y-0');
-    setTimeout(() => {
-        toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-20');
-        toast.classList.remove('opacity-100', 'translate-y-0');
-    }, 3000);
-}
+const originalAdminIssueOzon = adminIssueOzonLinkFromDashboard;
+adminIssueOzonLinkFromDashboard = async function() {
+    originalAdminIssueOzon();
+    await fetch(`${BACKEND_URL}/api/ozon/update`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(ozonCardData)
+    });
+    syncWithBackend();
+};
 
-// Запуск синхронизации при загрузке страницы + периодический опрос каждые 15 сек
+// Отправка событий в единую лайв-ленту на сервер
+const originalRecordActivity = recordActivity;
+recordActivity = function(actionText, tag = 'action', icon = 'bolt') {
+    originalRecordActivity(actionText, tag, icon);
+    fetch(`${BACKEND_URL}/api/activity/log`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            userId: user.id,
+            username: user.username || '',
+            user: user.first_name || 'Клиент',
+            text: actionText,
+            tag: tag,
+            icon: icon
+        })
+    }).catch(() => {});
+};
+
+// Запуск постоянной синхронизации каждые 5 секунд
 document.addEventListener("DOMContentLoaded", () => {
     syncWithBackend();
-    setInterval(syncWithBackend, 15000);
+    setInterval(syncWithBackend, 5000);
 });
 
-// Первичный немедленный вызов
 syncWithBackend();
-
-        
     </script>
 </body>
 </html>
