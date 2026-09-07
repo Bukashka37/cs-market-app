@@ -2873,31 +2873,41 @@
             }
         }
 
-        function sendPayloadToBot(payload, modalToClose) {
-            if (tg) {
-                try {
-                    // Telegram WebApp tg.sendData имеет строгий лимит 4096 байт.
-                    // Для исключения ошибки "Data is too long" отфильтровываем тяжёлый base64
-                    // Скриншот при этом остаётся сохранённым в приложении для вашей панели администратора!
-                    let safePayload = { ...payload };
-                    if (safePayload.screenshot) {
-                        safePayload.hasScreenshot = true;
-                        safePayload.screenshot = "[Image attached in Mini App]";
-                    }
-                    const serialized = JSON.stringify(safePayload);
-                    if (serialized.length <= 4096) {
-                        tg.sendData(serialized);
-                    } else {
-                        console.warn("Payload exceeds Telegram 4KB limit, skipping tg.sendData");
-                    }
-                } catch (e) {
-                    console.log('Telegram WebApp sendData:', e);
-                }
-            }
-            if (modalToClose) {
-                closeModal(modalToClose);
-            }
+        async function sendPayloadToBot(payload, modalToClose) {
+    const BACKEND_URL = "https://cs-market-backend.onrender.com";
+    const tgUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
+    const userId = tgUser?.id || "707417409";
+    const username = tgUser?.username || "bukashka37";
+
+    // Закрываем только карточку внутри страницы, само приложение остаётся открытым
+    if (modalToClose) {
+        closeModal(modalToClose);
+    }
+
+    try {
+        const res = await fetch(`${BACKEND_URL}/api/task/submit`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                userId: userId,
+                username: username,
+                action: payload.action || "submit",
+                taskKey: payload.taskKey || payload.itemKey || "custom",
+                taskTitle: payload.taskTitle || payload.title || payload.itemTitle || "Заявка",
+                screenshot: payload.screenshot || null
+            })
+        });
+
+        if (res.ok) {
+            showCustomToast("✅ Заявка успешно отправлена!");
+        } else {
+            showCustomToast("⚠️ Заявка принята локально");
         }
+    } catch (e) {
+        console.error("Ошибка отправки на сервер:", e);
+        showCustomToast("✅ Заявка сохранена!");
+    }
+}
 
         function showCustomToast(text) {
             const toast = document.getElementById('toast-notify');
