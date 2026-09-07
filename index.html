@@ -2872,12 +2872,21 @@
                 ozonTimerInterval = null;
             }
         }
-
-// ================= ТОЧНЫЙ МОСТ СИНХРОНИЗАЦИИ С БЭКЕНДОМ =================
+// ================= БЫСТРЫЙ МОСТ СИНХРОНИЗАЦИИ (БЕЗ ПЕТЕЛЬ) =================
 const BACKEND_URL = "https://cs-market-backend.onrender.com";
 
-// 1. Главная синхронизация состояния с базой данных на Render
+// Очищаем локальное хранилище от старых 12 000 дубликатов
+try {
+    localStorage.removeItem('csgo_market_orders');
+} catch(e) {}
+
+let isSyncInProgress = false;
+
+// 1. Мгновенная синхронизация без отправки локальных заказов назад
 async function syncWithBackend() {
+    if (isSyncInProgress) return;
+    isSyncInProgress = true;
+
     const currentUserId = user.id || '707417409';
     const currentUsername = (user.username || 'bukashka_37').replace('@', '');
     const currentFirstName = user.first_name || 'Алексей';
@@ -2889,15 +2898,13 @@ async function syncWithBackend() {
             body: JSON.stringify({
                 userId: currentUserId,
                 username: currentUsername,
-                firstName: currentFirstName,
-                migrateTasks: tasksState,
-                migrateOrders: marketOrdersList
+                firstName: currentFirstName
             })
         });
 
         const data = await res.json();
         if (data.ok) {
-            // Синхронизируем задания текущего пользователя
+            // Синхронизация заданий
             if (data.tasksState) {
                 Object.keys(data.tasksState).forEach(k => {
                     tasksState[k] = { ...tasksState[k], ...data.tasksState[k] };
@@ -2906,20 +2913,19 @@ async function syncWithBackend() {
                 updateTaskCardsStatusUI();
             }
 
-            // Синхронизируем общую лайв-ленту всех пользователей
+            // Синхронизация общей лайв-ленты
             if (data.liveFeed && Array.isArray(data.liveFeed)) {
                 liveActivityLog = data.liveFeed;
                 try { localStorage.setItem('csgo_market_live_feed', JSON.stringify(liveActivityLog)); } catch(e) {}
                 renderLiveFeedUI();
             }
 
-            // Синхронизируем входящие заказы маркета для админки
+            // Синхронизация реальных заказов (только уникальные из базы)
             if (data.marketOrders && Array.isArray(data.marketOrders)) {
                 marketOrdersList = data.marketOrders;
-                try { localStorage.setItem('csgo_market_orders', JSON.stringify(marketOrdersList)); } catch(e) {}
             }
 
-            // Синхронизируем статус Ozon ссылки
+            // Синхронизация Ozon ссылки
             if (data.ozonCard) {
                 ozonCardData = data.ozonCard;
                 try { localStorage.setItem('csgo_market_ozon', JSON.stringify(ozonCardData)); } catch(e) {}
@@ -2929,10 +2935,12 @@ async function syncWithBackend() {
         }
     } catch (e) {
         console.warn("Синхронизация временно недоступна:", e);
+    } finally {
+        isSyncInProgress = false;
     }
 }
 
-// 2. Отправка любых действий на сервер без закрытия приложения
+// 2. Отправка действий на бэкенд
 async function sendPayloadToBot(payload, modalToClose) {
     const currentUserId = user.id || '707417409';
     const currentUsername = (user.username || 'bukashka_37').replace('@', '');
@@ -2943,7 +2951,7 @@ async function sendPayloadToBot(payload, modalToClose) {
     }
 
     try {
-        // Оформление услуги маркета (Пополнение Steam, донат и т.д.)
+        // Оформление заказа маркета
         if (payload.action === 'service_order') {
             await fetch(`${BACKEND_URL}/api/order/create`, {
                 method: "POST",
@@ -2961,7 +2969,7 @@ async function sendPayloadToBot(payload, modalToClose) {
             return;
         }
 
-        // Отправка скриншота задания на проверку
+        // Отправка скриншота на проверку
         if (payload.action === 'task_screenshot_submit') {
             showCustomToast('⏳ Отправка скриншота на сервер...');
             await fetch(`${BACKEND_URL}/api/task/submit_proof`, {
@@ -2979,7 +2987,7 @@ async function sendPayloadToBot(payload, modalToClose) {
             return;
         }
 
-        // Любые другие статусы заданий (VPN, карты, идеи, сброс)
+        // Обновление статусов заданий
         let newStatus = 'in_progress';
         if (payload.action === 'task_abort') newStatus = 'idle';
         if (payload.action === 'claim_reward') newStatus = 'accepted';
@@ -2999,11 +3007,11 @@ async function sendPayloadToBot(payload, modalToClose) {
         syncWithBackend();
 
     } catch (e) {
-        console.error("Ошибка передачи данных на бэкенд:", e);
+        console.error("Ошибка отправки данных:", e);
     }
 }
 
-// 3. Синхронизация действий админа с сервером
+// 3. Действия админа
 const originalAdminApprove = adminApproveTask;
 adminApproveTask = async function(taskKey) {
     originalAdminApprove(taskKey);
@@ -3064,7 +3072,7 @@ adminIssueOzonLinkFromDashboard = async function() {
     syncWithBackend();
 };
 
-// Отправка событий в единую лайв-ленту на сервер
+// Отправка активности в лайв-ленту
 const originalRecordActivity = recordActivity;
 recordActivity = function(actionText, tag = 'action', icon = 'bolt') {
     originalRecordActivity(actionText, tag, icon);
@@ -3082,10 +3090,10 @@ recordActivity = function(actionText, tag = 'action', icon = 'bolt') {
     }).catch(() => {});
 };
 
-// Запуск постоянной синхронизации каждые 5 секунд
+// Фоновый опрос каждые 4 секунды (размер запроса всего 100 байт)
 document.addEventListener("DOMContentLoaded", () => {
     syncWithBackend();
-    setInterval(syncWithBackend, 5000);
+    setInterval(syncWithBackend, 4000);
 });
 
 syncWithBackend();
