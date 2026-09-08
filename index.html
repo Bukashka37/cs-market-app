@@ -2892,9 +2892,18 @@ let adminTasksList = []; // Глобальный список заданий в�
 
 async function syncWithBackend() {
     if (isSyncInProgress) return;
+
+    // --- ФИКС СБРОСА ТЕКСТА ---
+    // Ставим фоновое обновление на паузу, если курсор находится в любом поле ввода
+    if (document.activeElement && ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        return; 
+    }
+    // --------------------------
+
     isSyncInProgress = true;
 
     const currentUserId = user.id || '707417409';
+    // ... далее идёт старый код функции
     const currentUsername = (user.username || 'bukashka_37').replace('@', '');
     const currentFirstName = user.first_name || 'Алексей';
 
