@@ -2886,7 +2886,9 @@
 
 // ================= БЫСТРЫЙ МОСТ СИНХРОНИЗАЦИИ =================
 const BACKEND_URL = "https://cs-market-backend.onrender.com";
+
 let isSyncInProgress = false;
+let adminTasksList = []; // Глобальный список заданий всех юзеров для админа
 
 async function syncWithBackend() {
     if (isSyncInProgress) return;
@@ -2915,6 +2917,10 @@ async function syncWithBackend() {
                 });
                 saveTasksState();
                 updateTaskCardsStatusUI();
+            }
+
+            if (data.adminTasks && Array.isArray(data.adminTasks)) {
+                adminTasksList = data.adminTasks;
             }
 
             if (data.liveFeed && Array.isArray(data.liveFeed)) {
@@ -2957,7 +2963,6 @@ async function sendPayloadToBot(payload, modalToClose) {
     }
 
     try {
-        // Блокировка перевода в in_progress для Озона! Строго отдельный роут.
         if (payload.action === 'task_ozon_link_request') {
             await fetch(`${BACKEND_URL}/api/ozon/request`, {
                 method: "POST",
@@ -3006,7 +3011,6 @@ async function sendPayloadToBot(payload, modalToClose) {
             return;
         }
 
-        // Любые другие статусы
         let newStatus = 'in_progress';
         if (payload.action === 'task_abort') newStatus = 'idle';
         if (payload.action === 'claim_reward') newStatus = 'accepted';
@@ -3030,41 +3034,38 @@ async function sendPayloadToBot(payload, modalToClose) {
     }
 }
 
-// 3. Действия администратора
-const originalAdminApprove = adminApproveTask;
-adminApproveTask = async function(taskKey) {
-    originalAdminApprove(taskKey);
+// 3. Действия администратора по ID КЛИЕНТА (а не админа)
+async function adminApproveTask(targetUserId, taskKey) {
     await fetch(`${BACKEND_URL}/api/task/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.id, taskKey: taskKey, status: 'accepted' })
+        body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'accepted' })
     });
+    showCustomToast('✅ Задание одобрено!');
     syncWithBackend();
-};
+}
 
-const originalAdminReject = adminRejectTask;
-adminRejectTask = async function(taskKey) {
-    const reasonInput = document.getElementById(`admin-reject-reason-${taskKey}`);
+async function adminRejectTask(targetUserId, taskKey) {
+    const reasonInput = document.getElementById(`admin-reject-reason-${targetUserId}-${taskKey}`);
     const reason = (reasonInput && reasonInput.value.trim()) || 'Условия задания были выполнены не полностью.';
-    originalAdminReject(taskKey);
     await fetch(`${BACKEND_URL}/api/task/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.id, taskKey: taskKey, status: 'rejected', reason: reason })
+        body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'rejected', reason: reason })
     });
+    showCustomToast('❌ Задание отклонено');
     syncWithBackend();
-};
+}
 
-const originalAdminCompleteTask = adminCompleteTask;
-adminCompleteTask = async function(taskKey) {
-    originalAdminCompleteTask(taskKey);
+async function adminCompleteTask(targetUserId, taskKey) {
     await fetch(`${BACKEND_URL}/api/task/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.id, taskKey: taskKey, status: 'completed' })
+        body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'completed' })
     });
+    showCustomToast('🎉 Скин выдан, задание закрыто!');
     syncWithBackend();
-};
+}
 
 const originalAdminCompleteOrder = adminCompleteOrder;
 adminCompleteOrder = async function(idx) {
@@ -3090,6 +3091,209 @@ adminIssueOzonLinkFromDashboard = async function() {
     });
     syncWithBackend();
 };
+
+function updateAdminCounters() {
+    let pendingCount = 0;
+    let activeCount = 0;
+
+    if (isUserAdmin) {
+        pendingCount = adminTasksList.filter(t => t.status === 'in_progress').length;
+        activeCount = adminTasksList.filter(t => t.status === 'accepted' || t.rewardRequested).length;
+    }
+
+    const reqCount = ozonCardData.status === 'requested' ? 1 : 0;
+    const ordersCount = marketOrdersList.filter(o => o.status === 'new').length;
+
+    const pendingEl = document.getElementById('admin-stat-pending');
+    const requestsEl = document.getElementById('admin-stat-requests');
+    const activeEl = document.getElementById('admin-stat-active');
+    const ordersEl = document.getElementById('admin-stat-orders');
+
+    if (pendingEl) pendingEl.innerText = pendingCount;
+    if (requestsEl) requestsEl.innerText = reqCount;
+    if (activeEl) activeEl.innerText = activeCount;
+    if (ordersEl) ordersEl.innerText = ordersCount;
+
+    const revCounter = document.getElementById('admin-reviews-counter');
+    if (revCounter) revCounter.innerText = `${pendingCount} в очереди`;
+
+    const ordCounter = document.getElementById('admin-orders-counter');
+    if (ordCounter) ordCounter.innerText = `${ordersCount} заказов`;
+}
+
+function updateAdminDashboardUI() {
+    updateAdminCounters();
+    renderLiveFeedUI();
+
+    // 1. Рендер заданий на проверку (ПО ВСЕМ ЮЗЕРАМ ИЗ БД)
+    const reviewsList = document.getElementById('admin-reviews-list');
+    if (reviewsList) {
+        const pendingTasks = adminTasksList.filter(t => t.status === 'in_progress');
+        if (pendingTasks.length === 0) {
+            reviewsList.innerHTML = `
+                <div class="text-center py-6 text-slate-500 text-xs">
+                    <span class="material-icons text-2xl mb-1 text-slate-600">done_all</span>
+                    <p>Все входящие задания проверены!</p>
+                </div>
+            `;
+        } else {
+            reviewsList.innerHTML = pendingTasks.map(t => {
+                const meta = tasksMeta[t.taskKey];
+                let detailHtml = '';
+                if (t.taskKey === 'idea') {
+                    detailHtml = `
+                        <div class="space-y-2 text-xs">
+                            <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                                <span class="text-purple-400 font-bold block mb-0.5">💡 Суть идеи:</span>
+                                <span class="text-white font-semibold text-sm">${t.ideaTitle || 'Не указана'}</span>
+                            </div>
+                            <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                                <span class="text-slate-400 font-bold block mb-0.5">📝 Подробности и комментарий:</span>
+                                <p class="text-slate-200 leading-relaxed">${(t.ideaDesc || 'Нет описания').replace(/\n/g, '<br>')}</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    detailHtml = `<p>💡 <b>Заявка:</b> Клиент подтвердил выполнение. Скриншот (если нужен) отправлен в канал.</p>`;
+                }
+
+                return `
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs font-bold text-white">${t.firstName}</span>
+                                    <span class="text-[11px] text-slate-400 font-mono">@${t.username}</span>
+                                </div>
+                                <span class="text-xs font-semibold text-amber-400">Задание: ${meta ? meta.title : t.taskKey}</span>
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">На проверке</span>
+                        </div>
+
+                        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-xs">
+                            ${detailHtml}
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-[11px] text-slate-400 font-medium block">Причина отказа (будет показана клиенту):</label>
+                            <input id="admin-reject-reason-${t.userId}-${t.taskKey}" type="text" placeholder="Укажите причину (не прошел платёж)..." class="w-full bg-slate-900 border border-slate-700 focus:border-rose-500 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none transition">
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 pt-1 border-t border-slate-800/80">
+                            <button onclick="adminApproveTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow">
+                                <span class="material-icons text-sm">check_circle</span>
+                                <span>Одобрить</span>
+                            </button>
+                            <button onclick="adminRejectTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-rose-600/20 hover:bg-rose-600/30 text-rose-400 border border-rose-500/40 font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5">
+                                <span class="material-icons text-sm">cancel</span>
+                                <span>Отклонить</span>
+                            </button>
+                            <a href="https://t.me/${t.username}" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 border border-slate-700">
+                                <span class="material-icons text-sm text-blue-400">send</span>
+                                <span>В ЛС</span>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+
+    // 2. Рендер активных заданий
+    const activeList = document.getElementById('admin-active-tasks-list');
+    if (activeList) {
+        const activeTasks = adminTasksList.filter(t => t.status === 'accepted' || t.rewardRequested);
+        if (activeTasks.length === 0) {
+            activeList.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Нет пользователей ожидающих выдачи скина</p>`;
+        } else {
+            activeList.innerHTML = activeTasks.map(t => {
+                const meta = tasksMeta[t.taskKey];
+                const isReward = !!t.rewardRequested;
+                const statusBadge = isReward 
+                    ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 animate-pulse">🎁 ЖДЁТ ВЫДАЧИ</span>`
+                    : `<span class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-teal-500/20 text-teal-300 border border-teal-500/30">Одобрено (ждёт клика)</span>`;
+
+                return `
+                    <div class="bg-slate-950 p-3.5 rounded-xl border ${isReward ? 'border-emerald-500/50 shadow-lg shadow-emerald-950/30' : 'border-slate-800'} space-y-2.5">
+                        <div class="flex items-start justify-between gap-2">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs font-bold text-white">${meta ? meta.title : t.taskKey}</span>
+                                    <span class="text-[11px] text-amber-400 font-mono font-bold">${meta ? meta.reward : ''}</span>
+                                </div>
+                                <div class="text-[11px] text-slate-400 font-mono mt-0.5">
+                                    Клиент: <span class="text-slate-200">${t.firstName}</span> (@${t.username})
+                                </div>
+                            </div>
+                            ${statusBadge}
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-800/80">
+                            <a href="https://t.me/${t.username}" target="_blank" class="flex-1 bg-slate-900 hover:bg-slate-850 text-blue-400 border border-blue-500/30 py-1.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                <span class="material-icons text-sm">chat</span>
+                                <span>ЛС</span>
+                            </a>
+                            ${isReward ? `
+                                <button onclick="adminCompleteTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-1.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow">
+                                    <span class="material-icons text-sm">check_circle</span>
+                                    <span>Скин передан</span>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+
+    // 3. Рендер заказов маркета
+    const ordersContainer = document.getElementById('admin-market-orders-list');
+    if (ordersContainer) {
+        if (marketOrdersList.length === 0) {
+            ordersContainer.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Пока нет заказов из Маркета</p>`;
+        } else {
+            ordersContainer.innerHTML = marketOrdersList.map((ord, idx) => `
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2.5">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold text-white">${ord.user}</span>
+                                <span class="text-[11px] text-slate-400 font-mono">${ord.userTag}</span>
+                            </div>
+                            <span class="text-xs font-semibold text-blue-400">Услуга: ${ord.serviceTitle}</span>
+                        </div>
+                        <span class="text-[10px] font-mono text-slate-500">${ord.time}</span>
+                    </div>
+                    <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800/80 text-xs text-slate-300 font-mono">
+                        💬 ${ord.comment}
+                    </div>
+                    <div class="flex gap-2 pt-1">
+                        <a href="https://t.me/${ord.userTag.replace('@', '')}" target="_blank" class="flex-1 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/40 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1">
+                            <span class="material-icons text-sm">chat</span> Написать в ЛС
+                        </a>
+                        <button onclick="adminCompleteOrder(${idx})" class="bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/40 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1">
+                            <span class="material-icons text-sm">done</span> Выполнено
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    }
+
+    const ozonBadge = document.getElementById('admin-ozon-status-badge');
+    if (ozonBadge) {
+        if (ozonCardData.status === 'ready') {
+            ozonBadge.className = 'text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded';
+            ozonBadge.innerText = 'Ссылка выдана (72ч)';
+        } else if (ozonCardData.status === 'requested') {
+            ozonBadge.className = 'text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded';
+            ozonBadge.innerText = 'Клиент ждёт ссылку!';
+        } else {
+            ozonBadge.className = 'text-[10px] font-mono font-bold bg-slate-800 text-slate-400 px-2 py-0.5 rounded';
+            ozonBadge.innerText = 'Не активна';
+        }
+    }
+}
 
 const originalRecordActivity = recordActivity;
 recordActivity = function(actionText, tag = 'action', icon = 'bolt') {
