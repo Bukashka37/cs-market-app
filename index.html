@@ -2728,43 +2728,74 @@
             }
         }
 
-        // Добавление друга в реферальную систему с проверкой активности
-        function addReferralFriend() {
+        // Добавление друга через центральную базу данных
+        async function addReferralFriend() {
             const input = document.getElementById('ref-friend-input');
             let val = (input && input.value.trim()) || '';
             if (!val) {
                 showCustomToast('Введите @username друга!');
                 return;
             }
-            if (!val.startsWith('@')) val = '@' + val;
+            const cleanUser = val.replace('@', '').toLowerCase().trim();
+            const myUsername = (user.username || '').replace('@', '').toLowerCase().trim();
 
-            const normalizedTag = val.toLowerCase();
-            const myTag = user.username ? ('@' + user.username.replace('@', '').toLowerCase()) : '';
-
-            // Запрет приглашать самого себя
-            if (myTag && normalizedTag === myTag) {
+            if (myUsername && cleanUser === myUsername) {
                 showCustomToast('❌ Нельзя пригласить самого себя!');
                 return;
             }
 
-            // Проверка: запускал ли пользователь бота/приложение хотя бы раз
-            const hasLaunched = knownAppUsers.some(u => u.toLowerCase() === normalizedTag);
-            if (!hasLaunched) {
-                showCustomToast(`❌ Пользователь ${val} ещё ни разу не заходил в приложение, поэтому не может быть привязан! Попросите его сначала открыть бота.`);
-                return;
-            }
-
-            if (referralData.friends.some(f => f.username.toLowerCase() === normalizedTag)) {
+            if (referralData.friends.some(f => f.username.replace('@', '').toLowerCase() === cleanUser)) {
                 showCustomToast('Этот друг уже добавлен в ваш список!');
                 return;
             }
 
-            referralData.friends.unshift({
-                username: val,
-                tasksCount: 0,
-                earned: 0,
-                date: new Date().toLocaleDateString('ru-RU')
-            });
+            showCustomToast('🔍 Проверка пользователя...');
+
+            try {
+                const res = await fetch(`${BACKEND_URL}/api/check_referral`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: cleanUser })
+                });
+                const data = await res.json();
+
+                if (!data.exists) {
+                    showCustomToast(`❌ Пользователь @${cleanUser} ещё не запускал бота! Попросите его нажать /start в @market_02_bot`);
+                    return;
+                }
+
+                // Пользователь найден в базе — привязываем
+                const friendObj = {
+                    username: '@' + cleanUser,
+                    name: data.name || cleanUser,
+                    tasksCount: 0,
+                    earned: 0,
+                    date: new Date().toLocaleDateString('ru-RU')
+                };
+
+                referralData.friends.unshift(friendObj);
+                saveReferralData();
+                input.value = '';
+                renderReferralUI();
+
+                await fetch(`${BACKEND_URL}/api/referral/add`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: user.id,
+                        friendUsername: cleanUser,
+                        friendName: data.name || cleanUser
+                    })
+                });
+
+                recordActivity(`Пригласил друга @${cleanUser} в реферальную программу`, 'referral', 'person_add');
+                showCustomToast(`✅ Друг @${cleanUser} успешно привязан!`);
+                if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+            } catch(err) {
+                console.error(err);
+                showCustomToast('Ошибка соединения при проверке друга');
+            }
+        }
 
             saveReferralData();
             input.value = '';
@@ -2872,17 +2903,26 @@
                 ozonTimerInterval = null;
             }
         }
-// ================= БЫСТРЫЙ МОСТ СИНХРОНИЗАЦИИ (БЕЗ ПЕТЕЛЬ) =================
-const BACKEND_URL = "https://cs-market-backend.onrender.com";
+// ================= ВСПЛЫВАЮЩИЕ УВЕДОМЛЕНИЯ =================
+function showCustomToast(text) {
+    const toast = document.getElementById('toast-notify');
+    const toastText = document.getElementById('toast-text');
+    if (!toast || !toastText) return;
+    toastText.innerText = text;
+    toast.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-20');
+    toast.classList.add('opacity-100', 'translate-y-0');
+    setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-20');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+    }, 3000);
+}
 
-// Очищаем локальное хранилище от старых 12 000 дубликатов
-try {
-    localStorage.removeItem('csgo_market_orders');
-} catch(e) {}
+// ================= БЫСТРЫЙ МОСТ СИНХРОНИЗАЦИИ =================
+const BACKEND_URL = "https://cs-market-backend.onrender.com";
 
 let isSyncInProgress = false;
 
-// 1. Мгновенная синхронизация без отправки локальных заказов назад
+// 1. Синхронизация состояния с сервером
 async function syncWithBackend() {
     if (isSyncInProgress) return;
     isSyncInProgress = true;
@@ -2913,19 +2953,26 @@ async function syncWithBackend() {
                 updateTaskCardsStatusUI();
             }
 
-            // Синхронизация общей лайв-ленты
+            // Синхронизация общей лайв-ленты всех пользователей
             if (data.liveFeed && Array.isArray(data.liveFeed)) {
                 liveActivityLog = data.liveFeed;
                 try { localStorage.setItem('csgo_market_live_feed', JSON.stringify(liveActivityLog)); } catch(e) {}
                 renderLiveFeedUI();
             }
 
-            // Синхронизация реальных заказов (только уникальные из базы)
+            // Синхронизация списка рефералов
+            if (data.referrals && Array.isArray(data.referrals) && data.referrals.length > 0) {
+                referralData.friends = data.referrals;
+                saveReferralData();
+                renderReferralUI();
+            }
+
+            // Синхронизация заказов маркета
             if (data.marketOrders && Array.isArray(data.marketOrders)) {
                 marketOrdersList = data.marketOrders;
             }
 
-            // Синхронизация Ozon ссылки
+            // Синхронизация данных по Ozon
             if (data.ozonCard) {
                 ozonCardData = data.ozonCard;
                 try { localStorage.setItem('csgo_market_ozon', JSON.stringify(ozonCardData)); } catch(e) {}
@@ -2940,7 +2987,7 @@ async function syncWithBackend() {
     }
 }
 
-// 2. Отправка действий на бэкенд
+// 2. Отправка действий на бэкенд (без ложного перехода Ozon на проверку)
 async function sendPayloadToBot(payload, modalToClose) {
     const currentUserId = user.id || '707417409';
     const currentUsername = (user.username || 'bukashka_37').replace('@', '');
@@ -2951,7 +2998,22 @@ async function sendPayloadToBot(payload, modalToClose) {
     }
 
     try {
-        // Оформление заказа маркета
+        // Запрос ссылки Ozon — отправляется строго на /api/ozon/request и НЕ трогает статус задачи!
+        if (payload.action === 'task_ozon_link_request') {
+            await fetch(`${BACKEND_URL}/api/ozon/request`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    userId: currentUserId,
+                    username: currentUsername,
+                    firstName: currentFirstName
+                })
+            });
+            syncWithBackend();
+            return;
+        }
+
+        // Заказ товара / услуги
         if (payload.action === 'service_order') {
             await fetch(`${BACKEND_URL}/api/order/create`, {
                 method: "POST",
@@ -2969,7 +3031,7 @@ async function sendPayloadToBot(payload, modalToClose) {
             return;
         }
 
-        // Отправка скриншота на проверку
+        // Отправка скриншота
         if (payload.action === 'task_screenshot_submit') {
             showCustomToast('⏳ Отправка скриншота на сервер...');
             await fetch(`${BACKEND_URL}/api/task/submit_proof`, {
@@ -2987,7 +3049,7 @@ async function sendPayloadToBot(payload, modalToClose) {
             return;
         }
 
-        // Обновление статусов заданий
+        // Перевод заданий на проверку (только когда отмечены все галочки!)
         let newStatus = 'in_progress';
         if (payload.action === 'task_abort') newStatus = 'idle';
         if (payload.action === 'claim_reward') newStatus = 'accepted';
@@ -3011,7 +3073,7 @@ async function sendPayloadToBot(payload, modalToClose) {
     }
 }
 
-// 3. Действия админа
+// 3. Действия администратора
 const originalAdminApprove = adminApproveTask;
 adminApproveTask = async function(taskKey) {
     originalAdminApprove(taskKey);
@@ -3072,7 +3134,7 @@ adminIssueOzonLinkFromDashboard = async function() {
     syncWithBackend();
 };
 
-// Отправка активности в лайв-ленту
+// Отправка действий в единую лайв-ленту
 const originalRecordActivity = recordActivity;
 recordActivity = function(actionText, tag = 'action', icon = 'bolt') {
     originalRecordActivity(actionText, tag, icon);
@@ -3090,7 +3152,7 @@ recordActivity = function(actionText, tag = 'action', icon = 'bolt') {
     }).catch(() => {});
 };
 
-// Фоновый опрос каждые 4 секунды (размер запроса всего 100 байт)
+// Фоновый опрос каждые 4 секунды
 document.addEventListener("DOMContentLoaded", () => {
     syncWithBackend();
     setInterval(syncWithBackend, 4000);
