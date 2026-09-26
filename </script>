@@ -1098,19 +1098,11 @@
 
     <!-- Логика и скрипты приложения -->
      </script>
-    // Инициализация Telegram WebApp
-        const tg = window.Telegram ? window.Telegram.WebApp : null;
+    const tg = window.Telegram ? window.Telegram.WebApp : null;
         if (tg) { tg.expand(); tg.ready(); }
 
         const ADMIN_ID = '707417409';
-
-        // 1. ИСПРАВЛЕНО: Безопасный объект пользователя (сброшен фейковый ID)
-        const user = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) || {
-            first_name: 'Гость',
-            username: 'guest',
-            id: '0' 
-        };
-
+        const user = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) || { first_name: 'Гость', username: 'guest', id: '0' };
         const isUserAdmin = String(user.id) === String(ADMIN_ID);
 
         document.getElementById('user-name').innerText = user.first_name || 'Клиент';
@@ -1122,7 +1114,6 @@
             if (adminNavBtn) adminNavBtn.classList.remove('hidden');
         }
 
-        // ================= БАЗЫ ДАННЫХ И ТЕКСТЫ =================
         const servicesData = {
             steam_topup: { title: 'Пополнение Steam', html: `Пополнение вашего кошелька Steam без входа в аккаунт (любой регион).\n\n<b>Оплата:</b> Работаем по 100% предоплате.\n<b>Минимальная сумма:</b> От 100 руб.` },
             steam_game: { title: 'Покупка игр Steam', html: `Отправка любой игры подарком (Gift) на ваш аккаунт без входа.\n\n<b>Условия:</b> 100% предоплата, затем отправка.` },
@@ -1140,55 +1131,43 @@
         };
 
         const tasksMeta = {
-            alfa_card: { title: 'Альфа-карта', reward: 'до 750 ₽ скин', conditions: `1) От 14 лет.\n2) Без продуктов Альфа-Банка 90 дней.\n3) Новая реф. ссылка.`, instructions: `Оформить карту, забрать, сделать 1 любую покупку.`, bonus: 'Кэшбэк до 100%' },
+            alfa_card: { title: 'Альфа-карта', reward: 'до 750 ₽ скин', conditions: `1) От 14 лет.\n2) Без продуктов Альфа-Банка 90 дней.\n3) Новая реф. ссылка.`, instructions: `Оформить карту, забрать, сделать 1 покупку.`, bonus: 'Кэшбэк до 100%' },
             alfa_credit: { title: 'Альфа-кредитка', reward: 'до 1 000 ₽ скин', conditions: `1) От 18 лет.\n2) Без кредиток Альфы 90 дней.`, instructions: `Оформить кредитку, забрать, сделать 1 покупку.`, bonus: 'Кэшбэк' },
             yandex_pay: { title: 'Яндекс карта', reward: 'до 300 ₽ скин', conditions: `1) От 14 лет.\n2) Новая реф. ссылка.`, instructions: `Скачать Пэй, открыть карту, подтвердить Госуслуги, 1 покупка вне Яндекса.`, bonus: 'Кэшбэк 5%' },
             ozon_card: { title: 'Озон карта', reward: 'до 300 ₽ скин', conditions: `1) От 14 лет.\n2) Без карты Ozon Банка.`, instructions: `Получить ссылку, оформить карту, совершить 5 покупок ВНЕ Ozon.`, bonus: 'Кэшбэк до 25%' },
-            skinfights: { title: 'Бот SkinFights', reward: 'до 2.5 ₽ приз', conditions: `1) Первый запуск строго по ссылке.`, instructions: `Запустить бота, забрать бонус, вывести любой скин, прикрепить скрин.`, bonus: '500 гемов' },
-            skinape: { title: 'Приложение SkinApe', reward: 'до 2.5 ₽ приз', conditions: `1) Ранее не устанавливали приложение.`, instructions: `Скачать SkinApe, ввести промокод 66Q2BQL9, прикрепить скрин баланса.`, bonus: '50 монет' },
+            skinfights: { title: 'Бот SkinFights', reward: 'до 2.5 ₽ приз', conditions: `1) Первый запуск строго по ссылке.`, instructions: `Запустить бота, забрать бонус, вывести скин, прикрепить скрин.`, bonus: '500 гемов' },
+            skinape: { title: 'Приложение SkinApe', reward: 'до 2.5 ₽ приз', conditions: `1) Ранее не устанавливали приложение.`, instructions: `Скачать SkinApe, ввести код 66Q2BQL9, прикрепить скрин баланса.`, bonus: '50 монет' },
             vpn: { title: 'Подписка VPN', reward: 'до 40 ₽ скин', conditions: `1) Ранее не пользовались сервисом.`, instructions: `Оплатить подписку VPN на 1 месяц.`, bonus: '+5 дней и 1 ГБ' },
             idea: { title: 'Идея для задания', reward: '10 - 500 ₽ скин', conditions: `1) Легальность\n2) Безопасность\n3) Прибыльность`, instructions: `Заполнить поля с вашей идеей.`, bonus: '' }
         };
 
         const cardChecklistConfig = {
-            alfa_card: ['Я оформил карту', 'Я получил карту', 'Я совершил покупку по карте'],
-            alfa_credit: ['Я оформил карту', 'Я получил карту', 'Я совершил покупку по карте'],
+            alfa_card: ['Я оформил карту', 'Я получил карту', 'Я совершил покупку'],
+            alfa_credit: ['Я оформил карту', 'Я получил карту', 'Я совершил покупку'],
             yandex_pay: ['Скачал приложение', 'Открыл карту', 'Подтвердил данные', 'Сделал покупку'],
             ozon_card: ['Оформить карту', 'Получить карту', 'Выполнить 5 покупок вне Ozon']
         };
 
-        let tasksState = {};
-        let taskScreenshots = {};
-        let taskChecklists = {};
+        let tasksState = {}; Object.keys(tasksMeta).forEach(k => { tasksState[k] = { status: 'idle', reason: '', ideaTitle: '', ideaDesc: '', rewardRequested: false }; });
+        let taskScreenshots = {}; let taskChecklists = {}; let activeTaskForms = {};
         let referralData = { friends: [], balance: 0, withdrawnTotal: 0 };
-        let ozonCardData = { link: 'https://finance.ozon.ru/promo/card', readyTimestamp: 0 };
-
-        let marketOrdersList = [];
-        let liveActivityLog = [];
-        let adminTasksList = [];
-
-        let currentModalService = '';
-        let currentTaskKey = '';
+        let marketOrdersList = []; let liveActivityLog = []; let adminTasksList = [];
+        let currentModalService = ''; let currentTaskKey = '';
         
-        let alfaLinkTimestamp = localStorage.getItem('csgo_market_alfa_time') || Date.now();
-        let alfaCreditLinkTimestamp = localStorage.getItem('csgo_market_alfa_credit_time') || Date.now();
-        let savedAlfaLink = localStorage.getItem('csgo_market_alfa_link') || 'https://alfa.me/ZKsCZ2';
-        let savedAlfaCreditLink = localStorage.getItem('csgo_market_alfa_credit_link') || 'https://alfa.me/PDVEGs';
-        const cardTaskLinks = { alfa_card: savedAlfaLink, alfa_credit: savedAlfaCreditLink, yandex_pay: 'https://bank.yandex.ru/invite?refid=qxSp2JZACr6' };
+        let appSettings = {
+            ozon_link: 'https://finance.ozon.ru/promo/card', ozon_time: '0',
+            alfa_link: 'https://alfa.me/ZKsCZ2', alfa_time: Date.now().toString(),
+            alfa_credit_link: 'https://alfa.me/PDVEGs', alfa_credit_time: Date.now().toString()
+        };
 
-        // ================= ИНТЕРФЕЙС И ТАБЫ =================
         let isAdminUnlocked = false;
 
         function switchTab(tab) {
             if (tab === 'admin') {
                 if (!isUserAdmin) return;
-                // 2. ИСПРАВЛЕНО: ПИН-код на админку
                 if (!isAdminUnlocked) {
                     const pwd = prompt("Введите ПИН-код для входа (4 цифры):");
-                    if (pwd !== "7890") {
-                        showCustomToast("❌ Неверный ПИН-код");
-                        return;
-                    }
+                    if (pwd !== "7890") return showCustomToast("❌ Неверный ПИН-код");
                     isAdminUnlocked = true;
                     showCustomToast("✅ Доступ открыт");
                 }
@@ -1206,227 +1185,108 @@
             const activeContent = document.getElementById(`tab-content-${tab}`);
             const activeNavBtn = document.getElementById(`nav-${tab}`);
             if (activeContent) activeContent.classList.remove('hidden');
-            if (activeNavBtn) {
-                activeNavBtn.className = tab === 'admin'
-                    ? 'flex flex-col items-center gap-1 text-amber-400 font-black transition relative'
-                    : 'flex flex-col items-center gap-1 text-emerald-400 font-bold transition';
-            }
+            if (activeNavBtn) activeNavBtn.className = tab === 'admin' ? 'flex flex-col items-center gap-1 text-amber-400 font-black transition relative' : 'flex flex-col items-center gap-1 text-emerald-400 font-bold transition';
+            
             if (tab === 'admin') updateAdminDashboardUI();
             if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
         }
 
-        function filterMarket(category) {
-            document.querySelectorAll('.service-card').forEach(card => {
-                card.classList.toggle('hidden', category !== 'all' && card.getAttribute('data-category') !== category);
-            });
-            document.querySelectorAll('.market-filter-btn').forEach(btn => {
-                btn.className = 'market-filter-btn px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:border-slate-700 transition shrink-0';
-            });
-            const activeBtn = document.getElementById(`filter-${category}`);
+        function filterMarket(cat) {
+            document.querySelectorAll('.service-card').forEach(card => card.classList.toggle('hidden', cat !== 'all' && card.getAttribute('data-category') !== cat));
+            document.querySelectorAll('.market-filter-btn').forEach(btn => btn.className = 'market-filter-btn px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-900 text-slate-300 border border-slate-800 transition shrink-0');
+            const activeBtn = document.getElementById(`filter-${cat}`);
             if (activeBtn) activeBtn.className = 'market-filter-btn px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-500 text-slate-950 border border-emerald-400 transition shrink-0';
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
+        function closeModal(modalId) { document.getElementById(modalId).classList.add('hidden'); }
 
         function showCustomToast(text) {
-            const toast = document.getElementById('toast-notify');
-            const toastText = document.getElementById('toast-text');
-            if (!toast || !toastText) return;
-            toastText.innerText = text;
-            toast.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-20');
-            toast.classList.add('opacity-100', 'translate-y-0');
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-20');
-                toast.classList.remove('opacity-100', 'translate-y-0');
-            }, 3000);
+            const toast = document.getElementById('toast-notify'); const toastText = document.getElementById('toast-text');
+            if (!toast || !toastText) return; toastText.innerText = text;
+            toast.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-20'); toast.classList.add('opacity-100', 'translate-y-0');
+            setTimeout(() => { toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-20'); toast.classList.remove('opacity-100', 'translate-y-0'); }, 3000);
         }
 
-        // ================= ОПЕРАЦИИ ПОЛЬЗОВАТЕЛЯ =================
-        function openServiceModal(serviceKey) {
-            currentModalService = serviceKey;
-            document.getElementById('service-modal-title').innerText = servicesData[serviceKey].title;
-            document.getElementById('service-modal-body').innerHTML = servicesData[serviceKey].html;
-            document.getElementById('service-order-comment').value = '';
-            document.getElementById('service-modal').classList.remove('hidden');
-        }
-
-        function orderCurrentService() {
-            const comment = document.getElementById('service-order-comment').value.trim() || 'Без комментария';
-            sendPayloadToBot({ action: 'service_order', serviceKey: currentModalService, serviceTitle: servicesData[currentModalService].title, comment: comment }, 'service-modal');
-            showCustomToast(`Заявка на услугу отправлена!`);
-        }
+        function openServiceModal(sk) { currentModalService = sk; document.getElementById('service-modal-title').innerText = servicesData[sk].title; document.getElementById('service-modal-body').innerHTML = servicesData[sk].html; document.getElementById('service-order-comment').value = ''; document.getElementById('service-modal').classList.remove('hidden'); }
+        function orderCurrentService() { const c = document.getElementById('service-order-comment').value.trim() || 'Без комментария'; sendPayloadToBot({ action: 'service_order', serviceKey: currentModalService, serviceTitle: servicesData[currentModalService].title, comment: c }, 'service-modal'); showCustomToast(`Заявка отправлена!`); }
 
         function getOzonRemainingMs() {
-            if (!ozonCardData.readyTimestamp) return 0;
-            const expireAt = Number(ozonCardData.readyTimestamp) + (72 * 60 * 60 * 1000);
-            return Math.max(0, expireAt - Date.now());
+            if (!appSettings.ozon_time || appSettings.ozon_time === '0') return 0;
+            return Math.max(0, (Number(appSettings.ozon_time) + 72 * 60 * 60 * 1000) - Date.now());
         }
 
         function openTaskModal(taskKey) {
-            currentTaskKey = taskKey;
-            const meta = tasksMeta[taskKey];
-            const state = tasksState[taskKey] || { status: 'idle' };
-
-            document.getElementById('task-modal-title').innerText = meta.title;
-            document.getElementById('task-modal-reward').innerText = meta.reward;
-            document.getElementById('task-modal-conditions').innerText = meta.conditions;
-            document.getElementById('task-modal-instructions').innerText = meta.instructions;
-
+            currentTaskKey = taskKey; const meta = tasksMeta[taskKey]; const state = tasksState[taskKey] || { status: 'idle' };
+            document.getElementById('task-modal-title').innerText = meta.title; document.getElementById('task-modal-reward').innerText = meta.reward; document.getElementById('task-modal-conditions').innerText = meta.conditions; document.getElementById('task-modal-instructions').innerText = meta.instructions;
+            
             const bonusBlock = document.getElementById('task-bonus-block');
-            if (meta.bonus) {
-                bonusBlock.classList.remove('hidden');
-                document.getElementById('task-modal-bonus').innerText = `Бонус: ${meta.bonus}`;
-            } else {
-                bonusBlock.classList.add('hidden');
-            }
+            if (meta.bonus) { bonusBlock.classList.remove('hidden'); document.getElementById('task-modal-bonus').innerText = `Бонус: ${meta.bonus}`; } else { bonusBlock.classList.add('hidden'); }
 
-            document.getElementById('task-skinape-block').classList.add('hidden');
-            document.getElementById('task-skinfights-block').classList.add('hidden');
-            document.getElementById('task-vpn-block').classList.add('hidden');
-            document.getElementById('task-idea-fields').classList.add('hidden');
-            document.getElementById('task-screenshot-container').classList.add('hidden');
-            document.getElementById('task-rejected-reason-box').classList.add('hidden');
-            document.getElementById('task-card-link-block').classList.add('hidden');
-            document.getElementById('task-ozon-block').classList.add('hidden');
-            document.getElementById('task-card-checklist-container').classList.add('hidden');
+            ['skinape','skinfights','vpn','idea-fields','screenshot-container','rejected-reason-box','card-link-block','ozon-block','card-checklist-container'].forEach(id => {
+                const el = document.getElementById(`task-${id}`); if(el) el.classList.add('hidden');
+            });
 
-            const mainBtn = document.getElementById('task-main-action-btn');
-            const abortBtn = document.getElementById('task-abort-btn');
-            const retryBtn = document.getElementById('task-retry-btn');
-
-            mainBtn.disabled = false;
-            mainBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'hidden');
-            abortBtn.classList.add('hidden');
-            retryBtn.classList.add('hidden');
+            const mainBtn = document.getElementById('task-main-action-btn'); const abortBtn = document.getElementById('task-abort-btn'); const retryBtn = document.getElementById('task-retry-btn');
+            mainBtn.disabled = false; mainBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'hidden'); abortBtn.classList.add('hidden'); retryBtn.classList.add('hidden');
 
             if (taskScreenshots[taskKey]) {
-                document.getElementById('task-screenshot-preview-img').src = taskScreenshots[taskKey];
-                document.getElementById('task-screenshot-preview-box').classList.remove('hidden');
-                document.getElementById('task-screenshot-dropzone').classList.add('hidden');
-            } else {
-                document.getElementById('task-screenshot-preview-box').classList.add('hidden');
-                document.getElementById('task-screenshot-dropzone').classList.remove('hidden');
-            }
+                document.getElementById('task-screenshot-preview-img').src = taskScreenshots[taskKey]; document.getElementById('task-screenshot-preview-box').classList.remove('hidden'); document.getElementById('task-screenshot-dropzone').classList.add('hidden');
+            } else { document.getElementById('task-screenshot-preview-box').classList.add('hidden'); document.getElementById('task-screenshot-dropzone').classList.remove('hidden'); }
 
             if (state.status === 'idle') {
-                mainBtn.className = 'w-full neon-glow-btn text-slate-950 font-black py-3.5 rounded-2xl text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition';
-                mainBtn.innerHTML = `<span class="material-icons text-base">rocket_launch</span><span>Готов выполнить</span>`;
+                if (!activeTaskForms[taskKey]) {
+                    mainBtn.className = 'w-full neon-glow-btn text-slate-950 font-black py-3.5 rounded-2xl text-xs sm:text-sm uppercase tracking-wider transition'; mainBtn.innerHTML = `<span class="material-icons text-base">rocket_launch</span><span>Готов выполнить</span>`;
+                } else {
+                    renderTaskInteractiveForm(taskKey);
+                }
             } else if (state.status === 'in_progress') {
-                abortBtn.classList.remove('hidden');
-                mainBtn.disabled = true;
-                mainBtn.className = 'w-full bg-slate-800 text-slate-400 border border-slate-700 font-bold py-3.5 rounded-2xl text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 cursor-not-allowed';
-                mainBtn.innerHTML = `<span class="material-icons text-base animate-spin-reverse">sync</span><span>Задание проверяется админом</span>`;
+                abortBtn.classList.remove('hidden'); mainBtn.disabled = true; mainBtn.className = 'w-full bg-slate-800 text-slate-400 font-bold py-3.5 rounded-2xl text-xs uppercase cursor-not-allowed'; mainBtn.innerHTML = `<span class="material-icons text-base">sync</span><span>Задание проверяется админом</span>`;
             } else if (state.status === 'accepted') {
-                mainBtn.className = 'w-full bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-3.5 rounded-2xl text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl animate-pulse transition';
-                mainBtn.innerHTML = `<span class="material-icons text-base">card_giftcard</span><span>Получить скин</span>`;
+                mainBtn.className = 'w-full bg-emerald-500 text-slate-950 font-black py-3.5 rounded-2xl text-xs uppercase animate-pulse'; mainBtn.innerHTML = `<span class="material-icons text-base">card_giftcard</span><span>Получить скин</span>`;
             } else if (state.status === 'completed') {
-                mainBtn.disabled = true;
-                mainBtn.className = 'w-full bg-emerald-950/40 text-emerald-400 border border-emerald-500/40 font-bold py-3.5 rounded-2xl text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 cursor-default';
-                mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Скин передан (Выполнено)</span>`;
+                mainBtn.disabled = true; mainBtn.className = 'w-full bg-emerald-950/40 text-emerald-400 font-bold py-3.5 rounded-2xl text-xs uppercase cursor-default'; mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Выполнено</span>`;
             } else if (state.status === 'rejected') {
-                retryBtn.classList.remove('hidden');
-                document.getElementById('task-rejected-reason-box').classList.remove('hidden');
-                document.getElementById('task-rejected-reason-text').innerText = state.reason || 'Ошибка.';
-                mainBtn.disabled = true;
-                mainBtn.className = 'w-full bg-rose-950/50 text-rose-400 border border-rose-500/30 font-bold py-3 rounded-2xl text-xs uppercase cursor-not-allowed';
-                mainBtn.innerHTML = `<span class="material-icons text-base">cancel</span><span>Задание отклонено</span>`;
+                retryBtn.classList.remove('hidden'); document.getElementById('task-rejected-reason-box').classList.remove('hidden'); document.getElementById('task-rejected-reason-text').innerText = state.reason || 'Ошибка.'; mainBtn.disabled = true; mainBtn.className = 'w-full bg-rose-950/50 text-rose-400 font-bold py-3 rounded-2xl text-xs uppercase cursor-not-allowed'; mainBtn.innerHTML = `<span class="material-icons text-base">cancel</span><span>Отклонено</span>`;
             }
-
-            // Отрисовка активных панелей, если задание начато
-            if (state.status === 'in_progress' || (state.status === 'idle' && (taskKey === 'idea' || taskKey === 'skinape' || taskKey === 'skinfights' || taskKey === 'vpn' || ['alfa_card', 'alfa_credit', 'yandex_pay', 'ozon_card'].includes(taskKey)))) {
-                // Если юзер уже нажал "Готов выполнить" (но статус пока idle, т.к. он еще не отправил)
-                // Для этого мы используем проверку, есть ли у нас открытые чеклисты. 
-                // Но мы убрали taskActionRevealed, так как оно глючило. 
-                // Вместо этого мы управляем процессом прямо внутри handleTaskMainAction.
-            }
-
             document.getElementById('task-modal').classList.remove('hidden');
         }
 
-        // ================= ИСПРАВЛЕННАЯ ЛОГИКА ЗАДАНИЙ =================
-        let activeTaskForms = {}; // Хранит локально, что юзер развернул форму задачи
-
         function handleTaskMainAction() {
-            const meta = tasksMeta[currentTaskKey];
-            const state = tasksState[currentTaskKey] || { status: 'idle' };
+            const meta = tasksMeta[currentTaskKey]; const state = tasksState[currentTaskKey] || { status: 'idle' };
+            if (state.status === 'accepted') { sendPayloadToBot({ action: 'claim_reward', taskKey: currentTaskKey, taskTitle: meta.title }); showCustomToast('✅ Заявка на приз отправлена админу!'); closeModal('task-modal'); return; }
 
-            if (state.status === 'accepted') {
-                sendPayloadToBot({ action: 'claim_reward', taskKey: currentTaskKey, taskTitle: meta.title });
-                showCustomToast('✅ Заявка на приз отправлена админу!');
-                closeModal('task-modal');
-                return;
-            }
-
-            // РАСКРЫТИЕ ФОРМЫ
+            // ПЕРВЫЙ КЛИК: Раскрытие формы
             if (state.status === 'idle' && !activeTaskForms[currentTaskKey]) {
                 activeTaskForms[currentTaskKey] = true;
                 
-                // 3. ИСПРАВЛЕННЫЙ OZON
                 if (currentTaskKey === 'ozon_card') {
                     if (getOzonRemainingMs() > 0) {
                         showCustomToast('✅ Ссылка активна! Можете приступать к этапам.');
                     } else {
-                        showCustomToast('⏳ Ссылка просрочена. Запрос отправлен админу!');
-                        sendPayloadToBot({ action: 'task_ozon_link_request' }); // Запрос ссылки БЕЗ перевода на проверку
+                        showCustomToast('⏳ Ссылка запрашивается у админа...');
+                        sendPayloadToBot({ action: 'task_ozon_link_request' }); // Запрос без проверки
                     }
-                    renderTaskInteractiveForm(currentTaskKey);
-                    return;
+                    renderTaskInteractiveForm(currentTaskKey); return;
                 }
-
-                if (currentTaskKey === 'idea') {
-                    document.getElementById('task-idea-fields').classList.remove('hidden');
-                    document.getElementById('task-main-action-btn').innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить идею</span>`;
-                    return;
-                }
-
-                if (['skinape', 'skinfights'].includes(currentTaskKey)) {
-                    document.getElementById(`task-${currentTaskKey}-block`).classList.remove('hidden');
-                    document.getElementById('task-screenshot-container').classList.remove('hidden');
-                    document.getElementById('task-main-action-btn').innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить скриншот</span>`;
-                    validateScreenshotBtn();
-                    return;
-                }
-
-                if (['alfa_card', 'alfa_credit', 'yandex_pay'].includes(currentTaskKey)) {
-                    document.getElementById('task-card-link-block').classList.remove('hidden');
-                    document.getElementById('task-card-link-btn').href = cardTaskLinks[currentTaskKey];
-                    document.getElementById('task-card-checklist-container').classList.remove('hidden');
-                    renderChecklistUI(currentTaskKey);
-                    document.getElementById('task-main-action-btn').innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
-                    validateCardChecklistBtn(currentTaskKey);
-                    return;
-                }
-
-                if (currentTaskKey === 'vpn') {
-                    document.getElementById('task-vpn-block').classList.remove('hidden');
-                    document.getElementById('task-main-action-btn').innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
-                    return;
-                }
+                if (currentTaskKey === 'idea') { renderTaskInteractiveForm(currentTaskKey); return; }
+                if (['skinape', 'skinfights'].includes(currentTaskKey)) { renderTaskInteractiveForm(currentTaskKey); return; }
+                if (['alfa_card', 'alfa_credit', 'yandex_pay'].includes(currentTaskKey)) { renderTaskInteractiveForm(currentTaskKey); return; }
+                if (currentTaskKey === 'vpn') { renderTaskInteractiveForm(currentTaskKey); return; }
             }
 
-            // ФИНАЛЬНАЯ ОТПРАВКА
+            // ВТОРОЙ КЛИК: Отправка на проверку
             if (state.status === 'idle' && activeTaskForms[currentTaskKey]) {
                 if (currentTaskKey === 'idea') {
-                    const ideaTitle = document.getElementById('idea-title-input').value.trim();
-                    const ideaDesc = document.getElementById('idea-desc-input').value.trim();
-                    if (!ideaTitle || !ideaDesc) return showCustomToast('Заполните оба поля!');
-                    sendPayloadToBot({ action: 'task_submit', taskKey: 'idea', ideaTitle: ideaTitle, ideaDescription: ideaDesc });
+                    const t = document.getElementById('idea-title-input').value.trim(); const d = document.getElementById('idea-desc-input').value.trim();
+                    if (!t || !d) return showCustomToast('Заполните оба поля!'); sendPayloadToBot({ action: 'task_submit', taskKey: 'idea', ideaTitle: t, ideaDescription: d });
                 } else if (['skinape', 'skinfights'].includes(currentTaskKey)) {
-                    if (!taskScreenshots[currentTaskKey]) return showCustomToast('Загрузите скриншот!');
-                    sendPayloadToBot({ action: 'task_screenshot_submit', taskKey: currentTaskKey, taskTitle: meta.title, screenshot: taskScreenshots[currentTaskKey] });
+                    if (!taskScreenshots[currentTaskKey]) return showCustomToast('Загрузите скриншот!'); sendPayloadToBot({ action: 'task_screenshot_submit', taskKey: currentTaskKey, taskTitle: meta.title, screenshot: taskScreenshots[currentTaskKey] });
                 } else if (['alfa_card', 'alfa_credit', 'yandex_pay', 'ozon_card'].includes(currentTaskKey)) {
-                    const states = taskChecklists[currentTaskKey] || [];
-                    const items = cardChecklistConfig[currentTaskKey] || [];
-                    if (items.length > 0 && !items.every((_, idx) => !!states[idx])) {
-                        return showCustomToast('Отметьте все этапы!');
-                    }
+                    if (currentTaskKey === 'ozon_card' && getOzonRemainingMs() <= 0) return showCustomToast('Дождитесь выдачи ссылки!');
+                    const states = taskChecklists[currentTaskKey] || []; const items = cardChecklistConfig[currentTaskKey] || [];
+                    if (items.length > 0 && !items.every((_, idx) => !!states[idx])) return showCustomToast('Отметьте все этапы!');
                     sendPayloadToBot({ action: 'task_submit', taskKey: currentTaskKey, taskTitle: meta.title });
-                } else if (currentTaskKey === 'vpn') {
-                    sendPayloadToBot({ action: 'task_submit', taskKey: 'vpn', taskTitle: meta.title });
-                }
-                
+                } else if (currentTaskKey === 'vpn') { sendPayloadToBot({ action: 'task_submit', taskKey: 'vpn', taskTitle: meta.title }); }
                 showCustomToast('✅ Задание отправлено на проверку!');
             }
         }
@@ -1438,133 +1298,71 @@
             if (taskKey === 'ozon_card') {
                 document.getElementById('task-ozon-block').classList.remove('hidden');
                 if (getOzonRemainingMs() > 0) {
-                    document.getElementById('ozon-ready-box').classList.remove('hidden');
-                    document.getElementById('ozon-waiting-box').classList.add('hidden');
-                    document.getElementById('ozon-expired-box').classList.add('hidden');
-                    document.getElementById('ozon-ready-link-btn').href = ozonCardData.link;
-                    
-                    document.getElementById('task-card-checklist-container').classList.remove('hidden');
-                    renderChecklistUI(taskKey);
-                    
-                    mainBtn.disabled = false;
-                    mainBtn.className = 'w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3.5 rounded-2xl text-xs sm:text-sm uppercase transition';
-                    mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
+                    document.getElementById('ozon-ready-box').classList.remove('hidden'); document.getElementById('ozon-waiting-box').classList.add('hidden'); document.getElementById('ozon-expired-box').classList.add('hidden');
+                    document.getElementById('ozon-ready-link-btn').href = appSettings.ozon_link || '#';
+                    document.getElementById('task-card-checklist-container').classList.remove('hidden'); renderChecklistUI(taskKey);
+                    mainBtn.disabled = false; mainBtn.className = 'w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3.5 rounded-2xl text-xs uppercase'; mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
                     validateCardChecklistBtn(taskKey);
                 } else {
-                    document.getElementById('ozon-waiting-box').classList.remove('hidden');
-                    document.getElementById('ozon-ready-box').classList.add('hidden');
-                    document.getElementById('ozon-expired-box').classList.add('hidden');
-                    document.getElementById('task-card-checklist-container').classList.add('hidden');
-
-                    mainBtn.disabled = true;
-                    mainBtn.className = 'w-full bg-slate-800 text-slate-500 cursor-not-allowed font-bold py-3.5 rounded-2xl text-xs uppercase';
-                    mainBtn.innerHTML = `<span class="material-icons text-base">schedule</span><span>Ожидание ссылки от админа</span>`;
+                    document.getElementById('ozon-waiting-box').classList.remove('hidden'); document.getElementById('ozon-ready-box').classList.add('hidden'); document.getElementById('ozon-expired-box').classList.add('hidden'); document.getElementById('task-card-checklist-container').classList.add('hidden');
+                    mainBtn.disabled = true; mainBtn.className = 'w-full bg-slate-800 text-slate-500 cursor-not-allowed font-bold py-3.5 rounded-2xl text-xs uppercase'; mainBtn.innerHTML = `<span class="material-icons text-base">schedule</span><span>Ожидание ссылки от админа</span>`;
                 }
+            } else if (taskKey === 'idea') {
+                document.getElementById('task-idea-fields').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить идею</span>`;
+            } else if (['skinape', 'skinfights'].includes(taskKey)) {
+                document.getElementById(`task-${taskKey}-block`).classList.remove('hidden'); document.getElementById('task-screenshot-container').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить скриншот</span>`; validateScreenshotBtn();
+            } else if (['alfa_card', 'alfa_credit', 'yandex_pay'].includes(taskKey)) {
+                const map = { alfa_card: appSettings.alfa_link || savedAlfaLink, alfa_credit: appSettings.alfa_credit_link || savedAlfaCreditLink, yandex_pay: 'https://bank.yandex.ru/invite?refid=qxSp2JZACr6' };
+                document.getElementById('task-card-link-block').classList.remove('hidden'); document.getElementById('task-card-link-btn').href = map[taskKey]; document.getElementById('task-card-checklist-container').classList.remove('hidden'); renderChecklistUI(taskKey); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`; validateCardChecklistBtn(taskKey);
+            } else if (taskKey === 'vpn') {
+                document.getElementById('task-vpn-block').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
             }
         }
 
-        function requestNewOzonLink() {
-            sendPayloadToBot({ action: 'task_ozon_link_request' }, false);
-            showCustomToast('🔄 Повторный запрос отправлен!');
-            activeTaskForms['ozon_card'] = true;
-            renderTaskInteractiveForm('ozon_card');
-        }
-
-        function abortCurrentTask() {
-            activeTaskForms[currentTaskKey] = false;
-            if (taskChecklists[currentTaskKey]) {
-                taskChecklists[currentTaskKey].fill(false);
-            }
-            sendPayloadToBot({ action: 'task_abort', taskKey: currentTaskKey }, 'task-modal');
-            showCustomToast('Задание отменено.');
-        }
-
-        function retryCurrentTask() {
-            abortCurrentTask();
-            setTimeout(() => openTaskModal(currentTaskKey), 300);
-        }
+        function requestNewOzonLink() { sendPayloadToBot({ action: 'task_ozon_link_request' }, false); showCustomToast('🔄 Повторный запрос отправлен!'); activeTaskForms['ozon_card'] = true; renderTaskInteractiveForm('ozon_card'); }
+        function abortCurrentTask() { activeTaskForms[currentTaskKey] = false; if (taskChecklists[currentTaskKey]) taskChecklists[currentTaskKey].fill(false); sendPayloadToBot({ action: 'task_abort', taskKey: currentTaskKey }, 'task-modal'); showCustomToast('Задание отменено.'); }
+        function retryCurrentTask() { abortCurrentTask(); setTimeout(() => openTaskModal(currentTaskKey), 300); }
 
         // ================= ЧЕКЛИСТЫ И СКРИНШОТЫ =================
         function renderChecklistUI(taskKey) {
-            const container = document.getElementById('task-checklist-items');
-            container.innerHTML = '';
-            const items = cardChecklistConfig[taskKey] || [];
-            const states = taskChecklists[taskKey] || [];
-            let checkedCount = 0;
-
+            const container = document.getElementById('task-checklist-items'); container.innerHTML = '';
+            const items = cardChecklistConfig[taskKey] || []; const states = taskChecklists[taskKey] || []; let checkedCount = 0;
             items.forEach((text, idx) => {
-                const isChecked = !!states[idx];
-                if (isChecked) checkedCount++;
+                const isChecked = !!states[idx]; if (isChecked) checkedCount++;
                 const row = document.createElement('div');
                 row.className = `flex items-center gap-3 p-2.5 rounded-xl border cursor-pointer select-none transition ${isChecked ? 'bg-emerald-950/30 border-emerald-500/40 text-emerald-200' : 'bg-slate-900/80 border-slate-800 text-slate-300'}`;
                 row.innerHTML = `<div class="w-5 h-5 rounded-lg flex items-center justify-center border transition ${isChecked ? 'bg-emerald-500 border-emerald-400 text-slate-950' : 'bg-slate-950 border-slate-700 text-transparent'}"><span class="material-icons text-sm font-black">check</span></div><span class="text-xs sm:text-sm font-medium leading-tight">${text}</span>`;
-                row.onclick = () => {
-                    if (!taskChecklists[taskKey]) taskChecklists[taskKey] = new Array(items.length).fill(false);
-                    taskChecklists[taskKey][idx] = !taskChecklists[taskKey][idx];
-                    renderChecklistUI(taskKey);
-                    validateCardChecklistBtn(taskKey);
-                };
+                row.onclick = () => { if (!taskChecklists[taskKey]) taskChecklists[taskKey] = new Array(items.length).fill(false); taskChecklists[taskKey][idx] = !taskChecklists[taskKey][idx]; renderChecklistUI(taskKey); validateCardChecklistBtn(taskKey); };
                 container.appendChild(row);
             });
             document.getElementById('task-checklist-progress').innerText = `${checkedCount}/${items.length}`;
         }
 
         function validateCardChecklistBtn(taskKey) {
-            const mainBtn = document.getElementById('task-main-action-btn');
-            const items = cardChecklistConfig[taskKey] || [];
-            const states = taskChecklists[taskKey] || [];
-            if (items.length > 0 && items.every((_, idx) => !!states[idx])) {
-                mainBtn.disabled = false;
-                mainBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-            } else {
-                mainBtn.disabled = true;
-                mainBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            }
+            const mainBtn = document.getElementById('task-main-action-btn'); const items = cardChecklistConfig[taskKey] || []; const states = taskChecklists[taskKey] || [];
+            if (items.length > 0 && items.every((_, idx) => !!states[idx])) { mainBtn.disabled = false; mainBtn.classList.remove('opacity-50', 'cursor-not-allowed'); } 
+            else { mainBtn.disabled = true; mainBtn.classList.add('opacity-50', 'cursor-not-allowed'); }
         }
 
         function handleScreenshotUpload(event) {
-            const file = event.target.files && event.target.files[0];
-            if (!file) return;
+            const file = event.target.files && event.target.files[0]; if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
                 const img = new Image();
                 img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    let width = img.width, height = img.height;
-                    const maxDim = 800;
-                    if (width > maxDim || height > maxDim) {
-                        if (width > height) { height = Math.round((height * maxDim) / width); width = maxDim; } 
-                        else { width = Math.round((width * maxDim) / height); height = maxDim; }
-                    }
-                    canvas.width = width; canvas.height = height;
-                    canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                    const canvas = document.createElement('canvas'); let width = img.width, height = img.height; const maxDim = 800;
+                    if (width > maxDim || height > maxDim) { if (width > height) { height = Math.round((height * maxDim) / width); width = maxDim; } else { width = Math.round((width * maxDim) / height); height = maxDim; } }
+                    canvas.width = width; canvas.height = height; canvas.getContext('2d').drawImage(img, 0, 0, width, height);
                     taskScreenshots[currentTaskKey] = canvas.toDataURL('image/jpeg', 0.8);
-                    
-                    document.getElementById('task-screenshot-preview-img').src = taskScreenshots[currentTaskKey];
-                    document.getElementById('task-screenshot-preview-box').classList.remove('hidden');
-                    document.getElementById('task-screenshot-dropzone').classList.add('hidden');
+                    document.getElementById('task-screenshot-preview-img').src = taskScreenshots[currentTaskKey]; document.getElementById('task-screenshot-preview-box').classList.remove('hidden'); document.getElementById('task-screenshot-dropzone').classList.add('hidden');
                     validateScreenshotBtn();
                 };
                 img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+            }; reader.readAsDataURL(file);
         }
 
-        function removeTaskScreenshot() {
-            delete taskScreenshots[currentTaskKey];
-            document.getElementById('task-screenshot-preview-box').classList.add('hidden');
-            document.getElementById('task-screenshot-dropzone').classList.remove('hidden');
-            validateScreenshotBtn();
-        }
-
-        function validateScreenshotBtn() {
-            const mainBtn = document.getElementById('task-main-action-btn');
-            if (taskScreenshots[currentTaskKey]) {
-                mainBtn.disabled = false; mainBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-            } else {
-                mainBtn.disabled = true; mainBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            }
-        }
+        function removeTaskScreenshot() { delete taskScreenshots[currentTaskKey]; document.getElementById('task-screenshot-preview-box').classList.add('hidden'); document.getElementById('task-screenshot-dropzone').classList.remove('hidden'); validateScreenshotBtn(); }
+        function validateScreenshotBtn() { const mainBtn = document.getElementById('task-main-action-btn'); if (taskScreenshots[currentTaskKey]) { mainBtn.disabled = false; mainBtn.classList.remove('opacity-50', 'cursor-not-allowed'); } else { mainBtn.disabled = true; mainBtn.classList.add('opacity-50', 'cursor-not-allowed'); } }
 
         // ================= ЦЕНТРАЛЬНАЯ СИНХРОНИЗАЦИЯ =================
         const BACKEND_URL = "https://cs-market-backend.onrender.com";
@@ -1572,39 +1370,31 @@
 
         async function syncWithBackend() {
             if (isSyncInProgress) return;
-            
-            // Замораживаем интерфейс, если админ печатает текст (чтобы поле не удалялось)
             if (document.activeElement && ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return; 
 
             isSyncInProgress = true;
             try {
                 const res = await fetch(`${BACKEND_URL}/api/sync`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    method: "POST", headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ userId: user.id || '707417409', username: (user.username || 'bukashka_37').replace('@', ''), firstName: user.first_name || 'Алексей' })
                 });
 
                 const data = await res.json();
                 if (data.ok) {
-                    if (data.tasksState) {
-                        Object.keys(data.tasksState).forEach(k => { tasksState[k] = { ...tasksState[k], ...data.tasksState[k] }; });
-                        updateTaskCardsStatusUI();
-                    }
+                    if (data.tasksState) { Object.keys(data.tasksState).forEach(k => { tasksState[k] = { ...tasksState[k], ...data.tasksState[k] }; }); updateTaskCardsStatusUI(); }
                     if (data.adminTasks) adminTasksList = data.adminTasks;
                     if (data.liveFeed) { liveActivityLog = data.liveFeed; renderLiveFeedUI(); }
                     if (data.referrals) { referralData.friends = data.referrals; renderReferralUI(); }
                     if (data.marketOrders) marketOrdersList = data.marketOrders;
-                    if (data.ozonCard) ozonCardData = data.ozonCard;
+                    if (data.appSettings) appSettings = { ...appSettings, ...data.appSettings };
 
                     updateAdminDashboardUI();
                     
-                    // Если у пользователя открыта форма Озона и пришла свежая ссылка, перерисовываем
                     if (currentTaskKey === 'ozon_card' && activeTaskForms['ozon_card'] && !document.getElementById('task-modal').classList.contains('hidden')) {
                         renderTaskInteractiveForm('ozon_card');
                     }
                 }
-            } catch (e) { console.warn("Синхронизация недоступна", e); }
-            finally { isSyncInProgress = false; }
+            } catch (e) {} finally { isSyncInProgress = false; }
         }
 
         async function sendPayloadToBot(payload, modalToClose) {
@@ -1625,7 +1415,7 @@
                     await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...body, status: newStatus }) });
                 }
                 syncWithBackend();
-            } catch (e) { console.error(e); }
+            } catch (e) {}
         }
 
         // ================= АДМИН ПАНЕЛЬ =================
@@ -1634,7 +1424,7 @@
 
             const pendingTasks = adminTasksList.filter(t => t.status === 'in_progress');
             const activeTasks = adminTasksList.filter(t => t.status === 'accepted' || t.rewardRequested);
-            const reqCount = ozonCardData.status === 'requested' ? 1 : 0;
+            const reqCount = getOzonRemainingMs() <= 0 ? 1 : 0;
             const ordersCount = marketOrdersList.length;
 
             const pendingEl = document.getElementById('admin-stat-pending'); if (pendingEl) pendingEl.innerText = pendingTasks.length;
@@ -1702,19 +1492,19 @@
 
             const ozonBadge = document.getElementById('admin-ozon-status-badge');
             if (ozonBadge) {
-                if (getOzonRemainingMs() > 0) ozonBadge.className = 'text-[10px] font-bold bg-emerald-500/20 text-emerald-400 px-2 rounded', ozonBadge.innerText = 'Активна';
-                else ozonBadge.className = 'text-[10px] font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse', ozonBadge.innerText = 'Истекла!';
+                if (getOzonRemainingMs() > 0) { ozonBadge.className = 'text-[10px] font-bold bg-emerald-500/20 text-emerald-400 px-2 rounded'; ozonBadge.innerText = 'Активна'; }
+                else { ozonBadge.className = 'text-[10px] font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse'; ozonBadge.innerText = 'Истекла!'; }
             }
         }
 
         async function adminApproveTask(userId, taskKey) { await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: userId, taskKey: taskKey, status: 'accepted' }) }); syncWithBackend(); }
         async function adminRejectTask(userId, taskKey) { const r = document.getElementById(`admin-reject-reason-${userId}-${taskKey}`).value || 'Отклонено.'; await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: userId, taskKey: taskKey, status: 'rejected', reason: r }) }); syncWithBackend(); }
         async function adminCompleteTask(userId, taskKey) { await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: userId, taskKey: taskKey, status: 'completed' }) }); syncWithBackend(); }
-        async function adminCompleteOrder(orderId) { await fetch(`${BACKEND_URL}/api/order/complete`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ orderId: orderId }) }); syncWithBackend(); }
+        async function adminCompleteOrder(idx) { const order = marketOrdersList[idx]; if (order && order.id) { await fetch(`${BACKEND_URL}/api/order/complete`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ orderId: order.id }) }); } syncWithBackend(); }
         
         async function adminIssueOzonLinkFromDashboard() {
-            ozonCardData = { link: document.getElementById('admin-ozon-input').value || 'https://finance.ozon.ru/promo/card', readyTimestamp: Date.now() };
-            await fetch(`${BACKEND_URL}/api/ozon/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(ozonCardData) });
+            const link = document.getElementById('admin-ozon-input').value || 'https://finance.ozon.ru/promo/card';
+            await fetch(`${BACKEND_URL}/api/admin/settings`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: user.id, ozon_link: link, ozon_time: Date.now().toString() }) });
             showCustomToast('✅ Ссылка Ozon выдана! Клиенты могут приступать.');
             syncWithBackend();
         }
@@ -1724,18 +1514,26 @@
             const totalMs = 29 * 24 * 60 * 60 * 1000;
             const fmt = ms => ms <= 0 ? 'Истекло' : `${Math.floor(ms/86400000)}д ${Math.floor((ms/3600000)%24)}ч ${Math.floor((ms/60000)%60)}м`;
             
-            const dbMs = Math.max(0, totalMs - (Date.now() - Number(alfaLinkTimestamp)));
+            const dbMs = Math.max(0, totalMs - (Date.now() - Number(appSettings.alfa_time || alfaLinkTimestamp)));
             const bDb = document.getElementById('admin-alfa-badge');
             if (bDb) bDb.innerText = fmt(dbMs), bDb.className = dbMs < 86400000 ? 'text-[10px] font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse' : 'text-[10px] font-bold bg-emerald-500/10 text-emerald-400 px-2 rounded';
             
-            const crMs = Math.max(0, totalMs - (Date.now() - Number(alfaCreditLinkTimestamp)));
+            const crMs = Math.max(0, totalMs - (Date.now() - Number(appSettings.alfa_credit_time || alfaCreditLinkTimestamp)));
             const bCr = document.getElementById('admin-alfa-credit-badge');
             if (bCr) bCr.innerText = fmt(crMs), bCr.className = crMs < 86400000 ? 'text-[10px] font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse' : 'text-[10px] font-bold bg-emerald-500/10 text-emerald-400 px-2 rounded';
         }
-        setInterval(updateAlfaLiveTimers, 10000);
+        setInterval(updateAlfaLiveTimers, 1000);
 
-        function adminResetAlfaTimerFromDashboard() { alfaLinkTimestamp = Date.now(); localStorage.setItem('csgo_market_alfa_time', alfaLinkTimestamp); savedAlfaLink = document.getElementById('admin-alfa-input').value; localStorage.setItem('csgo_market_alfa_link', savedAlfaLink); updateAlfaLiveTimers(); showCustomToast('Обновлено'); }
-        function adminResetAlfaCreditTimerFromDashboard() { alfaCreditLinkTimestamp = Date.now(); localStorage.setItem('csgo_market_alfa_credit_time', alfaCreditLinkTimestamp); savedAlfaCreditLink = document.getElementById('admin-alfa-credit-input').value; localStorage.setItem('csgo_market_alfa_credit_link', savedAlfaCreditLink); updateAlfaLiveTimers(); showCustomToast('Обновлено'); }
+        async function adminResetAlfaTimerFromDashboard() { 
+            const link = document.getElementById('admin-alfa-input').value || 'https://alfa.me/ZKsCZ2';
+            await fetch(`${BACKEND_URL}/api/admin/settings`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: user.id, alfa_link: link, alfa_time: Date.now().toString() }) });
+            showCustomToast('Обновлено'); syncWithBackend();
+        }
+        async function adminResetAlfaCreditTimerFromDashboard() { 
+            const link = document.getElementById('admin-alfa-credit-input').value || 'https://alfa.me/PDVEGs';
+            await fetch(`${BACKEND_URL}/api/admin/settings`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: user.id, alfa_credit_link: link, alfa_credit_time: Date.now().toString() }) });
+            showCustomToast('Обновлено'); syncWithBackend();
+        }
 
         // ================= РЕФЕРАЛЫ =================
         function renderReferralUI() {
@@ -1778,7 +1576,6 @@
         function withdrawReferralBonus() {
             if (referralData.balance <= 0) return;
             referralData.withdrawnTotal += referralData.balance; referralData.balance = 0;
-            saveReferralData();
             showCustomToast('Заявка на вывод бонуса отправлена!');
         }
 
@@ -1788,21 +1585,20 @@
                 if (!badge) return;
                 const state = tasksState[key];
                 
-                if (key === 'ozon_card' && getOzonRemainingMs() > 0 && state.status !== 'completed' && state.status !== 'accepted') {
+                if (key === 'ozon_card' && getOzonRemainingMs() > 0 && state.status === 'idle' && activeTaskForms['ozon_card']) {
                     badge.className = 'flex items-center gap-1 text-[11px] font-bold text-cyan-300 bg-cyan-500/20 px-2 py-0.5 rounded-lg border border-cyan-500/40 animate-pulse'; badge.innerHTML = '<span class="material-icons text-xs">link</span><span>Ссылка готова!</span>'; badge.classList.remove('hidden'); return;
                 }
                 
-                if (state.status === 'in_progress') { badge.className = 'flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-amber-500/15 px-2 py-0.5 rounded border border-amber-500/30'; badge.innerHTML = '<span class="material-icons text-xs">sync</span><span>В процессе</span>'; badge.classList.remove('hidden'); }
+                if (state.status === 'idle') { badge.className = 'hidden'; }
+                else if (state.status === 'in_progress') { badge.className = 'flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-amber-500/15 px-2 py-0.5 rounded border border-amber-500/30'; badge.innerHTML = '<span class="material-icons text-xs">sync</span><span>В процессе</span>'; badge.classList.remove('hidden'); }
                 else if (state.status === 'accepted') { badge.className = 'flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded border border-emerald-500/30'; badge.innerHTML = '<span class="material-icons text-xs">check</span><span>Принято</span>'; badge.classList.remove('hidden'); }
                 else if (state.status === 'completed') { badge.className = 'flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded border border-emerald-500/30'; badge.innerHTML = '<span class="material-icons text-xs">verified</span><span>Выполнено</span>'; badge.classList.remove('hidden'); }
                 else if (state.status === 'rejected') { badge.className = 'flex items-center gap-1 text-[11px] font-bold text-rose-400 bg-rose-500/15 px-2 py-0.5 rounded border border-rose-500/30'; badge.innerHTML = '<span class="material-icons text-xs">cancel</span><span>Отклонено</span>'; badge.classList.remove('hidden'); }
-                else { badge.className = 'hidden'; }
             });
             renderReferralUI();
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            updateAlfaLiveTimers();
             syncWithBackend();
             setInterval(syncWithBackend, 4000);
         });
