@@ -31,7 +31,6 @@
             animation: popIn 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
         @keyframes popIn {
-            from { opacity: 1; transform: translateY(0); }
             from { opacity: 0; transform: translateY(14px) scale(0.97); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
@@ -64,8 +63,7 @@
             </div>
         </div>
 
-        <!-- Клик по бейджу открывает админку с проверкой ПИН-кода при необходимости -->
-        <div onclick="handleHeaderAdminTrigger()" class="cursor-pointer flex items-center gap-1.5 bg-slate-900/90 hover:bg-slate-850 border border-slate-800 px-3 py-1.5 rounded-xl shadow-inner transition active:scale-95">
+        <div class="flex items-center gap-1.5 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-xl shadow-inner">
             <span class="material-icons text-emerald-400 text-sm">storefront</span>
             <span class="text-xs sm:text-sm font-black tracking-wider text-emerald-400">CS:GO MARKET</span>
         </div>
@@ -83,7 +81,7 @@
                         <h2 class="text-sm sm:text-base font-black uppercase tracking-wide text-white">Каталог товаров и услуг</h2>
                     </div>
                     <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
-                        Здесь представлен полный ассортимент товаров и услуг по разделам: Steam, CS2, Tanks Blitz, ИИ и Clash Royale.
+                        Здесь представлен полный ассортимент моих товаров и услуг по разделам: Steam, CS2, Tanks blitz, ИИ и Clash royale. Выбирайте нужную позицию.
                     </p>
                 </div>
                 <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
@@ -127,7 +125,7 @@
                             <span class="text-[11px] font-bold text-sky-400 bg-sky-500/15 px-2.5 py-0.5 rounded-lg border border-sky-500/30">Gift подарком</span>
                         </div>
                         <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-sky-300 transition">Покупка игр Steam</h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Любая игра без входа в акк по ценам ниже Авито</p>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Любая игра без входа в акк по ценам ниже авито</p>
                     </div>
                     <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
                         <span class="text-xs sm:text-sm font-extrabold text-sky-400">Низкие цены</span>
@@ -148,7 +146,7 @@
                         <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Покупка скинов из наличия с гарантией (без реверса)</p>
                     </div>
                     <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
-                        <span class="text-xs sm:text-sm font-extrabold text-amber-400">Гарантия</span>
+                        <span class="text-xs sm:text-sm font-extrabold text-amber-400">Гарантия получения</span>
                         <span class="text-xs font-bold bg-amber-500/15 group-hover:bg-amber-500 text-amber-300 group-hover:text-slate-950 px-3 py-1.5 rounded-xl border border-amber-500/40 transition">Выбрать</span>
                     </div>
                 </div>
@@ -160,10 +158,10 @@
                             <div class="w-11 h-11 rounded-xl bg-orange-500/15 border border-orange-500/30 text-orange-400 flex items-center justify-center">
                                 <span class="material-icons text-2xl">shopping_cart</span>
                             </div>
-                            <span class="text-[11px] font-bold text-orange-400 bg-orange-500/15 px-2.5 py-0.5 rounded-lg border border-orange-500/30">Выгодно</span>
+                            <span class="text-[11px] font-bold text-orange-400 bg-orange-500/15 px-2.5 py-0.5 rounded-lg border border-orange-500/30">Дешевле Стима</span>
                         </div>
                         <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-orange-300 transition">Заказ скинов CS2</h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Любые скины с ТП с отправкой после трейд-лока</p>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Любые скины с тп с отправкой после трейд-лока</p>
                     </div>
                     <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
                         <span class="text-xs sm:text-sm font-extrabold text-orange-400">Выгоднее ТП</span>
@@ -199,7 +197,7 @@
                             <span class="text-[11px] font-bold text-cyan-400 bg-cyan-500/15 px-2.5 py-0.5 rounded-lg border border-cyan-500/30">Trade</span>
                         </div>
                         <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-cyan-300 transition">Обмен скинов CS2</h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Обмен ваших предметов на скины из наличия</p>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Обмен ваших любых скинов/кейсов на скины из наличия</p>
                     </div>
                     <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
                         <span class="text-xs sm:text-sm font-extrabold text-cyan-400">Трейд оффер</span>
@@ -217,10 +215,10 @@
                             <span class="text-[11px] font-bold text-yellow-400 bg-yellow-500/15 px-2.5 py-0.5 rounded-lg border border-yellow-500/30">0% наценки</span>
                         </div>
                         <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-yellow-300 transition">Донат Tanks Blitz</h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Повторная покупка лимитных наборов из магазина</p>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Повторная покупка лимитных игровых наборов из магазина</p>
                     </div>
                     <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
-                        <span class="text-xs sm:text-sm font-extrabold text-yellow-400">Как в игре</span>
+                        <span class="text-xs sm:text-sm font-extrabold text-yellow-400">Цены как в игре</span>
                         <span class="text-xs font-bold bg-yellow-500/15 group-hover:bg-yellow-500 text-yellow-300 group-hover:text-slate-950 px-3 py-1.5 rounded-xl border border-yellow-500/40 transition">Купить</span>
                     </div>
                 </div>
@@ -235,25 +233,61 @@
                             <span class="text-[11px] font-bold text-lime-400 bg-lime-500/15 px-2.5 py-0.5 rounded-lg border border-lime-500/30">3 пакета</span>
                         </div>
                         <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-lime-300 transition">Взвод Tanks Blitz</h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Скиловый тиммейт для совместной игры и побед</p>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Скиловый тиммейт для совместной игры и помощи</p>
                     </div>
                     <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
-                        <span class="text-xs sm:text-sm font-extrabold text-lime-400">От 10 ₽ / бой</span>
-                        <span class="text-xs font-bold bg-lime-500/15 group-hover:bg-lime-500 text-lime-300 group-hover:text-slate-950 px-3 py-1.5 rounded-xl border border-lime-500/40 transition">Выбрать</span>
+                        <span class="text-xs sm:text-sm font-extrabold text-lime-400">От 10 ₽ за бой</span>
+                        <span class="text-xs font-bold bg-lime-500/15 group-hover:bg-lime-500 text-lime-300 group-hover:text-slate-950 px-3 py-1.5 rounded-xl border border-lime-500/40 transition">Выбрать пакет</span>
                     </div>
                 </div>
 
-                <!-- 9. Подписка GPT Plus -->
+                <!-- 9. Отметки Tanks Blitz -->
+                <div onclick="openServiceModal('tanks_marks')" data-category="tanks" class="service-card cursor-pointer bg-slate-900/80 hover:bg-slate-900 border border-teal-500/30 hover:border-teal-500/60 rounded-2xl p-4 sm:p-5 transition-all shadow-md flex flex-col justify-between gap-3 group">
+                    <div class="space-y-2">
+                        <div class="flex items-start justify-between">
+                            <div class="w-11 h-11 rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-400 flex items-center justify-center">
+                                <span class="material-icons text-2xl">military_tech</span>
+                            </div>
+                            <span class="text-[11px] font-bold text-teal-400 bg-teal-500/15 px-2.5 py-0.5 rounded-lg border border-teal-500/30">Отметки мастерства</span>
+                        </div>
+                        <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-teal-300 transition">Отметки Tanks Blitz</h3>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Взятие первой отметки на любом вашем танке</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
+                        <span class="text-xs sm:text-sm font-extrabold text-teal-400">1000 руб / 1 танк</span>
+                        <span class="text-xs font-bold bg-teal-500/15 group-hover:bg-teal-500 text-teal-300 group-hover:text-slate-950 px-3 py-1.5 rounded-xl border border-teal-500/40 transition">Заказать</span>
+                    </div>
+                </div>
+
+                <!-- 10. Обучение Tanks Blitz -->
+                <div onclick="openServiceModal('tanks_training')" data-category="tanks" class="service-card cursor-pointer bg-slate-900/80 hover:bg-slate-900 border border-emerald-500/30 hover:border-emerald-500/60 rounded-2xl p-4 sm:p-5 transition-all shadow-md flex flex-col justify-between gap-3 group">
+                    <div class="space-y-2">
+                        <div class="flex items-start justify-between">
+                            <div class="w-11 h-11 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center">
+                                <span class="material-icons text-2xl">school</span>
+                            </div>
+                            <span class="text-[11px] font-bold text-emerald-400 bg-emerald-500/15 px-2.5 py-0.5 rounded-lg border border-emerald-500/30">Индивидуально</span>
+                        </div>
+                        <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-emerald-300 transition">Обучение Tanks Blitz</h3>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Помощь, советы, разборы от опытного игрока</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
+                        <span class="text-xs sm:text-sm font-extrabold text-emerald-400">Тренировки</span>
+                        <span class="text-xs font-bold bg-emerald-500/15 group-hover:bg-emerald-500 text-emerald-300 group-hover:text-slate-950 px-3 py-1.5 rounded-xl border border-emerald-500/40 transition">Заказать</span>
+                    </div>
+                </div>
+
+                <!-- 11. Подписка GPT Plus -->
                 <div onclick="openServiceModal('ai_gpt')" data-category="ai" class="service-card cursor-pointer bg-slate-900/80 hover:bg-slate-900 border border-green-500/30 hover:border-green-500/60 rounded-2xl p-4 sm:p-5 transition-all shadow-md flex flex-col justify-between gap-3 group">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
                             <div class="w-11 h-11 rounded-xl bg-green-500/15 border border-green-500/30 text-green-400 flex items-center justify-center">
                                 <span class="material-icons text-2xl">smart_toy</span>
                             </div>
-                            <span class="text-[11px] font-bold text-green-400 bg-green-500/15 px-2.5 py-0.5 rounded-lg border border-green-500/30">30 дней</span>
+                            <span class="text-[11px] font-bold text-green-400 bg-green-500/15 px-2.5 py-0.5 rounded-lg border border-green-500/30">Новый акк</span>
                         </div>
                         <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-green-300 transition">Подписка GPT Plus</h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Готовый личный аккаунт на 30 дней с гарантией</p>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Готовый личный аккаунт на 30дней с гарантией</p>
                     </div>
                     <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
                         <span class="text-xs sm:text-sm font-extrabold text-green-400">1000 ₽</span>
@@ -261,21 +295,39 @@
                     </div>
                 </div>
 
-                <!-- 10. Подписка Gemini PRO -->
+                <!-- 12. Подписка Gemini PRO -->
                 <div onclick="openServiceModal('ai_gemini')" data-category="ai" class="service-card cursor-pointer bg-slate-900/80 hover:bg-slate-900 border border-blue-500/30 hover:border-blue-500/60 rounded-2xl p-4 sm:p-5 transition-all shadow-md flex flex-col justify-between gap-3 group">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
                             <div class="w-11 h-11 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-400 flex items-center justify-center">
                                 <span class="material-icons text-2xl">auto_awesome</span>
                             </div>
-                            <span class="text-[11px] font-bold text-blue-400 bg-blue-500/15 px-2.5 py-0.5 rounded-lg border border-blue-500/30">12 мес</span>
+                            <span class="text-[11px] font-bold text-blue-400 bg-blue-500/15 px-2.5 py-0.5 rounded-lg border border-blue-500/30">Активация</span>
                         </div>
                         <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-blue-300 transition">Подписка Gemini PRO</h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Официальное подключение на ваш Google аккаунт</p>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Официальное начисление на ваш существующий акк Google на 12 мес</p>
                     </div>
                     <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
                         <span class="text-xs sm:text-sm font-extrabold text-blue-400">290 ₽</span>
                         <span class="text-xs font-bold bg-blue-500/15 group-hover:bg-blue-500 text-blue-300 group-hover:text-slate-950 px-3 py-1.5 rounded-xl border border-blue-500/40 transition">Купить</span>
+                    </div>
+                </div>
+
+                <!-- 13. Буст Clash Royale -->
+                <div onclick="openServiceModal('clash_boost')" data-category="clash" class="service-card cursor-pointer bg-slate-900/80 hover:bg-slate-900 border border-purple-500/30 hover:border-purple-500/60 rounded-2xl p-4 sm:p-5 transition-all shadow-md flex flex-col justify-between gap-3 group">
+                    <div class="space-y-2">
+                        <div class="flex items-start justify-between">
+                            <div class="w-11 h-11 rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-400 flex items-center justify-center">
+                                <span class="material-icons text-2xl">emoji_events</span>
+                            </div>
+                            <span class="text-[11px] font-bold text-purple-400 bg-purple-500/15 px-2.5 py-0.5 rounded-lg border border-purple-500/30">Буст арен</span>
+                        </div>
+                        <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-purple-300 transition">Буст Clash Royale</h3>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Быстрое поднятие кубков и новых арен на вашем акке</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
+                        <span class="text-xs sm:text-sm font-extrabold text-purple-400">1 ₽ – 1 кубок</span>
+                        <span class="text-xs font-bold bg-purple-500/15 group-hover:bg-purple-500 text-purple-300 group-hover:text-slate-950 px-3 py-1.5 rounded-xl border border-purple-500/40 transition">Заказать</span>
                     </div>
                 </div>
             </div>
@@ -292,13 +344,14 @@
                         </h2>
                     </div>
                     <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Выполняйте простые условия, подтверждайте выполнение и забирайте реальные скины прямо в Steam!
+                        Выполняйте простые условия проверенных сервисов, подтверждайте выполнение и получайте реальные скины в Steam прямо на ваш аккаунт!
                     </p>
                 </div>
             </div>
 
+            <!-- Карточки заданий -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-                <!-- Карточки заданий -->
+                <!-- 1. Альфа-карта Дебетовая -->
                 <div onclick="openTaskModal('alfa_card')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-rose-500/30 hover:border-rose-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -316,6 +369,7 @@
                     </div>
                 </div>
 
+                <!-- 2. Альфа-кредитка -->
                 <div onclick="openTaskModal('alfa_credit')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-orange-500/30 hover:border-orange-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -325,7 +379,7 @@
                             <div id="badge-status-alfa_credit" class="hidden"></div>
                         </div>
                         <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-orange-300 transition">Альфа-кредитка</h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Оформление + 1 покупка (любая сумма)</p>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Оформление (пластик) + 1 покупка (любая сумма)</p>
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-slate-800/80">
                         <span class="text-xs sm:text-sm font-black text-orange-400">до 1 000 ₽ скин</span>
@@ -333,6 +387,7 @@
                     </div>
                 </div>
 
+                <!-- 3. Яндекс карта -->
                 <div onclick="openTaskModal('yandex_pay')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-amber-500/30 hover:border-amber-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -342,14 +397,15 @@
                             <div id="badge-status-yandex_pay" class="hidden"></div>
                         </div>
                         <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-amber-300 transition">Яндекс карта</h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Оформление + 1 покупка вне Яндекса</p>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Оформление (виртуальная) + 1 покупка (любая сумма + вне яндекс)</p>
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-slate-800/80">
                         <span class="text-xs sm:text-sm font-black text-amber-400">до 300 ₽ скин</span>
-                        <span class="text-xs text-amber-300/80 font-medium">Кэшбэк 5%</span>
+                        <span class="text-xs text-amber-300/80 font-medium">Кэшбэк 5% Плюса</span>
                     </div>
                 </div>
 
+                <!-- 4. Озон карта -->
                 <div onclick="openTaskModal('ozon_card')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-blue-500/30 hover:border-blue-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -359,14 +415,15 @@
                             <div id="badge-status-ozon_card" class="hidden"></div>
                         </div>
                         <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-blue-300 transition">Озон карта</h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Оформление + 5 покупок вне Ozon</p>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Оформление (пластик) + 5 покупок (любая сумма + вне озон)</p>
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-slate-800/80">
                         <span class="text-xs sm:text-sm font-black text-blue-400">до 300 ₽ скин</span>
-                        <span class="text-xs text-blue-300/80 font-medium">Скидки</span>
+                        <span class="text-xs text-blue-300/80 font-medium">Товары за 1 рубль</span>
                     </div>
                 </div>
 
+                <!-- 5. Бот SkinFights -->
                 <div onclick="openTaskModal('skinfights')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-emerald-500/30 hover:border-emerald-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -384,6 +441,7 @@
                     </div>
                 </div>
 
+                <!-- 6. Приложение SkinApe -->
                 <div onclick="openTaskModal('skinape')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-cyan-500/30 hover:border-cyan-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -401,6 +459,7 @@
                     </div>
                 </div>
 
+                <!-- 7. Подписка VPN -->
                 <div onclick="openTaskModal('vpn')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-indigo-500/30 hover:border-indigo-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -414,10 +473,11 @@
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-slate-800/80">
                         <span class="text-xs sm:text-sm font-black text-indigo-400">до 40 ₽ скин</span>
-                        <span class="text-xs text-indigo-300/80 font-medium">+5 дней бонуса</span>
+                        <span class="text-xs text-indigo-300/80 font-medium">+5 дней и 1 ГБ</span>
                     </div>
                 </div>
 
+                <!-- 8. Идея для нового задания -->
                 <div onclick="openTaskModal('idea')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-purple-500/30 hover:border-purple-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -427,7 +487,7 @@
                             <div id="badge-status-idea" class="hidden"></div>
                         </div>
                         <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-purple-300 transition">Идея для задания</h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Предложите новое задание для маркет-бота</p>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Придумать новое задание для маркет-бота</p>
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-slate-800/80">
                         <span class="text-xs sm:text-sm font-black text-purple-400">10 - 500 ₽ скин</span>
@@ -436,7 +496,7 @@
                 </div>
             </div>
 
-            <!-- Реферальная программа -->
+            <!-- Блок реферальной программы -->
             <div id="referral-program-container" class="mt-8 pt-4 border-t border-slate-800/80 space-y-4">
                 <div id="ref-locked-box" class="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl space-y-3 relative overflow-hidden">
                     <div class="flex items-center justify-between">
@@ -444,11 +504,15 @@
                             <span class="material-icons text-amber-400 text-xl">lock</span>
                             <h3 class="text-sm sm:text-base font-bold text-white">Реферальная программа: 10% от наград друзей</h3>
                         </div>
-                        <span class="text-[11px] font-bold text-amber-400 bg-amber-500/15 px-2.5 py-0.5 rounded-lg border border-amber-500/30">Заблокировано</span>
+                        <span class="text-[11px] font-bold text-amber-400 bg-amber-500/15 px-2.5 py-0.5 rounded-lg border border-amber-500/30">Доступ пока заблокирован</span>
                     </div>
                     <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Чтобы открыть доступ к реферальной программе, сначала выполните хотя бы <b>одно любое задание</b> и получите подтверждение от админа!
+                        Чтобы открыть доступ к реферальной программе и получать 10% от наград каждого приглашённого друга, сначала выполните хотя бы <b>одно любое задание самостоятельно</b> и подтвердите получение скина!
                     </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono pt-1">
+                        <span>Прогресс:</span>
+                        <span class="text-amber-400 font-bold">0 / 1 задание</span>
+                    </div>
                 </div>
 
                 <div id="ref-active-box" class="hidden bg-slate-900/90 border border-emerald-500/40 p-5 rounded-2xl space-y-4 shadow-xl">
@@ -457,38 +521,47 @@
                             <span class="material-icons text-emerald-400 text-2xl">people_alt</span>
                             <div>
                                 <h3 class="text-sm sm:text-base font-black text-white">Реферальная программа</h3>
-                                <p class="text-[11px] text-slate-400">Получайте 10% от наград приглашённых друзей</p>
+                                <p class="text-[11px] text-slate-400">Получайте 10% скинами от всех наград приглашённых друзей</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-xl border border-slate-800">
-                            <span class="text-xs text-slate-400">Реф. баланс:</span>
+                            <span class="text-xs text-slate-400">Ваш реф. баланс:</span>
                             <span id="ref-user-balance" class="text-sm font-black text-emerald-400 font-mono">0 ₽</span>
                         </div>
                     </div>
 
+                    <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800/90 text-xs text-slate-300 space-y-1.5 leading-relaxed">
+                        <p class="font-bold text-slate-200 flex items-center gap-1.5">
+                            <span class="material-icons text-sm text-blue-400">info</span> Правила программы:
+                        </p>
+                        <p>• Друг получает свою стандартную полную награду за задание, а вы — <b>10% от суммы его награды</b> на ваш баланс (например, за карту 300 ₽ вы получаете 30 ₽).</p>
+                        <p>• Бонус начисляется только за задания с наградой <b>от 25 ₽</b> (минимальный бонус — <b>2.5 ₽ скином</b>). Мелкие задания до 25 ₽ (SkinApe, SkinFights) в программе не учитываются.</p>
+                        <p>• Награды суммируются со всех друзей и выполненных ими заданий. Вы можете копить баланс или выводить скинами в любой момент!</p>
+                    </div>
+
                     <div class="space-y-2">
-                        <label class="text-xs font-bold text-slate-200 block">Telegram @username приглашённого друга:</label>
+                        <label class="text-xs font-bold text-slate-200 block">Укажите Telegram @username друга, которого вы пригласили:</label>
                         <div class="flex gap-2">
                             <input id="ref-friend-input" type="text" placeholder="@username_druga" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-200 outline-none focus:border-emerald-500 transition font-mono">
                             <button onclick="addReferralFriend()" class="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs transition flex items-center gap-1 shrink-0 shadow">
                                 <span class="material-icons text-sm">person_add</span>
-                                <span>Добавить</span>
+                                <span>Добавить друга</span>
                             </button>
                         </div>
                     </div>
 
                     <div class="space-y-2 pt-2 border-t border-slate-800">
                         <div class="flex items-center justify-between text-xs">
-                            <span class="font-bold text-slate-300">Приглашённые друзья:</span>
-                            <span id="ref-friends-count" class="text-slate-500 font-mono">0</span>
+                            <span class="font-bold text-slate-300">Ваши приглашённые друзья:</span>
+                            <span id="ref-friends-count" class="text-slate-500 font-mono">0 друзей</span>
                         </div>
                         <div id="ref-friends-list" class="space-y-2 max-h-48 overflow-y-auto pr-1"></div>
                     </div>
 
                     <div class="pt-1">
-                        <button id="ref-withdraw-btn" onclick="withdrawReferralBonus()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 text-slate-950 font-black py-3 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition">
+                        <button id="ref-withdraw-btn" onclick="withdrawReferralBonus()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black py-3 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition">
                             <span class="material-icons text-base">card_giftcard</span>
-                            <span>Вывести бонус</span>
+                            <span>Вывести реферальный бонус</span>
                         </button>
                     </div>
                 </div>
@@ -502,7 +575,7 @@
                     <span class="material-icons text-emerald-400">support_agent</span> Связь с администратором
                 </h3>
                 <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    Если у вас есть вопросы по услугам или получению скинов:
+                    Если у вас есть вопросы по услугам, заданиям или получению скинов — напишите администратору напрямую через удобный канал:
                 </p>
 
                 <div class="space-y-2.5 pt-1">
@@ -522,12 +595,18 @@
                             <span class="material-icons text-purple-400 text-2xl">shopping_bag</span>
                             <div>
                                 <div class="text-xs sm:text-sm font-bold text-slate-200 group-hover:text-white">Профиль на Авито</div>
-                                <div class="text-xs text-slate-400">Отзывы и гарантии</div>
+                                <div class="text-xs text-slate-400">Сообщения и отзывы магазина</div>
                             </div>
                         </div>
                         <span class="material-icons text-slate-500 group-hover:text-purple-400 transition">open_in_new</span>
                     </a>
                 </div>
+            </div>
+
+            <div class="bg-slate-900/60 border border-slate-800/80 p-4 rounded-2xl space-y-2 text-xs text-slate-400 leading-relaxed">
+                <p class="font-bold text-slate-300">🛡️ Гарантии и безопасность:</p>
+                <p>• Все операции со скинами и балансами проводятся строго через официальные механизмы Steam и банковские сервисы.</p>
+                <p>• Награды за задания передаются после завершения проверки и подтверждения условий.</p>
             </div>
         </div>
 
@@ -537,62 +616,60 @@
                 <div class="space-y-1 relative z-10">
                     <div class="flex items-center gap-2">
                         <span class="material-icons text-amber-400 text-2xl">shield</span>
-                        <h2 class="text-sm sm:text-base font-black uppercase tracking-wider text-white">Панель Управления</h2>
+                        <h2 class="text-sm sm:text-base font-black uppercase tracking-wider text-white">Панель Управления Магазином</h2>
                     </div>
                     <p class="text-xs sm:text-sm text-slate-300">
-                        Модерация заявок, выдача ссылок, контроль заказов и лайв-лента.
+                        Центр управления: модерация заданий, выдача ссылок, контроль заказов и лайв-лента активности.
                     </p>
                 </div>
                 <div class="flex items-center gap-2 bg-slate-950/80 px-3 py-1.5 rounded-xl border border-slate-800 shrink-0">
+                    <span class="text-xs text-slate-400 font-medium">Статус:</span>
                     <span class="text-xs font-bold text-emerald-400 flex items-center gap-1">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Онлайн
                     </span>
                 </div>
             </div>
 
-            <!-- KPI карточки -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
-                <div onclick="switchAdminSection('reviews')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-800 border border-slate-800 p-3.5 rounded-2xl space-y-1 transition">
+                <div onclick="switchAdminSection('reviews')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-850 border border-slate-800 p-3.5 rounded-2xl space-y-1 transition">
                     <span class="text-[11px] text-slate-400 font-medium block">На проверке:</span>
                     <span id="admin-stat-pending" class="text-lg sm:text-xl font-black text-amber-400 font-mono">0</span>
                 </div>
-                <div onclick="switchAdminSection('data_requests')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-800 border border-slate-800 p-3.5 rounded-2xl space-y-1 transition">
+                <div onclick="switchAdminSection('data_requests')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-850 border border-slate-800 p-3.5 rounded-2xl space-y-1 transition">
                     <span class="text-[11px] text-slate-400 font-medium block">Выдача ссылок:</span>
                     <span id="admin-stat-requests" class="text-lg sm:text-xl font-black text-blue-400 font-mono">0</span>
                 </div>
-                <div onclick="switchAdminSection('active_tasks')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-800 border border-slate-800 p-3.5 rounded-2xl space-y-1 transition">
-                    <span class="text-[11px] text-slate-400 font-medium block">Ждут скин:</span>
+                <div onclick="switchAdminSection('active_tasks')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-850 border border-slate-800 p-3.5 rounded-2xl space-y-1 transition">
+                    <span class="text-[11px] text-slate-400 font-medium block">В процессе:</span>
                     <span id="admin-stat-active" class="text-lg sm:text-xl font-black text-indigo-400 font-mono">0</span>
                 </div>
-                <div onclick="switchAdminSection('market_orders')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-800 border border-slate-800 p-3.5 rounded-2xl space-y-1 transition">
+                <div onclick="switchAdminSection('market_orders')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-850 border border-slate-800 p-3.5 rounded-2xl space-y-1 transition">
                     <span class="text-[11px] text-slate-400 font-medium block">Заказы маркета:</span>
                     <span id="admin-stat-orders" class="text-lg sm:text-xl font-black text-emerald-400 font-mono">0</span>
                 </div>
             </div>
 
-            <!-- 1. ЛАЙВ-ЛЕНТА АКТИВНОСТИ -->
+            <!-- Лайв-лента действий -->
             <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl space-y-3 shadow-md">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xs sm:text-sm font-black text-slate-200 uppercase tracking-wider flex items-center gap-2">
                         <span class="material-icons text-cyan-400 text-lg">stream</span>
-                        <span>Лайв-лента активности</span>
+                        <span>Лайв-лента активности (24 часа)</span>
                     </h3>
-                    <button onclick="clearActivityLog()" class="text-[11px] text-slate-400 hover:text-rose-400 transition bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">Очистить</button>
+                    <button onclick="clearActivityLog()" class="text-[11px] text-slate-500 hover:text-slate-300 transition">Очистить</button>
                 </div>
-                <div id="admin-live-feed" class="h-44 overflow-y-auto space-y-2 pr-1 text-xs">
-                    <!-- Заполняется из JS -->
-                </div>
+                <div id="admin-live-feed" class="h-44 overflow-y-auto space-y-2 pr-1 text-xs"></div>
             </div>
 
-            <!-- Табы админки -->
+            <!-- Переключатель подразделов -->
             <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-bold scrollbar-none">
                 <button onclick="switchAdminSection('reviews')" id="admin-tab-reviews" class="px-3.5 py-2 rounded-xl bg-amber-500 text-slate-950 font-black shrink-0 transition">🔍 На проверку</button>
-                <button onclick="switchAdminSection('data_requests')" id="admin-tab-data_requests" class="px-3.5 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white border border-slate-800 shrink-0 transition">⏳ Выдача ссылок</button>
-                <button onclick="switchAdminSection('active_tasks')" id="admin-tab-active_tasks" class="px-3.5 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white border border-slate-800 shrink-0 transition">🚀 Ждут выдачи</button>
+                <button onclick="switchAdminSection('data_requests')" id="admin-tab-data_requests" class="px-3.5 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white border border-slate-800 shrink-0 transition">⏳ Выдача данных</button>
+                <button onclick="switchAdminSection('active_tasks')" id="admin-tab-active_tasks" class="px-3.5 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white border border-slate-800 shrink-0 transition">🚀 В процессе</button>
                 <button onclick="switchAdminSection('market_orders')" id="admin-tab-market_orders" class="px-3.5 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white border border-slate-800 shrink-0 transition">🛒 Заказы Маркета</button>
             </div>
 
-            <!-- Подраздел: На проверку -->
+            <!-- Подраздел А: Задания на проверку -->
             <div id="admin-sec-reviews" class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl space-y-3">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xs sm:text-sm font-black text-slate-200 uppercase tracking-wider flex items-center gap-2">
@@ -604,14 +681,14 @@
                 <div id="admin-reviews-list" class="space-y-3"></div>
             </div>
 
-            <!-- Подраздел: Выдача ссылок -->
+            <!-- Подраздел Б: Выдача ссылок -->
             <div id="admin-sec-data_requests" class="hidden bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl space-y-4">
                 <h3 class="text-xs sm:text-sm font-black text-slate-200 uppercase tracking-wider flex items-center gap-2">
                     <span class="material-icons text-blue-400 text-lg">link</span>
-                    <span>Управление ссылками клиентов</span>
+                    <span>Управление выдачей ссылок клиентам</span>
                 </h3>
 
-                <!-- Ozon -->
+                <!-- Ozon карта -->
                 <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800/90 space-y-2.5">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
@@ -621,30 +698,36 @@
                             Не активна
                         </span>
                     </div>
+                    <p class="text-[11px] text-slate-400 leading-tight">
+                        Вставьте свежую ссылку из Ozon Банка. Она станет доступна клиенту со стартом таймера на 72 часа:
+                    </p>
                     <div class="flex flex-col sm:flex-row gap-2">
                         <input id="admin-ozon-input" type="text" placeholder="https://finance.ozon.ru/promo/..." value="https://finance.ozon.ru/promo/card" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-blue-500 transition">
                         <button onclick="adminIssueOzonLinkFromDashboard()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow flex items-center justify-center gap-1.5 shrink-0">
                             <span class="material-icons text-sm">send</span>
-                            <span>Выдать клиентам (72ч)</span>
+                            <span>Выдать ссылку клиентам</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Альфа-Карта -->
+                <!-- Альфа-Банк -->
                 <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800/90 space-y-2.5">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold text-rose-400 flex items-center gap-1.5">
                             <span class="material-icons text-sm">credit_card</span> Альфа-Карта (Дебетовая, 29 дней)
                         </span>
                         <span id="admin-alfa-badge" class="text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded">
-                            29 дн.
+                            29 дн. осталось
                         </span>
                     </div>
+                    <p class="text-[11px] text-slate-400 leading-tight">
+                        Вставьте новую реферальную ссылку для дебетовой карты при обновлении:
+                    </p>
                     <div class="flex flex-col sm:flex-row gap-2">
-                        <input id="admin-alfa-input" type="text" value="https://alfa.me/ZKsCZ2" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-rose-500 transition font-mono">
-                        <button onclick="adminResetAlfaTimerFromDashboard()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3.5 py-2 rounded-xl border border-slate-700 transition flex items-center justify-center gap-1 shrink-0">
+                        <input id="admin-alfa-input" type="text" placeholder="https://alfa.me/..." value="https://alfa.me/ZKsCZ2" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-rose-500 transition font-mono">
+                        <button onclick="adminResetAlfaTimerFromDashboard()" class="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3.5 py-2 rounded-xl border border-slate-700 transition flex items-center justify-center gap-1 shrink-0">
                             <span class="material-icons text-sm">save</span>
-                            <span>Сбросить 29дн</span>
+                            <span>Сохранить и сбросить таймер</span>
                         </button>
                     </div>
                 </div>
@@ -653,37 +736,40 @@
                 <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800/90 space-y-2.5">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold text-orange-400 flex items-center gap-1.5">
-                            <span class="material-icons text-sm">credit_score</span> Альфа-Кредитка (29 дней)
+                            <span class="material-icons text-sm">credit_score</span> Альфа-Кредитка (Кредитная, 29 дней)
                         </span>
                         <span id="admin-alfa-credit-badge" class="text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded">
-                            29 дн.
+                            29 дн. осталось
                         </span>
                     </div>
+                    <p class="text-[11px] text-slate-400 leading-tight">
+                        Вставьте новую реферальную ссылку для кредитной карты при обновлении:
+                    </p>
                     <div class="flex flex-col sm:flex-row gap-2">
-                        <input id="admin-alfa-credit-input" type="text" value="https://alfa.me/PDVEGs" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-orange-500 transition font-mono">
-                        <button onclick="adminResetAlfaCreditTimerFromDashboard()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3.5 py-2 rounded-xl border border-slate-700 transition flex items-center justify-center gap-1 shrink-0">
+                        <input id="admin-alfa-credit-input" type="text" placeholder="https://alfa.me/..." value="https://alfa.me/PDVEGs" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-orange-500 transition font-mono">
+                        <button onclick="adminResetAlfaCreditTimerFromDashboard()" class="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3.5 py-2 rounded-xl border border-slate-700 transition flex items-center justify-center gap-1 shrink-0">
                             <span class="material-icons text-sm">save</span>
-                            <span>Сбросить 29дн</span>
+                            <span>Сохранить и сбросить таймер</span>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Подраздел: Ждут выдачи -->
+            <!-- Подраздел В: Активные задания -->
             <div id="admin-sec-active_tasks" class="hidden bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl space-y-3">
                 <h3 class="text-xs sm:text-sm font-black text-slate-200 uppercase tracking-wider flex items-center gap-2">
                     <span class="material-icons text-indigo-400 text-lg">hourglass_top</span>
-                    <span>Клиенты, ожидающие получение скина</span>
+                    <span>Клиенты, начавшие выполнение заданий</span>
                 </h3>
                 <div id="admin-active-tasks-list" class="space-y-2.5"></div>
             </div>
 
-            <!-- Подраздел: Заказы Маркета -->
+            <!-- Подраздел Г: Заказы Маркета -->
             <div id="admin-sec-market_orders" class="hidden bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl space-y-3">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xs sm:text-sm font-black text-slate-200 uppercase tracking-wider flex items-center gap-2">
                         <span class="material-icons text-emerald-400 text-lg">receipt_long</span>
-                        <span>Входящие заказы</span>
+                        <span>Входящие заказы товаров и услуг</span>
                     </h3>
                     <span id="admin-orders-counter" class="text-[11px] text-slate-400 font-mono">0 заказов</span>
                 </div>
@@ -693,7 +779,7 @@
 
     </main>
 
-    <!-- Нижняя навигация -->
+    <!-- Нижнее меню навигации -->
     <nav class="fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 px-4 py-2.5 flex items-center justify-around shadow-2xl max-w-5xl mx-auto">
         <button onclick="switchTab('market')" id="nav-market" class="flex flex-col items-center gap-1 text-emerald-400 transition">
             <span class="material-icons text-2xl">store</span>
@@ -710,10 +796,11 @@
             <span class="text-[11px] font-bold">Контакты</span>
         </button>
 
+        <!-- Кнопка админки: скрыта по умолчанию, видна ТОЛЬКО для ADMIN_ID -->
         <button onclick="switchTab('admin')" id="nav-admin" class="hidden flex flex-col items-center gap-1 text-amber-500 hover:text-amber-400 transition relative">
             <span class="material-icons text-2xl">admin_panel_settings</span>
             <span class="text-[11px] font-black tracking-wider">Админка</span>
-            <span class="absolute top-0 right-1 w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <span id="admin-nav-indicator" class="absolute top-0 right-1 w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
         </button>
     </nav>
 
@@ -726,11 +813,14 @@
                     <span class="material-icons text-lg">close</span>
                 </button>
             </div>
+
             <div id="service-modal-body" class="text-xs sm:text-sm text-slate-200 whitespace-pre-line leading-relaxed space-y-2 bg-slate-950 p-4 rounded-2xl border border-slate-800/80"></div>
+
             <div class="space-y-2 pt-1">
                 <label class="text-xs font-bold text-slate-300 block">Комментарий к заявке (логин, ссылка или игра):</label>
                 <input id="service-order-comment" type="text" placeholder="Например: расчет цены / ник / код друга..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-200 outline-none focus:border-emerald-500 transition">
             </div>
+
             <div class="pt-1">
                 <button onclick="orderCurrentService()" class="w-full neon-glow-btn text-slate-950 font-black py-3.5 rounded-2xl text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition">
                     <span class="material-icons text-base">send</span>
@@ -740,11 +830,14 @@
         </div>
     </div>
 
-    <!-- Модальное окно задания -->
+    <!-- Модальное окно деталей Задания -->
     <div id="task-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
         <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 space-y-3.5 max-h-[90vh] overflow-y-auto animate-pop shadow-2xl">
             <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                <h3 id="task-modal-title" class="text-base sm:text-lg font-black text-white">Задание</h3>
+                <div class="flex items-center gap-2">
+                    <h3 id="task-modal-title" class="text-base sm:text-lg font-black text-white">Задание</h3>
+                    <div id="task-modal-status-label" class="hidden"></div>
+                </div>
                 <button onclick="closeModal('task-modal')" class="text-slate-400 hover:text-white p-1 rounded-xl bg-slate-800/60">
                     <span class="material-icons text-lg">close</span>
                 </button>
@@ -757,7 +850,7 @@
 
             <div class="space-y-1">
                 <h4 class="text-xs sm:text-sm font-bold text-slate-300 flex items-center gap-1.5">
-                    <span class="material-icons text-sm text-amber-400">fact_check</span> Условия:
+                    <span class="material-icons text-sm text-amber-400">fact_check</span> Условия выполнения:
                 </h4>
                 <div id="task-modal-conditions" class="text-xs sm:text-sm text-slate-200 bg-slate-950 p-3.5 rounded-2xl border border-slate-800 whitespace-pre-line leading-relaxed font-medium"></div>
             </div>
@@ -774,14 +867,13 @@
                 <span id="task-modal-bonus">Бонус</span>
             </div>
 
-            <!-- Интерактивные блоки -->
             <div id="task-interactive-block" class="space-y-3 pt-1">
                 <!-- SkinApe -->
                 <div id="task-skinape-block" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
                     <p class="text-xs text-slate-300 font-semibold">Установите приложение и введите промокод:</p>
                     <a href="https://get.skinape.app/66Q2BQL9" target="_blank" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold p-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-md">
                         <span class="material-icons text-base">download</span>
-                        <span>Скачать SkinApe CS2</span>
+                        <span>Скачать сразу: SkinApe CS2</span>
                     </a>
                     <div class="flex items-center justify-between bg-slate-900 px-3 py-2 rounded-xl border border-slate-800">
                         <span class="text-xs text-slate-400">Промокод: <b class="text-cyan-400 text-sm font-mono tracking-wider">66Q2BQL9</b></span>
@@ -791,38 +883,40 @@
 
                 <!-- SkinFights -->
                 <div id="task-skinfights-block" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
-                    <p class="text-xs text-slate-300 font-semibold">Запустите бота по ссылке и выведите скин:</p>
+                    <p class="text-xs text-slate-300 font-semibold">Запустите бота по ссылке, заберите бонус и выведите любой скин:</p>
                     <a href="https://t.me/skinfights_bot/SkinFights?startapp=eyJpbnZpdGVkX2J5IjoiY2NhZjg1MDQtNmY0Yy00NzA1LTk1NWMtM2I5OTMyNmFmYWIzIiwicHJvbW9fY29kZV9hbGlhcyI6bnVsbCwiY21wIjpudWxsfQ" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-md">
                         <span class="material-icons text-base">smart_toy</span>
-                        <span>Открыть бота SkinFights</span>
+                        <span>Открыть бота: SkinFights CS2</span>
                     </a>
                 </div>
 
                 <!-- VPN -->
                 <div id="task-vpn-block" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
+                    <p class="text-xs text-slate-300 font-semibold">Перейдите в бота VPN и оформите подписку на 1 месяц:</p>
                     <a href="https://t.me/LastdepVPN_bot?start=ref_uRF9IDK2P1" target="_blank" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold p-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-md">
                         <span class="material-icons text-base">vpn_key</span>
                         <span>Открыть бота: Lastdep VPN</span>
                     </a>
                 </div>
 
-                <!-- Банковские карты (Альфа / Яндекс) -->
-                <div id="task-card-link-block" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
+                <!-- Ссылка карты -->
+                <div id="task-card-link-block" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800 animate-pop">
+                    <p class="text-xs text-slate-300 font-semibold">Оформите заявку на официальном сайте:</p>
                     <a id="task-card-link-btn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-md">
                         <span class="material-icons text-base">open_in_new</span>
-                        <span>Перейти к оформлению карты</span>
+                        <span id="task-card-link-btn-text">Перейти к оформлению карты</span>
                     </a>
                 </div>
 
-                <!-- Озон -->
-                <div id="task-ozon-block" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
+                <!-- Ozon блок -->
+                <div id="task-ozon-block" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800 animate-pop">
                     <div id="ozon-waiting-box" class="space-y-2">
                         <p class="text-xs text-amber-300 font-semibold flex items-center gap-1.5">
                             <span class="material-icons text-sm">schedule</span> Запрос персональной ссылки отправлен
                         </p>
                         <button disabled class="w-full bg-slate-900 border border-slate-700 text-slate-400 font-bold p-3 rounded-xl text-xs flex items-center justify-center gap-2 cursor-not-allowed opacity-90 leading-tight text-center">
                             <span class="material-icons text-sm animate-spin-reverse">hourglass_empty</span>
-                            <span>Ожидайте выдачи персональной ссылки администратором</span>
+                            <span>Ожидайте доступа от админа (в течение дня сможете проверить доступность выполнения)</span>
                         </button>
                     </div>
 
@@ -837,13 +931,13 @@
                         </div>
                         <a id="ozon-ready-link-btn" href="#" target="_blank" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-md">
                             <span class="material-icons text-base">open_in_new</span>
-                            <span>Оформить Ozon Карту</span>
+                            <span>Перейти к оформлению Ozon Карты</span>
                         </a>
                     </div>
                 </div>
 
                 <!-- Чеклист -->
-                <div id="task-card-checklist-container" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
+                <div id="task-card-checklist-container" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800 animate-pop">
                     <div class="flex items-center justify-between">
                         <span class="text-xs text-slate-300 font-bold flex items-center gap-1.5">
                             <span class="material-icons text-sm text-emerald-400">checklist</span> Отметьте выполненные этапы:
@@ -854,16 +948,16 @@
                 </div>
 
                 <!-- Идея -->
-                <div id="task-idea-fields" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
-                    <input id="idea-title-input" type="text" placeholder="Суть задания..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-purple-500">
-                    <textarea id="idea-desc-input" rows="3" placeholder="Подробные условия и ссылки..." class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 outline-none focus:border-purple-500"></textarea>
+                <div id="task-idea-fields" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800 animate-pop">
+                    <input id="idea-title-input" type="text" placeholder="Например: оформить карту Т-Банка..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-purple-500 transition">
+                    <textarea id="idea-desc-input" rows="3" placeholder="Опишите условия, как это работает, какая выгода..." class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 outline-none focus:border-purple-500 transition"></textarea>
                 </div>
 
                 <!-- Скриншот -->
                 <div id="task-screenshot-container" class="hidden space-y-2 bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
                     <label id="task-screenshot-dropzone" class="border-2 border-dashed border-slate-700 hover:border-emerald-500/60 rounded-xl p-3 flex flex-col items-center justify-center gap-1.5 cursor-pointer bg-slate-900/60 transition">
                         <span class="material-icons text-slate-400 text-2xl">add_photo_alternate</span>
-                        <span class="text-xs text-slate-400">Прикрепить скриншот подтверждения</span>
+                        <span class="text-xs text-slate-400">Нажмите, чтобы выбрать скриншот</span>
                         <input id="task-file-input" type="file" accept="image/*" class="hidden" onchange="handleScreenshotUpload(event)">
                     </label>
                     <div id="task-screenshot-preview-box" class="hidden relative rounded-xl overflow-hidden border border-slate-700 bg-slate-900 p-1">
@@ -874,14 +968,14 @@
                     </div>
                 </div>
 
-                <!-- Причина отказа -->
+                <!-- Отклонено -->
                 <div id="task-rejected-reason-box" class="hidden bg-rose-950/40 border border-rose-500/40 p-3 rounded-xl space-y-1">
                     <p class="text-xs font-bold text-rose-400">Причина отклонения:</p>
                     <p id="task-rejected-reason-text" class="text-xs text-slate-300"></p>
                 </div>
             </div>
 
-            <!-- Кнопки -->
+            <!-- Кнопки действий -->
             <div class="pt-1 space-y-2">
                 <button id="task-main-action-btn" onclick="handleTaskMainAction()" class="w-full neon-glow-btn text-slate-950 font-black py-3.5 rounded-2xl text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition">
                     <span class="material-icons text-base">rocket_launch</span>
@@ -904,69 +998,67 @@
         <span id="toast-text">Уведомление</span>
     </div>
 
-    <!-- JavaScript -->
+    <!-- Скрипты -->
     <script>
         const tg = window.Telegram ? window.Telegram.WebApp : null;
         if (tg) { tg.expand(); tg.ready(); }
 
-        const ADMIN_ID = '707417409';
         const BACKEND_URL = "https://cs-market-backend.onrender.com";
-
+        const ADMIN_ID = '707417409';
         const user = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : { id: '0', first_name: 'Клиент', username: '' };
-        let isAdminUnlocked = localStorage.getItem('csgo_admin_unlocked') === 'true';
-        let isUserAdmin = String(user.id) === String(ADMIN_ID) || isAdminUnlocked;
+        const isUserAdmin = String(user.id) === String(ADMIN_ID);
+        let isAdminUnlocked = false;
 
         document.getElementById('user-name').innerText = user.first_name || 'Клиент';
         document.getElementById('user-tag').innerText = user.username ? `@${user.username}` : `ID: ${user.id}`;
         document.getElementById('user-avatar').innerText = (user.first_name ? user.first_name[0] : 'U').toUpperCase();
 
+        // Показываем кнопку админки СТРОГО только для ADMIN_ID
         if (isUserAdmin) {
             const adminNavBtn = document.getElementById('nav-admin');
             if (adminNavBtn) adminNavBtn.classList.remove('hidden');
         }
 
         const servicesData = {
-            steam_topup: { title: 'Пополнение Steam', html: `Пополнение кошелька Steam без входа (любой регион).\n\n<b>Оплата:</b> 100% предоплата.\n<b>Минимальная сумма:</b> От 100 руб.` },
-            steam_game: { title: 'Покупка игр Steam', html: `Отправка любой игры подарком (Gift) без входа.\n\n<b>Условия:</b> 100% предоплата.` },
-            cs_buy_stock: { title: 'Покупка скинов CS2', html: `Сначала оплата, затем получение скина трейдом моментально.` },
-            cs_buy_order: { title: 'Заказ скинов CS2', html: `Любые скины дешевле Steam. Передача после трейд-лока (до 8 дней).` },
-            cs_sell: { title: 'Выкуп ваших скинов CS2', html: `Выкупаю скины, кейсы, ширп за 50% - 65% от ТП Steam.` },
-            cs_trade: { title: 'Обмен скинов CS2', html: `Обменивайте свои скины на скины из наличия магазина.` },
-            tanks_donate: { title: 'Донат Tanks Blitz', html: `Пополнение аккаунта Tanks Blitz наборами без наценки.` },
-            tanks_platoon: { title: 'Взвод Tanks Blitz', html: `Совместная игра со скиловым бойцом.\n10 ₽ (формальный) / 20 ₽ (помощь) / 40 ₽ (прикрытие).` },
-            ai_gpt: { title: 'Подписка GPT Plus', html: `Готовый личный аккаунт OpenAI (30 дней). Логин, пароль и почта в комплекте.\nЦена: 1000 ₽.` },
-            ai_gemini: { title: 'Подписка Gemini PRO', html: `Премиум Gemini PRO на ваш Google аккаунт на 12 месяцев.\nЦена: 290 ₽.` }
+            steam_topup: { title: 'Пополнение Steam', html: `Пополнение вашего кошелька Steam без входа в аккаунт (любой регион).\n\n<b>Оплата:</b> Работаем по 100% предоплате.\n<b>Минимальная сумма:</b> От 100 руб.` },
+            steam_game: { title: 'Покупка игр Steam', html: `Отправка любой игры подарком (Gift) на ваш аккаунт без входа.\n\n<b>Условия:</b> 100% предоплата, затем отправка.` },
+            cs_buy_stock: { title: 'Покупка скинов CS2', html: `Сначала оплата, затем получение скина трейдом.\n\n<i>(Уточню статус и цену сразу после заявки).</i>` },
+            cs_buy_order: { title: 'Заказ скинов CS2', html: `Сначала оплата. Передача скина происходит в течение 10 дней (обычно до 8 дней из-за банов трейда).` },
+            cs_sell: { title: 'Выкуп ваших скинов CS2', html: `Выкупаю любые предметы (скины, кейсы, ширп, наклейки, брелки).\n\n<b>Цена выкупа:</b> за 50% - 65% от ТП Steam.` },
+            cs_trade: { title: 'Обмен скинов CS2', html: `Обменивайте любые свои предметы на мои скины.\n\n<b>Условия:</b> обмены в – или = не рассматриваю.` },
+            tanks_donate: { title: 'Донат Tanks Blitz', html: `Пополнение аккаунта Tanks Blitz наборами из официального магазина без наценки.\n\n<b>Условия:</b> 100% предоплата.` },
+            tanks_platoon: { title: 'Взвод Tanks Blitz', html: `<b>Условия:</b> Работаю по 100% предоплате.\n\nПакеты:\n10 руб / бой (формальный)\n20 руб / бой (помощь на фланге)\n40 руб / бой (полное прикрытие, без фрагов)` },
+            tanks_marks: { title: 'Отметки Tanks Blitz', html: `Получение одной (первой) отметки на любом вашем танке.\n<b>Стоимость:</b> 1000 руб за одну отметку.\nПо срокам примерно 10дн.` },
+            tanks_training: { title: 'Обучение Tanks Blitz', html: `Разбор тактики на картах, выбор позиций, разбор ТТХ техники.` },
+            ai_gpt: { title: 'Подписка GPT Plus', html: `Готовый личный аккаунт OpenAI (30 дней). Выдается логин, пароль и почта.\n\n<b>Цена:</b> 1000 руб.` },
+            ai_gemini: { title: 'Подписка Gemini PRO', html: `Начисление премиум-подписки на ваш личный аккаунт Google (12 месяцев).\n\n<b>Цена:</b> 290 руб.` },
+            clash_boost: { title: 'Буст Clash Royale', html: `Профессиональное поднятие кубков/арен.\n\n<b>Расчет стоимости:</b> 1 руб = 1 апнутый кубок.` }
         };
 
         const tasksMeta = {
-            alfa_card: { title: 'Альфа-карта', reward: 'до 750 ₽ скин', conditions: `1) От 14 лет.\n2) Без продуктов Альфа-Банка 90 дней.`, instructions: `Оформить карту, забрать, сделать 1 покупку.`, bonus: 'Кэшбэк до 100%' },
-            alfa_credit: { title: 'Альфа-кредитка', reward: 'до 1 000 ₽ скин', conditions: `1) От 18 лет.\n2) Без кредиток Альфы 90 дней.`, instructions: `Оформить кредитку, совершить 1 покупку.`, bonus: 'Кэшбэк' },
-            yandex_pay: { title: 'Яндекс карта', reward: 'до 300 ₽ скин', conditions: `1) От 14 лет.\n2) Новая реф. ссылка.`, instructions: `Открыть карту, подтвердить Госуслуги, сделать 1 покупку вне Яндекса.`, bonus: 'Кэшбэк 5%' },
-            ozon_card: { title: 'Озон карта', reward: 'до 300 ₽ скин', conditions: `1) От 14 лет.\n2) Без карты Ozon Банка.`, instructions: `Получить ссылку, оформить карту, сделать 5 покупок вне Ozon.`, bonus: 'Скидки' },
-            skinfights: { title: 'Бот SkinFights', reward: 'до 2.5 ₽ приз', conditions: `Первый запуск строго по ссылке.`, instructions: `Запустить бота, забрать бонус, вывести скин, загрузить скриншот.`, bonus: '500 гемов' },
-            skinape: { title: 'Приложение SkinApe', reward: 'до 2.5 ₽ приз', conditions: `Ранее не устанавливали приложение.`, instructions: `Скачать приложение, ввести промокод 66Q2BQL9, загрузить скриншот.`, bonus: '50 монет' },
-            vpn: { title: 'Подписка VPN', reward: 'до 40 ₽ скин', conditions: `Ранее не пользовались ботом.`, instructions: `Оформить подписку на 1 месяц.`, bonus: '+5 дней' },
-            idea: { title: 'Идея для задания', reward: '10 - 500 ₽ скин', conditions: `Легальность и безопасность.`, instructions: `Опишите предложение для задания.`, bonus: 'Приз за идею' }
+            alfa_card: { title: 'Альфа-карта', reward: 'до 750 ₽ скин', conditions: `1) От 14 лет.\n2) Без продуктов Альфа-Банка 90 дней.\n3) Новая реф. ссылка.`, instructions: `Оформить карту, забрать, сделать 1 покупку.`, bonus: 'Кэшбэк до 100%' },
+            alfa_credit: { title: 'Альфа-кредитка', reward: 'до 1 000 ₽ скин', conditions: `1) От 18 лет.\n2) Без кредиток Альфы 90 дней.`, instructions: `Оформить кредитку, забрать, сделать 1 покупку.`, bonus: 'Кэшбэк' },
+            yandex_pay: { title: 'Яндекс карта', reward: 'до 300 ₽ скин', conditions: `1) От 14 лет.\n2) Новая реф. ссылка.`, instructions: `Скачать Пэй, открыть карту, подтвердить Госуслуги, 1 покупка вне Яндекса.`, bonus: 'Кэшбэк 5%' },
+            ozon_card: { title: 'Озон карта', reward: 'до 300 ₽ скин', conditions: `1) От 14 лет.\n2) Без карты Ozon Банка.`, instructions: `Получить ссылку, оформить карту, совершить 5 покупок ВНЕ Ozon.`, bonus: 'Кэшбэк до 25%' },
+            skinfights: { title: 'Бот SkinFights', reward: 'до 2.5 ₽ приз', conditions: `1) Первый запуск строго по ссылке.`, instructions: `Запустить бота, забрать бонус, вывести скин, прикрепить скрин.`, bonus: '500 гемов' },
+            skinape: { title: 'Приложение SkinApe', reward: 'до 2.5 ₽ приз', conditions: `1) Ранее не устанавливали приложение.`, instructions: `Скачать SkinApe, ввести код 66Q2BQL9, прикрепить скрин баланса.`, bonus: '50 монет' },
+            vpn: { title: 'Подписка VPN', reward: 'до 40 ₽ скин', conditions: `1) Ранее не пользовались сервисом.`, instructions: `Оплатить подписку VPN на 1 месяц.`, bonus: '+5 дней и 1 ГБ' },
+            idea: { title: 'Идея для задания', reward: '10 - 500 ₽ скин', conditions: `1) Легальность\n2) Безопасность\n3) Прибыльность`, instructions: `Заполнить поля с вашей идеей.`, bonus: '' }
         };
 
         const cardChecklistConfig = {
-            alfa_card: ['Я оформил карту', 'Я забрал карту', 'Я совершил 1 покупку'],
-            alfa_credit: ['Я оформил карту', 'Я получил карту', 'Я совершил 1 покупку'],
-            yandex_pay: ['Скачал Пэй', 'Открыл карту', 'Подтвердил Госуслуги', 'Сделал покупку вне Яндекса'],
-            ozon_card: ['Оформил карту', 'Получил карту', 'Сделал 5 покупок вне Ozon']
+            alfa_card: ['Я оформил карту', 'Я получил карту', 'Я совершил покупку'],
+            alfa_credit: ['Я оформил карту', 'Я получил карту', 'Я совершил покупку'],
+            yandex_pay: ['Скачал приложение', 'Открыл карту', 'Подтвердил данные', 'Сделал покупку'],
+            ozon_card: ['Оформить карту', 'Получить карту', 'Выполнить 5 покупок вне Ozon']
         };
 
         let isSyncInProgress = false;
         let tasksState = {}; Object.keys(tasksMeta).forEach(k => { tasksState[k] = { status: 'idle', reason: '', ideaTitle: '', ideaDesc: '', rewardRequested: false }; });
-        let taskScreenshots = {}; 
-        let taskChecklists = {}; 
-        let activeTaskForms = {};
+        let taskScreenshots = {}; let taskChecklists = {}; let activeTaskForms = {};
         let referralData = { friends: [], balance: 0, withdrawnTotal: 0 };
-        let marketOrdersList = []; 
-        let liveActivityLog = []; 
-        let adminTasksList = [];
-        let currentModalService = ''; 
-        let currentTaskKey = '';
+        let marketOrdersList = []; let liveActivityLog = []; let adminTasksList = [];
+        let currentModalService = ''; let currentTaskKey = '';
         
         let appSettings = { alfa_time: Date.now().toString(), alfa_credit_time: Date.now().toString() };
         let savedAlfaLink = localStorage.getItem('csgo_market_alfa_link') || 'https://alfa.me/ZKsCZ2';
@@ -974,33 +1066,16 @@
         let ozonCardData = { status: 'idle', link: 'https://finance.ozon.ru/promo/card', readyTimestamp: 0 };
 
         // ================= НАВИГАЦИЯ =================
-        function handleHeaderAdminTrigger() {
-            if (!isUserAdmin) {
-                const pwd = prompt("Введите ПИН-код администратора (4 цифры):");
-                if (pwd === "7890") {
-                    isAdminUnlocked = true;
-                    isUserAdmin = true;
-                    localStorage.setItem('csgo_admin_unlocked', 'true');
-                    const adminNavBtn = document.getElementById('nav-admin');
-                    if (adminNavBtn) adminNavBtn.classList.remove('hidden');
-                    switchTab('admin');
-                    showCustomToast("✅ Доступ открыт!");
-                } else if (pwd !== null) {
-                    showCustomToast("❌ Неверный ПИН-код");
-                }
-            } else {
-                switchTab('admin');
-            }
-        }
-
         function switchTab(tab) {
             if (tab === 'admin') {
-                if (!isUserAdmin) {
-                    const pwd = prompt("Введите ПИН-код (4 цифры):");
-                    if (pwd !== "7890") return showCustomToast("❌ Неверный ПИН-код");
+                if (!isUserAdmin) return;
+                if (!isAdminUnlocked) {
+                    const pwd = prompt("Введите пароль администратора (3 цифры):");
+                    if (pwd !== "789") {
+                        showCustomToast("❌ Неверный пароль");
+                        return;
+                    }
                     isAdminUnlocked = true;
-                    isUserAdmin = true;
-                    localStorage.setItem('csgo_admin_unlocked', 'true');
                     showCustomToast("✅ Доступ открыт");
                 }
             }
@@ -1034,12 +1109,19 @@
                 if (secEl) secEl.classList.toggle('hidden', s !== sec);
                 if (tabBtn) {
                     if (s === sec) {
-                        tabBtn.className = 'px-3.5 py-2 rounded-xl bg-amber-500 text-slate-950 font-black shrink-0 transition shadow';
+                        tabBtn.className = 'px-3.5 py-2 rounded-xl bg-amber-500 text-slate-950 font-black shrink-0 transition';
                     } else {
                         tabBtn.className = 'px-3.5 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white border border-slate-800 shrink-0 transition';
                     }
                 }
             });
+        }
+
+        function copyPromoCode(code) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(code).catch(() => {});
+            }
+            showCustomToast(`Промокод ${code} скопирован!`);
         }
 
         function filterMarket(cat) {
@@ -1052,126 +1134,61 @@
         function closeModal(modalId) { document.getElementById(modalId).classList.add('hidden'); }
 
         function showCustomToast(text) {
-            const toast = document.getElementById('toast-notify'); 
-            const toastText = document.getElementById('toast-text');
-            if (!toast || !toastText) return; 
-            toastText.innerText = text;
-            toast.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-20'); 
-            toast.classList.add('opacity-100', 'translate-y-0');
-            setTimeout(() => { 
-                toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-20'); 
-                toast.classList.remove('opacity-100', 'translate-y-0'); 
-            }, 3000);
-        }
-
-        function copyPromoCode(code) {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(code);
-            }
-            showCustomToast(`Промокод ${code} скопирован!`);
+            const toast = document.getElementById('toast-notify'); const toastText = document.getElementById('toast-text');
+            if (!toast || !toastText) return; toastText.innerText = text;
+            toast.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-20'); toast.classList.add('opacity-100', 'translate-y-0');
+            setTimeout(() => { toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-20'); toast.classList.remove('opacity-100', 'translate-y-0'); }, 3000);
         }
 
         // ================= МАРКЕТ =================
-        function openServiceModal(sk) { 
-            currentModalService = sk; 
-            document.getElementById('service-modal-title').innerText = servicesData[sk].title; 
-            document.getElementById('service-modal-body').innerHTML = servicesData[sk].html; 
-            document.getElementById('service-order-comment').value = ''; 
-            document.getElementById('service-modal').classList.remove('hidden'); 
-        }
+        function openServiceModal(sk) { currentModalService = sk; document.getElementById('service-modal-title').innerText = servicesData[sk].title; document.getElementById('service-modal-body').innerHTML = servicesData[sk].html; document.getElementById('service-order-comment').value = ''; document.getElementById('service-modal').classList.remove('hidden'); }
+        function orderCurrentService() { const c = document.getElementById('service-order-comment').value.trim() || 'Без комментария'; sendPayloadToBot({ action: 'service_order', serviceKey: currentModalService, serviceTitle: servicesData[currentModalService].title, comment: c }, 'service-modal'); showCustomToast(`Заявка отправлена!`); }
 
-        function orderCurrentService() { 
-            const c = document.getElementById('service-order-comment').value.trim() || 'Без комментария'; 
-            sendPayloadToBot({ action: 'service_order', serviceKey: currentModalService, serviceTitle: servicesData[currentModalService].title, comment: c }, 'service-modal'); 
-            showCustomToast(`Заявка отправлена админу!`); 
-        }
-
-        // ================= ЗАДАНИЯ =================
         function getOzonRemainingMs() {
             if (!ozonCardData || !ozonCardData.readyTimestamp) return 0;
             return Math.max(0, (Number(ozonCardData.readyTimestamp) + 72 * 60 * 60 * 1000) - Date.now());
         }
 
+        // ================= ЗАДАНИЯ =================
         function openTaskModal(taskKey) {
-            currentTaskKey = taskKey; 
-            const meta = tasksMeta[taskKey]; 
-            const state = tasksState[taskKey] || { status: 'idle' };
-            
-            document.getElementById('task-modal-title').innerText = meta.title; 
-            document.getElementById('task-modal-reward').innerText = meta.reward; 
-            document.getElementById('task-modal-conditions').innerText = meta.conditions; 
-            document.getElementById('task-modal-instructions').innerText = meta.instructions;
+            currentTaskKey = taskKey; const meta = tasksMeta[taskKey]; const state = tasksState[taskKey] || { status: 'idle' };
+            document.getElementById('task-modal-title').innerText = meta.title; document.getElementById('task-modal-reward').innerText = meta.reward; document.getElementById('task-modal-conditions').innerText = meta.conditions; document.getElementById('task-modal-instructions').innerText = meta.instructions;
             
             const bonusBlock = document.getElementById('task-bonus-block');
-            if (meta.bonus) { 
-                bonusBlock.classList.remove('hidden'); 
-                document.getElementById('task-modal-bonus').innerText = `Бонус: ${meta.bonus}`; 
-            } else { 
-                bonusBlock.classList.add('hidden'); 
-            }
+            if (meta.bonus) { bonusBlock.classList.remove('hidden'); document.getElementById('task-modal-bonus').innerText = `Бонус: ${meta.bonus}`; } else { bonusBlock.classList.add('hidden'); }
 
             ['skinape','skinfights','vpn','idea-fields','screenshot-container','rejected-reason-box','card-link-block','ozon-block','card-checklist-container'].forEach(id => {
                 const el = document.getElementById(`task-${id}`); if(el) el.classList.add('hidden');
             });
 
-            const mainBtn = document.getElementById('task-main-action-btn'); 
-            const abortBtn = document.getElementById('task-abort-btn'); 
-            const retryBtn = document.getElementById('task-retry-btn');
-            
-            mainBtn.disabled = false; 
-            mainBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'hidden'); 
-            abortBtn.classList.add('hidden'); 
-            retryBtn.classList.add('hidden');
+            const mainBtn = document.getElementById('task-main-action-btn'); const abortBtn = document.getElementById('task-abort-btn'); const retryBtn = document.getElementById('task-retry-btn');
+            mainBtn.disabled = false; mainBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'hidden'); abortBtn.classList.add('hidden'); retryBtn.classList.add('hidden');
 
             if (taskScreenshots[taskKey]) {
-                document.getElementById('task-screenshot-preview-img').src = taskScreenshots[taskKey]; 
-                document.getElementById('task-screenshot-preview-box').classList.remove('hidden'); 
-                document.getElementById('task-screenshot-dropzone').classList.add('hidden');
-            } else { 
-                document.getElementById('task-screenshot-preview-box').classList.add('hidden'); 
-                document.getElementById('task-screenshot-dropzone').classList.remove('hidden'); 
-            }
+                document.getElementById('task-screenshot-preview-img').src = taskScreenshots[taskKey]; document.getElementById('task-screenshot-preview-box').classList.remove('hidden'); document.getElementById('task-screenshot-dropzone').classList.add('hidden');
+            } else { document.getElementById('task-screenshot-preview-box').classList.add('hidden'); document.getElementById('task-screenshot-dropzone').classList.remove('hidden'); }
 
             if (state.status === 'idle') {
                 if (!activeTaskForms[taskKey]) {
-                    mainBtn.className = 'w-full neon-glow-btn text-slate-950 font-black py-3.5 rounded-2xl text-xs sm:text-sm uppercase tracking-wider transition'; 
-                    mainBtn.innerHTML = `<span class="material-icons text-base">rocket_launch</span><span>Готов выполнить</span>`;
+                    mainBtn.className = 'w-full neon-glow-btn text-slate-950 font-black py-3.5 rounded-2xl text-xs sm:text-sm uppercase tracking-wider transition'; mainBtn.innerHTML = `<span class="material-icons text-base">rocket_launch</span><span>Готов выполнить</span>`;
                 } else {
                     renderTaskInteractiveForm(taskKey);
                 }
             } else if (state.status === 'in_progress') {
-                abortBtn.classList.remove('hidden'); 
-                mainBtn.disabled = true; 
-                mainBtn.className = 'w-full bg-slate-800 text-slate-400 font-bold py-3.5 rounded-2xl text-xs uppercase cursor-not-allowed'; 
-                mainBtn.innerHTML = `<span class="material-icons text-base">sync</span><span>Задание проверяется админом</span>`;
+                abortBtn.classList.remove('hidden'); mainBtn.disabled = true; mainBtn.className = 'w-full bg-slate-800 text-slate-400 font-bold py-3.5 rounded-2xl text-xs uppercase cursor-not-allowed'; mainBtn.innerHTML = `<span class="material-icons text-base">sync</span><span>Задание проверяется админом</span>`;
             } else if (state.status === 'accepted') {
-                mainBtn.className = 'w-full bg-emerald-500 text-slate-950 font-black py-3.5 rounded-2xl text-xs uppercase animate-pulse'; 
-                mainBtn.innerHTML = `<span class="material-icons text-base">card_giftcard</span><span>Получить скин</span>`;
+                mainBtn.className = 'w-full bg-emerald-500 text-slate-950 font-black py-3.5 rounded-2xl text-xs uppercase animate-pulse'; mainBtn.innerHTML = `<span class="material-icons text-base">card_giftcard</span><span>Получить скин</span>`;
             } else if (state.status === 'completed') {
-                mainBtn.disabled = true; 
-                mainBtn.className = 'w-full bg-emerald-950/40 text-emerald-400 font-bold py-3.5 rounded-2xl text-xs uppercase cursor-default'; 
-                mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Выполнено</span>`;
+                mainBtn.disabled = true; mainBtn.className = 'w-full bg-emerald-950/40 text-emerald-400 font-bold py-3.5 rounded-2xl text-xs uppercase cursor-default'; mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Выполнено</span>`;
             } else if (state.status === 'rejected') {
-                retryBtn.classList.remove('hidden'); 
-                document.getElementById('task-rejected-reason-box').classList.remove('hidden'); 
-                document.getElementById('task-rejected-reason-text').innerText = state.reason || 'Ошибка.'; 
-                mainBtn.disabled = true; 
-                mainBtn.className = 'w-full bg-rose-950/50 text-rose-400 font-bold py-3 rounded-2xl text-xs uppercase cursor-not-allowed'; 
-                mainBtn.innerHTML = `<span class="material-icons text-base">cancel</span><span>Отклонено</span>`;
+                retryBtn.classList.remove('hidden'); document.getElementById('task-rejected-reason-box').classList.remove('hidden'); document.getElementById('task-rejected-reason-text').innerText = state.reason || 'Ошибка.'; mainBtn.disabled = true; mainBtn.className = 'w-full bg-rose-950/50 text-rose-400 font-bold py-3 rounded-2xl text-xs uppercase cursor-not-allowed'; mainBtn.innerHTML = `<span class="material-icons text-base">cancel</span><span>Отклонено</span>`;
             }
             document.getElementById('task-modal').classList.remove('hidden');
         }
 
         function handleTaskMainAction() {
-            const meta = tasksMeta[currentTaskKey]; 
-            const state = tasksState[currentTaskKey] || { status: 'idle' };
-            
-            if (state.status === 'accepted') { 
-                sendPayloadToBot({ action: 'claim_reward', taskKey: currentTaskKey, taskTitle: meta.title }); 
-                showCustomToast('✅ Заявка на приз отправлена админу!'); 
-                closeModal('task-modal'); 
-                return; 
-            }
+            const meta = tasksMeta[currentTaskKey]; const state = tasksState[currentTaskKey] || { status: 'idle' };
+            if (state.status === 'accepted') { sendPayloadToBot({ action: 'claim_reward', taskKey: currentTaskKey, taskTitle: meta.title }); showCustomToast('✅ Заявка на приз отправлена админу!'); closeModal('task-modal'); return; }
 
             if (state.status === 'idle' && !activeTaskForms[currentTaskKey]) {
                 activeTaskForms[currentTaskKey] = true;
@@ -1179,32 +1196,25 @@
                     if (getOzonRemainingMs() > 0) {
                         showCustomToast('✅ Ссылка активна! Можете приступать к этапам.');
                     } else {
-                        showCustomToast('⏳ Запрос ссылки отправлен админу...');
+                        showCustomToast('⏳ Ссылка запрашивается у админа...');
                         sendPayloadToBot({ action: 'task_ozon_link_request' }, false); 
                     }
                 }
-                renderTaskInteractiveForm(currentTaskKey); 
-                return;
+                renderTaskInteractiveForm(currentTaskKey); return;
             }
 
             if (state.status === 'idle' && activeTaskForms[currentTaskKey]) {
                 if (currentTaskKey === 'idea') {
-                    const t = document.getElementById('idea-title-input').value.trim(); 
-                    const d = document.getElementById('idea-desc-input').value.trim();
-                    if (!t || !d) return showCustomToast('Заполните оба поля!'); 
-                    sendPayloadToBot({ action: 'task_submit', taskKey: 'idea', ideaTitle: t, ideaDescription: d });
+                    const t = document.getElementById('idea-title-input').value.trim(); const d = document.getElementById('idea-desc-input').value.trim();
+                    if (!t || !d) return showCustomToast('Заполните оба поля!'); sendPayloadToBot({ action: 'task_submit', taskKey: 'idea', ideaTitle: t, ideaDescription: d });
                 } else if (['skinape', 'skinfights'].includes(currentTaskKey)) {
-                    if (!taskScreenshots[currentTaskKey]) return showCustomToast('Прикрепите скриншот!'); 
-                    sendPayloadToBot({ action: 'task_screenshot_submit', taskKey: currentTaskKey, taskTitle: meta.title, screenshot: taskScreenshots[currentTaskKey] });
+                    if (!taskScreenshots[currentTaskKey]) return showCustomToast('Загрузите скриншот!'); sendPayloadToBot({ action: 'task_screenshot_submit', taskKey: currentTaskKey, taskTitle: meta.title, screenshot: taskScreenshots[currentTaskKey] });
                 } else if (['alfa_card', 'alfa_credit', 'yandex_pay', 'ozon_card'].includes(currentTaskKey)) {
-                    if (currentTaskKey === 'ozon_card' && getOzonRemainingMs() <= 0) return showCustomToast('Дождитесь выдачи ссылки админом!');
-                    const states = taskChecklists[currentTaskKey] || []; 
-                    const items = cardChecklistConfig[currentTaskKey] || [];
-                    if (items.length > 0 && !items.every((_, idx) => !!states[idx])) return showCustomToast('Отметьте все выполненные пункты чеклиста!');
+                    if (currentTaskKey === 'ozon_card' && getOzonRemainingMs() <= 0) return showCustomToast('Дождитесь выдачи ссылки!');
+                    const states = taskChecklists[currentTaskKey] || []; const items = cardChecklistConfig[currentTaskKey] || [];
+                    if (items.length > 0 && !items.every((_, idx) => !!states[idx])) return showCustomToast('Отметьте все этапы!');
                     sendPayloadToBot({ action: 'task_submit', taskKey: currentTaskKey, taskTitle: meta.title });
-                } else if (currentTaskKey === 'vpn') { 
-                    sendPayloadToBot({ action: 'task_submit', taskKey: 'vpn', taskTitle: meta.title }); 
-                }
+                } else if (currentTaskKey === 'vpn') { sendPayloadToBot({ action: 'task_submit', taskKey: 'vpn', taskTitle: meta.title }); }
                 
                 showCustomToast('✅ Задание отправлено на проверку!');
                 closeModal('task-modal');
@@ -1218,152 +1228,77 @@
             if (taskKey === 'ozon_card') {
                 document.getElementById('task-ozon-block').classList.remove('hidden');
                 if (getOzonRemainingMs() > 0) {
-                    document.getElementById('ozon-ready-box').classList.remove('hidden'); 
-                    document.getElementById('ozon-waiting-box').classList.add('hidden'); 
+                    document.getElementById('ozon-ready-box').classList.remove('hidden'); document.getElementById('ozon-waiting-box').classList.add('hidden');
                     document.getElementById('ozon-ready-link-btn').href = ozonCardData.link || '#';
-                    document.getElementById('task-card-checklist-container').classList.remove('hidden'); 
-                    renderChecklistUI(taskKey);
-                    mainBtn.disabled = false; 
-                    mainBtn.className = 'w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3.5 rounded-2xl text-xs uppercase transition'; 
-                    mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
+                    document.getElementById('task-card-checklist-container').classList.remove('hidden'); renderChecklistUI(taskKey);
+                    mainBtn.disabled = false; mainBtn.className = 'w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3.5 rounded-2xl text-xs uppercase transition'; mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
                     validateCardChecklistBtn(taskKey);
                 } else {
-                    document.getElementById('ozon-waiting-box').classList.remove('hidden'); 
-                    document.getElementById('ozon-ready-box').classList.add('hidden'); 
-                    document.getElementById('task-card-checklist-container').classList.add('hidden');
-                    mainBtn.disabled = true; 
-                    mainBtn.className = 'w-full bg-slate-800 text-slate-500 cursor-not-allowed font-bold py-3.5 rounded-2xl text-xs uppercase'; 
-                    mainBtn.innerHTML = `<span class="material-icons text-base">schedule</span><span>Ожидание ссылки от админа</span>`;
+                    document.getElementById('ozon-waiting-box').classList.remove('hidden'); document.getElementById('ozon-ready-box').classList.add('hidden'); document.getElementById('task-card-checklist-container').classList.add('hidden');
+                    mainBtn.disabled = true; mainBtn.className = 'w-full bg-slate-800 text-slate-500 cursor-not-allowed font-bold py-3.5 rounded-2xl text-xs uppercase'; mainBtn.innerHTML = `<span class="material-icons text-base">schedule</span><span>Ожидание ссылки от админа</span>`;
                 }
             } else if (taskKey === 'idea') {
-                document.getElementById('task-idea-fields').classList.remove('hidden'); 
-                mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить идею</span>`;
+                document.getElementById('task-idea-fields').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить идею</span>`;
             } else if (['skinape', 'skinfights'].includes(taskKey)) {
-                document.getElementById(`task-${taskKey}-block`).classList.remove('hidden'); 
-                document.getElementById('task-screenshot-container').classList.remove('hidden'); 
-                mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить подтверждение</span>`; 
-                validateScreenshotBtn();
+                document.getElementById(`task-${taskKey}-block`).classList.remove('hidden'); document.getElementById('task-screenshot-container').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить скриншот</span>`; validateScreenshotBtn();
             } else if (['alfa_card', 'alfa_credit', 'yandex_pay'].includes(taskKey)) {
-                const map = { 
-                    alfa_card: appSettings.alfa_link || savedAlfaLink, 
-                    alfa_credit: appSettings.alfa_credit_link || savedAlfaCreditLink, 
-                    yandex_pay: 'https://bank.yandex.ru/invite?refid=qxSp2JZACr6' 
-                };
-                document.getElementById('task-card-link-block').classList.remove('hidden'); 
-                document.getElementById('task-card-link-btn').href = map[taskKey] || '#'; 
-                document.getElementById('task-card-checklist-container').classList.remove('hidden'); 
-                renderChecklistUI(taskKey); 
-                mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`; 
-                validateCardChecklistBtn(taskKey);
+                const map = { alfa_card: appSettings.alfa_link || savedAlfaLink, alfa_credit: appSettings.alfa_credit_link || savedAlfaCreditLink, yandex_pay: 'https://bank.yandex.ru/invite?refid=qxSp2JZACr6' };
+                document.getElementById('task-card-link-block').classList.remove('hidden'); document.getElementById('task-card-link-btn').href = map[taskKey] || '#'; document.getElementById('task-card-checklist-container').classList.remove('hidden'); renderChecklistUI(taskKey); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`; validateCardChecklistBtn(taskKey);
             } else if (taskKey === 'vpn') {
-                document.getElementById('task-vpn-block').classList.remove('hidden'); 
-                mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
+                document.getElementById('task-vpn-block').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
             }
         }
 
-        function abortCurrentTask() { 
-            activeTaskForms[currentTaskKey] = false; 
-            if (taskChecklists[currentTaskKey]) taskChecklists[currentTaskKey].fill(false); 
-            sendPayloadToBot({ action: 'task_abort', taskKey: currentTaskKey }, 'task-modal'); 
-            showCustomToast('Задание отменено.'); 
-        }
+        function abortCurrentTask() { activeTaskForms[currentTaskKey] = false; if (taskChecklists[currentTaskKey]) taskChecklists[currentTaskKey].fill(false); sendPayloadToBot({ action: 'task_abort', taskKey: currentTaskKey }, 'task-modal'); showCustomToast('Задание отменено.'); }
+        function retryCurrentTask() { abortCurrentTask(); setTimeout(() => openTaskModal(currentTaskKey), 300); }
 
-        function retryCurrentTask() { 
-            abortCurrentTask(); 
-            setTimeout(() => openTaskModal(currentTaskKey), 300); 
-        }
-
+        // ================= ЧЕКЛИСТЫ И СКРИНШОТЫ =================
         function renderChecklistUI(taskKey) {
-            const container = document.getElementById('task-checklist-items'); 
-            container.innerHTML = '';
-            const items = cardChecklistConfig[taskKey] || []; 
-            const states = taskChecklists[taskKey] || []; 
-            let checkedCount = 0;
-            
+            const container = document.getElementById('task-checklist-items'); container.innerHTML = '';
+            const items = cardChecklistConfig[taskKey] || []; const states = taskChecklists[taskKey] || []; let checkedCount = 0;
             items.forEach((text, idx) => {
-                const isChecked = !!states[idx]; 
-                if (isChecked) checkedCount++;
+                const isChecked = !!states[idx]; if (isChecked) checkedCount++;
                 const row = document.createElement('div');
                 row.className = `flex items-center gap-3 p-2.5 rounded-xl border cursor-pointer select-none transition ${isChecked ? 'bg-emerald-950/30 border-emerald-500/40 text-emerald-200' : 'bg-slate-900/80 border-slate-800 text-slate-300'}`;
                 row.innerHTML = `<div class="w-5 h-5 rounded-lg flex items-center justify-center border transition ${isChecked ? 'bg-emerald-500 border-emerald-400 text-slate-950' : 'bg-slate-950 border-slate-700 text-transparent'}"><span class="material-icons text-sm font-black">check</span></div><span class="text-xs sm:text-sm font-medium leading-tight">${text}</span>`;
-                row.onclick = () => { 
-                    if (!taskChecklists[taskKey]) taskChecklists[taskKey] = new Array(items.length).fill(false); 
-                    taskChecklists[taskKey][idx] = !taskChecklists[taskKey][idx]; 
-                    renderChecklistUI(taskKey); 
-                    validateCardChecklistBtn(taskKey); 
-                };
+                row.onclick = () => { if (!taskChecklists[taskKey]) taskChecklists[taskKey] = new Array(items.length).fill(false); taskChecklists[taskKey][idx] = !taskChecklists[taskKey][idx]; renderChecklistUI(taskKey); validateCardChecklistBtn(taskKey); };
                 container.appendChild(row);
             });
             document.getElementById('task-checklist-progress').innerText = `${checkedCount}/${items.length}`;
         }
 
         function validateCardChecklistBtn(taskKey) {
-            const mainBtn = document.getElementById('task-main-action-btn'); 
-            const items = cardChecklistConfig[taskKey] || []; 
-            const states = taskChecklists[taskKey] || [];
-            if (items.length > 0 && items.every((_, idx) => !!states[idx])) { 
-                mainBtn.disabled = false; 
-                mainBtn.classList.remove('opacity-50', 'cursor-not-allowed'); 
-            } else { 
-                mainBtn.disabled = true; 
-                mainBtn.classList.add('opacity-50', 'cursor-not-allowed'); 
-            }
+            const mainBtn = document.getElementById('task-main-action-btn'); const items = cardChecklistConfig[taskKey] || []; const states = taskChecklists[taskKey] || [];
+            if (items.length > 0 && items.every((_, idx) => !!states[idx])) { mainBtn.disabled = false; mainBtn.classList.remove('opacity-50', 'cursor-not-allowed'); } 
+            else { mainBtn.disabled = true; mainBtn.classList.add('opacity-50', 'cursor-not-allowed'); }
         }
 
         function handleScreenshotUpload(event) {
-            const file = event.target.files && event.target.files[0]; 
-            if (!file) return;
+            const file = event.target.files && event.target.files[0]; if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
                 const img = new Image();
                 img.onload = function() {
-                    const canvas = document.createElement('canvas'); 
-                    let width = img.width, height = img.height; 
-                    const maxDim = 800;
-                    if (width > maxDim || height > maxDim) { 
-                        if (width > height) { height = Math.round((height * maxDim) / width); width = maxDim; } 
-                        else { width = Math.round((width * maxDim) / height); height = maxDim; } 
-                    }
-                    canvas.width = width; 
-                    canvas.height = height; 
-                    canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                    const canvas = document.createElement('canvas'); let width = img.width, height = img.height; const maxDim = 800;
+                    if (width > maxDim || height > maxDim) { if (width > height) { height = Math.round((height * maxDim) / width); width = maxDim; } else { width = Math.round((width * maxDim) / height); height = maxDim; } }
+                    canvas.width = width; canvas.height = height; canvas.getContext('2d').drawImage(img, 0, 0, width, height);
                     taskScreenshots[currentTaskKey] = canvas.toDataURL('image/jpeg', 0.8);
-                    document.getElementById('task-screenshot-preview-img').src = taskScreenshots[currentTaskKey]; 
-                    document.getElementById('task-screenshot-preview-box').classList.remove('hidden'); 
-                    document.getElementById('task-screenshot-dropzone').classList.add('hidden');
+                    document.getElementById('task-screenshot-preview-img').src = taskScreenshots[currentTaskKey]; document.getElementById('task-screenshot-preview-box').classList.remove('hidden'); document.getElementById('task-screenshot-dropzone').classList.add('hidden');
                     validateScreenshotBtn();
                 };
                 img.src = e.target.result;
-            }; 
-            reader.readAsDataURL(file);
+            }; reader.readAsDataURL(file);
         }
 
-        function removeTaskScreenshot() { 
-            delete taskScreenshots[currentTaskKey]; 
-            document.getElementById('task-screenshot-preview-box').classList.add('hidden'); 
-            document.getElementById('task-screenshot-dropzone').classList.remove('hidden'); 
-            validateScreenshotBtn(); 
-        }
+        function removeTaskScreenshot() { delete taskScreenshots[currentTaskKey]; document.getElementById('task-screenshot-preview-box').classList.add('hidden'); document.getElementById('task-screenshot-dropzone').classList.remove('hidden'); validateScreenshotBtn(); }
+        function validateScreenshotBtn() { const mainBtn = document.getElementById('task-main-action-btn'); if (taskScreenshots[currentTaskKey]) { mainBtn.disabled = false; mainBtn.classList.remove('opacity-50', 'cursor-not-allowed'); } else { mainBtn.disabled = true; mainBtn.classList.add('opacity-50', 'cursor-not-allowed'); } }
 
-        function validateScreenshotBtn() { 
-            const mainBtn = document.getElementById('task-main-action-btn'); 
-            if (taskScreenshots[currentTaskKey]) { 
-                mainBtn.disabled = false; 
-                mainBtn.classList.remove('opacity-50', 'cursor-not-allowed'); 
-            } else { 
-                mainBtn.disabled = true; 
-                mainBtn.classList.add('opacity-50', 'cursor-not-allowed'); 
-            } 
-        }
-
-        // ================= ЛАЙВ-ЛЕНТА =================
+        // ================= ЛОГИРОВАНИЕ АКТИВНОСТИ =================
         function recordActivity(actionText, tag = 'action', icon = 'bolt') {
             const now = Date.now();
             const timeStr = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
             const item = { id: now + Math.random(), time: timeStr, user: user.first_name || 'Клиент', userTag: user.username ? `@${user.username}` : `ID:${user.id}`, text: actionText, tag: tag, icon: icon, timestamp: now };
-            
-            liveActivityLog.unshift(item); 
-            if (liveActivityLog.length > 50) liveActivityLog.pop();
+            liveActivityLog.unshift(item); if (liveActivityLog.length > 50) liveActivityLog.pop();
             renderLiveFeedUI();
             
             fetch(`${BACKEND_URL}/api/activity/log`, {
@@ -1376,8 +1311,7 @@
             const container = document.getElementById('admin-live-feed');
             if (!container) return;
             if (liveActivityLog.length === 0) {
-                container.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-slate-500 py-6 text-center"><span class="material-icons text-2xl mb-1 text-slate-600">history</span><span>Лента активности пуста</span></div>`; 
-                return;
+                container.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-slate-500 py-6 text-center"><span class="material-icons text-2xl mb-1 text-slate-600">history</span><span>Лента активности пуста за последние 24 часа</span></div>`; return;
             }
             container.innerHTML = liveActivityLog.map(item => `
                 <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800/80 flex items-start justify-between gap-2 leading-tight">
@@ -1406,27 +1340,15 @@
             try {
                 const res = await fetch(`${BACKEND_URL}/api/sync`, {
                     method: "POST", headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ 
-                        userId: user.id || '0', 
-                        username: (user.username || '').replace('@', ''), 
-                        firstName: user.first_name || 'Клиент',
-                        isAdmin: isUserAdmin 
-                    })
+                    body: JSON.stringify({ userId: user.id || '0', username: (user.username || '').replace('@', ''), firstName: user.first_name || 'Клиент' })
                 });
 
                 const data = await res.json();
                 if (data.ok) {
-                    if (data.tasksState) { 
-                        Object.keys(data.tasksState).forEach(k => { tasksState[k] = { ...tasksState[k], ...data.tasksState[k] }; }); 
-                        updateTaskCardsStatusUI(); 
-                    }
+                    if (data.tasksState) { Object.keys(data.tasksState).forEach(k => { tasksState[k] = { ...tasksState[k], ...data.tasksState[k] }; }); updateTaskCardsStatusUI(); }
                     if (data.adminTasks) adminTasksList = data.adminTasks;
                     if (data.liveFeed) { liveActivityLog = data.liveFeed; renderLiveFeedUI(); }
-                    if (data.referrals) { 
-                        referralData.friends = data.referrals; 
-                        if (typeof data.referralBalance !== 'undefined') referralData.balance = data.referralBalance;
-                        renderReferralUI(); 
-                    }
+                    if (data.referrals) { referralData.friends = data.referrals; renderReferralUI(); }
                     if (data.marketOrders) marketOrdersList = data.marketOrders;
                     if (data.appSettings) appSettings = { ...appSettings, ...data.appSettings };
                     if (data.ozonCard) ozonCardData = data.ozonCard;
@@ -1442,7 +1364,7 @@
 
         async function sendPayloadToBot(payload, modalToClose) {
             if (modalToClose) closeModal(modalToClose);
-            const body = { userId: user.id || '0', username: (user.username || '').replace('@', ''), firstName: user.first_name || 'Клиент', ...payload };
+            const body = { userId: user.id || '0', username: (user.username || '').replace('@', ''), ...payload };
             
             try {
                 if (payload.action === 'task_ozon_link_request') {
@@ -1462,9 +1384,9 @@
             } catch (e) {}
         }
 
-        // ================= АДМИН-ПАНЕЛЬ =================
+        // ================= АДМИН ПАНЕЛЬ =================
         function updateAdminDashboardUI() {
-            if (!isUserAdmin) return;
+            if (!isUserAdmin || !isAdminUnlocked) return;
 
             const pendingTasks = adminTasksList.filter(t => t.status === 'in_progress');
             const activeTasks = adminTasksList.filter(t => t.status === 'accepted' || t.rewardRequested);
@@ -1476,17 +1398,14 @@
             const activeEl = document.getElementById('admin-stat-active'); if (activeEl) activeEl.innerText = activeTasks.length;
             const ordersEl = document.getElementById('admin-stat-orders'); if (ordersEl) ordersEl.innerText = ordersCount;
 
-            const revCounter = document.getElementById('admin-reviews-counter'); if (revCounter) revCounter.innerText = `${pendingTasks.length} в очереди`;
-            const ordCounter = document.getElementById('admin-orders-counter'); if (ordCounter) ordCounter.innerText = `${ordersCount} заказов`;
-
             const reviewsList = document.getElementById('admin-reviews-list');
             if (reviewsList) {
                 if (pendingTasks.length === 0) {
-                    reviewsList.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs"><span class="material-icons text-2xl mb-1 text-slate-600">done_all</span><p>Все задания проверены!</p></div>`;
+                    reviewsList.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs"><span class="material-icons text-2xl mb-1 text-slate-600">done_all</span><p>Все входящие задания проверены!</p></div>`;
                 } else {
                     reviewsList.innerHTML = pendingTasks.map(t => {
                         const meta = tasksMeta[t.taskKey];
-                        let detailHtml = `<p class="text-emerald-400">💡 Пользователь отправил подтверждение на проверку.</p>`;
+                        let detailHtml = `<p class="text-emerald-400">💡 <b>Заявка:</b> Клиент подтвердил выполнение. Скриншот (если нужен) в канале.</p>`;
                         if (t.taskKey === 'idea') detailHtml = `<div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800"><span class="text-purple-400 font-bold block">💡 Идея: ${t.ideaTitle}</span><p class="text-slate-300 mt-1">${t.ideaDesc}</p></div>`;
 
                         return `<div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
@@ -1495,10 +1414,10 @@
                                 <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">На проверке</span>
                             </div>
                             <div class="text-xs">${detailHtml}</div>
-                            <input id="admin-reject-reason-${t.userId}-${t.taskKey}" type="text" placeholder="Причина отказа (если отклоняете)..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none">
+                            <input id="admin-reject-reason-${t.userId}-${t.taskKey}" type="text" placeholder="Причина отказа (для клиента)..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none">
                             <div class="flex gap-2">
-                                <button onclick="adminApproveTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2 rounded-xl text-xs transition">Одобрить</button>
-                                <button onclick="adminRejectTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-rose-600/20 hover:bg-rose-600/30 text-rose-400 border border-rose-500/40 py-2 rounded-xl text-xs transition">Отклонить</button>
+                                <button onclick="adminApproveTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 text-slate-950 font-black py-2 rounded-xl text-xs">Одобрить</button>
+                                <button onclick="adminRejectTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-rose-600/20 text-rose-400 border border-rose-500/40 py-2 rounded-xl text-xs">Отклонить</button>
                             </div>
                         </div>`;
                     }).join('');
@@ -1508,17 +1427,17 @@
             const activeList = document.getElementById('admin-active-tasks-list');
             if (activeList) {
                 if (activeTasks.length === 0) {
-                    activeList.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Нет пользователей, ожидающих выдачи скина</p>`;
+                    activeList.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Нет пользователей ожидающих выдачи скина</p>`;
                 } else {
                     activeList.innerHTML = activeTasks.map(t => `
                         <div class="bg-slate-950 p-3.5 rounded-xl border border-emerald-500/50 shadow-lg space-y-2">
                             <div class="flex justify-between">
                                 <div><span class="text-xs font-bold text-white">${tasksMeta[t.taskKey] ? tasksMeta[t.taskKey].title : t.taskKey}</span><br><span class="text-[11px] text-slate-400">Клиент: ${t.firstName} (@${t.username})</span></div>
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-400 animate-pulse">🎁 ЖДЁТ СКИНОМ</span>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-400 animate-pulse">🎁 ЖДЁТ ВЫДАЧИ</span>
                             </div>
                             <div class="flex gap-2">
-                                <a href="https://t.me/${t.username}" target="_blank" class="flex-1 bg-slate-900 text-blue-400 py-1.5 rounded-xl text-xs font-bold text-center border border-slate-800">В ЛС</a>
-                                <button onclick="adminCompleteTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-1.5 rounded-xl text-xs transition">✅ Скин передан</button>
+                                <a href="https://t.me/${t.username}" target="_blank" class="flex-1 bg-slate-900 text-blue-400 py-1.5 rounded-xl text-xs font-bold text-center">В ЛС</a>
+                                <button onclick="adminCompleteTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 text-slate-950 font-black py-1.5 rounded-xl text-xs">✅ Скин передан</button>
                             </div>
                         </div>
                     `).join('');
@@ -1527,63 +1446,37 @@
 
             const ordersContainer = document.getElementById('admin-market-orders-list');
             if (ordersContainer) {
-                if (marketOrdersList.length === 0) ordersContainer.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Нет входящих заказов</p>`;
+                if (marketOrdersList.length === 0) ordersContainer.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Нет заказов</p>`;
                 else ordersContainer.innerHTML = marketOrdersList.map((ord, idx) => `
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
                         <div class="flex justify-between"><span class="text-xs font-bold text-white">${ord.user} <span class="text-slate-400 font-normal">${ord.userTag}</span></span><span class="text-[10px] text-slate-500">${ord.time}</span></div>
                         <div class="text-xs font-semibold text-blue-400">${ord.serviceTitle}</div>
                         <div class="bg-slate-900 p-2 rounded text-xs text-slate-300">💬 ${ord.comment}</div>
-                        <button onclick="adminCompleteOrder(${ord.id}, ${idx})" class="w-full bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/40 py-2 rounded-xl text-xs font-bold mt-1 transition">Заказ закрыт</button>
+                        <button onclick="adminCompleteOrder(${ord.id}, ${idx})" class="w-full bg-emerald-600/20 text-emerald-400 border border-emerald-500/40 py-2 rounded-xl text-xs font-bold mt-1">Выполнено</button>
                     </div>`).join('');
             }
 
             const ozonBadge = document.getElementById('admin-ozon-status-badge');
             if (ozonBadge) {
-                if (getOzonRemainingMs() > 0) { 
-                    ozonBadge.className = 'text-[10px] font-bold bg-emerald-500/20 text-emerald-400 px-2 rounded'; 
-                    ozonBadge.innerText = 'Активна'; 
-                } else { 
-                    ozonBadge.className = 'text-[10px] font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse'; 
-                    ozonBadge.innerText = (ozonCardData && ozonCardData.status === 'requested') ? 'Ждёт выдачи!' : 'Не активна'; 
-                }
+                if (getOzonRemainingMs() > 0) { ozonBadge.className = 'text-[10px] font-bold bg-emerald-500/20 text-emerald-400 px-2 rounded'; ozonBadge.innerText = 'Активна'; }
+                else { ozonBadge.className = 'text-[10px] font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse'; ozonBadge.innerText = 'Истекла!'; }
             }
         }
 
-        async function adminApproveTask(targetUserId, taskKey) { 
-            await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'accepted' }) }); 
-            showCustomToast('✅ Задание одобрено!'); 
-            syncWithBackend(); 
-        }
-
-        async function adminRejectTask(targetUserId, taskKey) { 
-            const reasonInput = document.getElementById(`admin-reject-reason-${targetUserId}-${taskKey}`);
-            const r = reasonInput ? reasonInput.value.trim() : 'Отклонено модератором.'; 
-            await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'rejected', reason: r }) }); 
-            showCustomToast('❌ Задание отклонено'); 
-            syncWithBackend(); 
-        }
-
-        async function adminCompleteTask(targetUserId, taskKey) { 
-            await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'completed' }) }); 
-            showCustomToast('🎉 Скин выдан, задание закрыто!'); 
-            syncWithBackend(); 
-        }
-
-        async function adminCompleteOrder(orderId, idx) { 
-            await fetch(`${BACKEND_URL}/api/order/complete`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ orderId: orderId }) }); 
-            marketOrdersList.splice(idx, 1); 
-            syncWithBackend(); 
-        }
-
+        async function adminApproveTask(targetUserId, taskKey) { await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'accepted' }) }); showCustomToast('✅ Одобрено!'); syncWithBackend(); }
+        async function adminRejectTask(targetUserId, taskKey) { const r = document.getElementById(`admin-reject-reason-${targetUserId}-${taskKey}`).value || 'Отклонено.'; await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'rejected', reason: r }) }); showCustomToast('❌ Отклонено'); syncWithBackend(); }
+        async function adminCompleteTask(targetUserId, taskKey) { await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'completed' }) }); showCustomToast('🎉 Завершено!'); syncWithBackend(); }
+        async function adminCompleteOrder(orderId, idx) { await fetch(`${BACKEND_URL}/api/order/complete`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ orderId: orderId }) }); marketOrdersList.splice(idx, 1); syncWithBackend(); }
+        
         async function adminIssueOzonLinkFromDashboard() {
-            const link = document.getElementById('admin-ozon-input').value.trim() || 'https://finance.ozon.ru/promo/card';
+            const link = document.getElementById('admin-ozon-input').value || 'https://finance.ozon.ru/promo/card';
             await fetch(`${BACKEND_URL}/api/ozon/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ status: 'ready', link: link, readyTimestamp: Date.now() }) });
-            showCustomToast('✅ Ссылка Ozon выдана на 72ч!');
+            showCustomToast('✅ Ссылка Ozon выдана! Клиенты могут приступать.');
             syncWithBackend();
         }
 
         function updateAlfaLiveTimers() {
-            if (!isUserAdmin) return;
+            if (!isUserAdmin || !isAdminUnlocked) return;
             const totalMs = 29 * 24 * 60 * 60 * 1000;
             const fmt = ms => ms <= 0 ? 'Истекло' : `${Math.floor(ms/86400000)}д ${Math.floor((ms/3600000)%24)}ч ${Math.floor((ms/60000)%60)}м`;
             
@@ -1597,17 +1490,14 @@
         }
 
         async function adminResetAlfaTimerFromDashboard() { 
-            const link = document.getElementById('admin-alfa-input').value.trim() || 'https://alfa.me/ZKsCZ2';
+            const link = document.getElementById('admin-alfa-input').value || 'https://alfa.me/ZKsCZ2';
             await fetch(`${BACKEND_URL}/api/admin/settings`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: user.id, alfa_link: link, alfa_time: Date.now().toString() }) });
-            showCustomToast('Таймер Альфа-Карты сброшен'); 
-            syncWithBackend();
+            showCustomToast('Обновлено'); syncWithBackend();
         }
-
         async function adminResetAlfaCreditTimerFromDashboard() { 
-            const link = document.getElementById('admin-alfa-credit-input').value.trim() || 'https://alfa.me/PDVEGs';
+            const link = document.getElementById('admin-alfa-credit-input').value || 'https://alfa.me/PDVEGs';
             await fetch(`${BACKEND_URL}/api/admin/settings`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: user.id, alfa_credit_link: link, alfa_credit_time: Date.now().toString() }) });
-            showCustomToast('Таймер Альфа-Кредитки сброшен'); 
-            syncWithBackend();
+            showCustomToast('Обновлено'); syncWithBackend();
         }
 
         // ================= РЕФЕРАЛЫ =================
@@ -1618,71 +1508,48 @@
             if (lockedBox) lockedBox.classList.toggle('hidden', hasCompleted);
             if (activeBox) activeBox.classList.toggle('hidden', !hasCompleted);
             
-            const balanceEl = document.getElementById('ref-user-balance');
-            if (balanceEl) balanceEl.innerText = `${referralData.balance} ₽`;
-
-            const friendsCountEl = document.getElementById('ref-friends-count');
-            if (friendsCountEl) friendsCountEl.innerText = `${referralData.friends.length} друзей`;
-
-            const friendsListEl = document.getElementById('ref-friends-list');
-            if (friendsListEl) {
-                friendsListEl.innerHTML = referralData.friends.length === 0 
-                    ? `<p class="text-slate-500 text-[11px] py-3 text-center">Вы ещё не добавили друзей</p>` 
-                    : referralData.friends.map(f => `
-                        <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 flex items-center justify-between text-xs">
-                            <div><span class="font-bold text-white">${f.username}</span></div>
-                            <div class="text-emerald-400 font-bold">+${f.earned} ₽</div>
-                        </div>
-                    `).join('');
-            }
+            document.getElementById('ref-user-balance').innerText = `${referralData.balance} ₽`;
+            document.getElementById('ref-friends-count').innerText = `${referralData.friends.length} друзей`;
+            document.getElementById('ref-friends-list').innerHTML = referralData.friends.length === 0 ? `<p class="text-slate-500 text-[11px] py-3 text-center">Вы ещё не добавили ни одного друга</p>` : referralData.friends.map(f => `<div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 flex items-center justify-between text-xs"><div><span class="font-bold text-white">${f.username}</span></div><div class="text-emerald-400 font-bold">+${f.earned} ₽</div></div>`).join('');
             
             const btn = document.getElementById('ref-withdraw-btn');
             if (btn) {
-                btn.innerHTML = `<span class="material-icons text-base">card_giftcard</span><span>Вывести бонус (${referralData.balance} ₽)</span>`;
+                btn.innerHTML = `<span class="material-icons text-base">card_giftcard</span><span>Вывести реферальный бонус</span>`;
                 btn.disabled = referralData.balance <= 0;
                 btn.classList.toggle('opacity-50', referralData.balance <= 0);
             }
         }
 
         async function addReferralFriend() {
-            const input = document.getElementById('ref-friend-input');
-            let val = input ? input.value.trim() : '';
+            let val = document.getElementById('ref-friend-input').value.trim();
             if (!val) return showCustomToast('Введите @username друга!');
             const cleanUser = val.replace('@', '').toLowerCase();
             const myUser = (user.username || '').replace('@', '').toLowerCase();
             
-            if (myUser && cleanUser === myUser) return showCustomToast('❌ Нельзя пригласить самого себя!');
-            if (referralData.friends.some(f => f.username.replace('@', '').toLowerCase() === cleanUser)) return showCustomToast('Этот друг уже добавлен!');
+            if (myUser && cleanUser === myUser) return showCustomToast('❌ Нельзя пригласить себя!');
+            if (referralData.friends.some(f => f.username.replace('@', '').toLowerCase() === cleanUser)) return showCustomToast('Друг уже добавлен!');
 
-            showCustomToast('🔍 Поиск пользователя...');
+            showCustomToast('🔍 Проверка пользователя...');
             try {
                 const res = await fetch(`${BACKEND_URL}/api/check_referral`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: cleanUser }) });
                 const data = await res.json();
-                if (!data.exists) return showCustomToast(`❌ Пользователь @${cleanUser} не найден в боте. Пусть нажмет /start в боте.`);
+                if (!data.exists) return showCustomToast(`❌ Пользователь @${cleanUser} не найден. Пусть нажмет /start в боте.`);
                 
                 await fetch(`${BACKEND_URL}/api/referral/add`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: user.id, friendUsername: cleanUser, friendName: data.name }) });
                 
                 referralData.friends.unshift({ username: '@' + cleanUser, name: data.name, tasksCount: 0, earned: 0, date: new Date().toLocaleDateString('ru-RU') });
-                if (input) input.value = '';
+                document.getElementById('ref-friend-input').value = '';
                 renderReferralUI();
-                recordActivity(`Пригласил @${cleanUser} в реферальную систему`, 'referral', 'person_add');
-                showCustomToast(`✅ Друг успешно привязан!`);
-            } catch(e) { showCustomToast('Ошибка проверки пользователя'); }
+                recordActivity(`Пригласил друга @${cleanUser} в реферальную программу`, 'referral', 'person_add');
+                showCustomToast(`✅ Друг привязан!`);
+            } catch(e) { showCustomToast('Ошибка проверки'); }
         }
 
-        async function withdrawReferralBonus() {
+        function withdrawReferralBonus() {
             if (referralData.balance <= 0) return;
-            const amount = referralData.balance;
-            try {
-                await fetch(`${BACKEND_URL}/api/referral/withdraw`, {
-                    method: "POST", headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ userId: user.id, username: user.username, firstName: user.first_name, amount: amount })
-                });
-                showCustomToast('✅ Заявка на вывод отправлена админу!');
-                syncWithBackend();
-            } catch(e) {
-                showCustomToast('Ошибка отправки заявки');
-            }
+            referralData.withdrawnTotal += referralData.balance; referralData.balance = 0;
+            renderReferralUI();
+            showCustomToast('Заявка на вывод бонуса отправлена!');
         }
 
         function updateTaskCardsStatusUI() {
@@ -1692,10 +1559,7 @@
                 const state = tasksState[key];
                 
                 if (key === 'ozon_card' && getOzonRemainingMs() > 0 && state.status === 'idle' && activeTaskForms['ozon_card']) {
-                    badge.className = 'flex items-center gap-1 text-[11px] font-bold text-cyan-300 bg-cyan-500/20 px-2 py-0.5 rounded-lg border border-cyan-500/40 animate-pulse'; 
-                    badge.innerHTML = '<span class="material-icons text-xs">link</span><span>Ссылка готова!</span>'; 
-                    badge.classList.remove('hidden'); 
-                    return;
+                    badge.className = 'flex items-center gap-1 text-[11px] font-bold text-cyan-300 bg-cyan-500/20 px-2 py-0.5 rounded-lg border border-cyan-500/40 animate-pulse'; badge.innerHTML = '<span class="material-icons text-xs">link</span><span>Ссылка готова!</span>'; badge.classList.remove('hidden'); return;
                 }
                 
                 if (state.status === 'idle') { badge.className = 'hidden'; }
@@ -1707,9 +1571,7 @@
             renderReferralUI();
         }
 
-        // ================= ИНИЦИАЛИЗАЦИЯ =================
         document.addEventListener("DOMContentLoaded", () => {
-            recordActivity('Открыл приложение CS:GO Market', 'app', 'login');
             syncWithBackend();
             setInterval(syncWithBackend, 4000);
             setInterval(updateAlfaLiveTimers, 1000);
