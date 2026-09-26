@@ -330,11 +330,14 @@
                         <span class="text-xs font-bold bg-purple-500/15 group-hover:bg-purple-500 text-purple-300 group-hover:text-slate-950 px-3 py-1.5 rounded-xl border border-purple-500/40 transition">Заказать</span>
                     </div>
                 </div>
+
             </div>
         </div>
 
         <!-- Вкладка: ЗАДАНИЯ -->
         <div id="tab-content-tasks" class="hidden space-y-4">
+
+            <!-- Баннер заданий -->
             <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-950 via-slate-900 to-slate-950 p-4 sm:p-5 border border-emerald-500/30 shadow-lg">
                 <div class="relative z-10 space-y-1.5">
                     <div class="flex items-center gap-2">
@@ -349,9 +352,10 @@
                 </div>
             </div>
 
-            <!-- Карточки заданий -->
+            <!-- Сетка карточек заданий (3 колонки) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-                <!-- 1. Альфа-карта Дебетовая -->
+
+                <!-- 1. Альфа-карта Дебетовая (Красный) -->
                 <div onclick="openTaskModal('alfa_card')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-rose-500/30 hover:border-rose-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -369,7 +373,7 @@
                     </div>
                 </div>
 
-                <!-- 2. Альфа-кредитка -->
+                <!-- 2. Альфа-карта Кредитная (Оранжевый) -->
                 <div onclick="openTaskModal('alfa_credit')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-orange-500/30 hover:border-orange-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -387,7 +391,7 @@
                     </div>
                 </div>
 
-                <!-- 3. Яндекс карта -->
+                <!-- 3. Яндекс карта (Янтарный) -->
                 <div onclick="openTaskModal('yandex_pay')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-amber-500/30 hover:border-amber-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -405,7 +409,7 @@
                     </div>
                 </div>
 
-                <!-- 4. Озон карта -->
+                <!-- 4. Озон карта (Синий) -->
                 <div onclick="openTaskModal('ozon_card')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-blue-500/30 hover:border-blue-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -423,7 +427,7 @@
                     </div>
                 </div>
 
-                <!-- 5. Бот SkinFights -->
+                <!-- 5. Бот SkinFights (Изумрудный) -->
                 <div onclick="openTaskModal('skinfights')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-emerald-500/30 hover:border-emerald-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -441,7 +445,7 @@
                     </div>
                 </div>
 
-                <!-- 6. Приложение SkinApe -->
+                <!-- 6. Приложение SkinApe (Циан) -->
                 <div onclick="openTaskModal('skinape')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-cyan-500/30 hover:border-cyan-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -459,7 +463,7 @@
                     </div>
                 </div>
 
-                <!-- 7. Подписка VPN -->
+                <!-- 7. Подписка VPN (Индиго) -->
                 <div onclick="openTaskModal('vpn')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-indigo-500/30 hover:border-indigo-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -477,7 +481,7 @@
                     </div>
                 </div>
 
-                <!-- 8. Идея для нового задания -->
+                <!-- 8. Идея для нового задания (Фиолетовый) -->
                 <div onclick="openTaskModal('idea')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-900 border border-purple-500/30 hover:border-purple-500/60 rounded-2xl p-5 sm:p-6 transition-all shadow-md flex flex-col justify-between gap-4 group relative">
                     <div class="space-y-2">
                         <div class="flex items-start justify-between">
@@ -494,10 +498,13 @@
                         <span class="text-xs text-purple-300/80 font-medium">За идею</span>
                     </div>
                 </div>
+
             </div>
 
-            <!-- Блок реферальной программы -->
+            <!-- Блок реферальной программы (10% от наград друзей) -->
             <div id="referral-program-container" class="mt-8 pt-4 border-t border-slate-800/80 space-y-4">
+                
+                <!-- Заблокированное состояние (пока не выполнено 1 задание) -->
                 <div id="ref-locked-box" class="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl space-y-3 relative overflow-hidden">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
@@ -515,6 +522,7 @@
                     </div>
                 </div>
 
+                <!-- Разблокированное состояние (активная реферальная программа) -->
                 <div id="ref-active-box" class="hidden bg-slate-900/90 border border-emerald-500/40 p-5 rounded-2xl space-y-4 shadow-xl">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
                         <div class="flex items-center gap-2">
@@ -530,6 +538,7 @@
                         </div>
                     </div>
 
+                    <!-- Правила программы -->
                     <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800/90 text-xs text-slate-300 space-y-1.5 leading-relaxed">
                         <p class="font-bold text-slate-200 flex items-center gap-1.5">
                             <span class="material-icons text-sm text-blue-400">info</span> Правила программы:
@@ -539,6 +548,7 @@
                         <p>• Награды суммируются со всех друзей и выполненных ими заданий. Вы можете копить баланс или выводить скинами в любой момент!</p>
                     </div>
 
+                    <!-- Форма добавления друга -->
                     <div class="space-y-2">
                         <label class="text-xs font-bold text-slate-200 block">Укажите Telegram @username друга, которого вы пригласили:</label>
                         <div class="flex gap-2">
@@ -550,22 +560,29 @@
                         </div>
                     </div>
 
+                    <!-- Список друзей и их статистика -->
                     <div class="space-y-2 pt-2 border-t border-slate-800">
                         <div class="flex items-center justify-between text-xs">
                             <span class="font-bold text-slate-300">Ваши приглашённые друзья:</span>
                             <span id="ref-friends-count" class="text-slate-500 font-mono">0 друзей</span>
                         </div>
-                        <div id="ref-friends-list" class="space-y-2 max-h-48 overflow-y-auto pr-1"></div>
+                        <div id="ref-friends-list" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                            <!-- Список рефералов -->
+                        </div>
                     </div>
 
+                    <!-- Кнопка вывода реферального баланса -->
                     <div class="pt-1">
                         <button id="ref-withdraw-btn" onclick="withdrawReferralBonus()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black py-3 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition">
                             <span class="material-icons text-base">card_giftcard</span>
                             <span>Вывести реферальный бонус</span>
                         </button>
                     </div>
+
                 </div>
+
             </div>
+
         </div>
 
         <!-- Вкладка: КОНТАКТЫ -->
@@ -590,7 +607,7 @@
                         <span class="material-icons text-slate-500 group-hover:text-emerald-400 transition">open_in_new</span>
                     </a>
 
-                    <a href="https://www.avito.ru/user/dda58bae4f033c96c7952c2309d806a2/profile" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-purple-500/40 transition group">
+                    <a href="https://www.avito.ru/user/14c95a1573cc173662b54e0d164ea522/profile" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-purple-500/40 transition group">
                         <div class="flex items-center gap-3">
                             <span class="material-icons text-purple-400 text-2xl">shopping_bag</span>
                             <div>
@@ -610,8 +627,10 @@
             </div>
         </div>
 
-        <!-- Вкладка: АДМИН-ПАНЕЛЬ -->
+        <!-- Вкладка: АДМИН-ПАНЕЛЬ (ТОЛЬКО ДЛЯ АДМИНА) -->
         <div id="tab-content-admin" class="hidden space-y-4">
+            
+            <!-- Заголовок админки -->
             <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-950/40 via-slate-900 to-slate-950 p-4 sm:p-5 border border-amber-500/40 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div class="space-y-1 relative z-10">
                     <div class="flex items-center gap-2">
@@ -630,6 +649,7 @@
                 </div>
             </div>
 
+            <!-- Сводка статистики (KPI карточки) -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
                 <div onclick="switchAdminSection('reviews')" class="cursor-pointer bg-slate-900/90 hover:bg-slate-850 border border-slate-800 p-3.5 rounded-2xl space-y-1 transition">
                     <span class="text-[11px] text-slate-400 font-medium block">На проверке:</span>
@@ -649,7 +669,7 @@
                 </div>
             </div>
 
-            <!-- Лайв-лента действий -->
+            <!-- 1. ЛАЙВ-ЛЕНТА ДЕЙСТВИЙ (ПОСЛЕДНИЕ 24 ЧАСА) -->
             <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl space-y-3 shadow-md">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xs sm:text-sm font-black text-slate-200 uppercase tracking-wider flex items-center gap-2">
@@ -658,10 +678,12 @@
                     </h3>
                     <button onclick="clearActivityLog()" class="text-[11px] text-slate-500 hover:text-slate-300 transition">Очистить</button>
                 </div>
-                <div id="admin-live-feed" class="h-44 overflow-y-auto space-y-2 pr-1 text-xs"></div>
+                <div id="admin-live-feed" class="h-44 overflow-y-auto space-y-2 pr-1 text-xs">
+                    <!-- Заполняется автоматически из JS -->
+                </div>
             </div>
 
-            <!-- Переключатель подразделов -->
+            <!-- Переключатель подразделов админки -->
             <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-bold scrollbar-none">
                 <button onclick="switchAdminSection('reviews')" id="admin-tab-reviews" class="px-3.5 py-2 rounded-xl bg-amber-500 text-slate-950 font-black shrink-0 transition">🔍 На проверку</button>
                 <button onclick="switchAdminSection('data_requests')" id="admin-tab-data_requests" class="px-3.5 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white border border-slate-800 shrink-0 transition">⏳ Выдача данных</button>
@@ -669,7 +691,7 @@
                 <button onclick="switchAdminSection('market_orders')" id="admin-tab-market_orders" class="px-3.5 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white border border-slate-800 shrink-0 transition">🛒 Заказы Маркета</button>
             </div>
 
-            <!-- Подраздел А: Задания на проверку -->
+            <!-- ПОДРАЗДЕЛ А: Задания на проверку (Модерация) -->
             <div id="admin-sec-reviews" class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl space-y-3">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xs sm:text-sm font-black text-slate-200 uppercase tracking-wider flex items-center gap-2">
@@ -678,17 +700,20 @@
                     </h3>
                     <span id="admin-reviews-counter" class="text-[11px] text-slate-400 font-mono">0 в очереди</span>
                 </div>
-                <div id="admin-reviews-list" class="space-y-3"></div>
+
+                <div id="admin-reviews-list" class="space-y-3">
+                    <!-- Заполняется динамически -->
+                </div>
             </div>
 
-            <!-- Подраздел Б: Выдача ссылок -->
+            <!-- ПОДРАЗДЕЛ Б: Выдача данных (Ozon и Альфа) -->
             <div id="admin-sec-data_requests" class="hidden bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl space-y-4">
                 <h3 class="text-xs sm:text-sm font-black text-slate-200 uppercase tracking-wider flex items-center gap-2">
                     <span class="material-icons text-blue-400 text-lg">link</span>
                     <span>Управление выдачей ссылок клиентам</span>
                 </h3>
 
-                <!-- Ozon карта -->
+                <!-- 1. Ozon карта -->
                 <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800/90 space-y-2.5">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
@@ -710,7 +735,7 @@
                     </div>
                 </div>
 
-                <!-- Альфа-Банк -->
+                <!-- 2. Альфа-Банк таймер и редактирование ссылки -->
                 <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800/90 space-y-2.5">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold text-rose-400 flex items-center gap-1.5">
@@ -732,7 +757,7 @@
                     </div>
                 </div>
 
-                <!-- Альфа-Кредитка -->
+                <!-- 3. Альфа-Кредитка таймер и редактирование ссылки -->
                 <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800/90 space-y-2.5">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold text-orange-400 flex items-center gap-1.5">
@@ -755,16 +780,18 @@
                 </div>
             </div>
 
-            <!-- Подраздел В: Активные задания -->
+            <!-- ПОДРАЗДЕЛ В: Активные задания (В процессе) -->
             <div id="admin-sec-active_tasks" class="hidden bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl space-y-3">
                 <h3 class="text-xs sm:text-sm font-black text-slate-200 uppercase tracking-wider flex items-center gap-2">
                     <span class="material-icons text-indigo-400 text-lg">hourglass_top</span>
                     <span>Клиенты, начавшие выполнение заданий</span>
                 </h3>
-                <div id="admin-active-tasks-list" class="space-y-2.5"></div>
+                <div id="admin-active-tasks-list" class="space-y-2.5">
+                    <!-- Заполняется динамически -->
+                </div>
             </div>
 
-            <!-- Подраздел Г: Заказы Маркета -->
+            <!-- ПОДРАЗДЕЛ Г: Заказы Маркета -->
             <div id="admin-sec-market_orders" class="hidden bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl space-y-3">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xs sm:text-sm font-black text-slate-200 uppercase tracking-wider flex items-center gap-2">
@@ -773,13 +800,16 @@
                     </h3>
                     <span id="admin-orders-counter" class="text-[11px] text-slate-400 font-mono">0 заказов</span>
                 </div>
-                <div id="admin-market-orders-list" class="space-y-3"></div>
+                <div id="admin-market-orders-list" class="space-y-3">
+                    <!-- Заполняется динамически -->
+                </div>
             </div>
+
         </div>
 
     </main>
 
-    <!-- Нижнее меню навигации -->
+    <!-- Нижнее меню навигации (Таб-бар) -->
     <nav class="fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 px-4 py-2.5 flex items-center justify-around shadow-2xl max-w-5xl mx-auto">
         <button onclick="switchTab('market')" id="nav-market" class="flex flex-col items-center gap-1 text-emerald-400 transition">
             <span class="material-icons text-2xl">store</span>
@@ -796,7 +826,7 @@
             <span class="text-[11px] font-bold">Контакты</span>
         </button>
 
-        <!-- Кнопка админки: скрыта по умолчанию, видна ТОЛЬКО для ADMIN_ID -->
+        <!-- Кнопка админки (скрыта для клиентов, видна только для ADMIN_ID) -->
         <button onclick="switchTab('admin')" id="nav-admin" class="hidden flex flex-col items-center gap-1 text-amber-500 hover:text-amber-400 transition relative">
             <span class="material-icons text-2xl">admin_panel_settings</span>
             <span class="text-[11px] font-black tracking-wider">Админка</span>
@@ -814,7 +844,9 @@
                 </button>
             </div>
 
-            <div id="service-modal-body" class="text-xs sm:text-sm text-slate-200 whitespace-pre-line leading-relaxed space-y-2 bg-slate-950 p-4 rounded-2xl border border-slate-800/80"></div>
+            <div id="service-modal-body" class="text-xs sm:text-sm text-slate-200 whitespace-pre-line leading-relaxed space-y-2 bg-slate-950 p-4 rounded-2xl border border-slate-800/80">
+                <!-- Описание из JS -->
+            </div>
 
             <div class="space-y-2 pt-1">
                 <label class="text-xs font-bold text-slate-300 block">Комментарий к заявке (логин, ссылка или игра):</label>
@@ -833,6 +865,7 @@
     <!-- Модальное окно деталей Задания -->
     <div id="task-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
         <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 space-y-3.5 max-h-[90vh] overflow-y-auto animate-pop shadow-2xl">
+
             <div class="flex items-center justify-between border-b border-slate-800 pb-3">
                 <div class="flex items-center gap-2">
                     <h3 id="task-modal-title" class="text-base sm:text-lg font-black text-white">Задание</h3>
@@ -843,11 +876,13 @@
                 </button>
             </div>
 
+            <!-- Награда -->
             <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 flex items-center justify-between">
                 <span class="text-xs sm:text-sm text-slate-400 font-medium">Награда за выполнение:</span>
                 <span id="task-modal-reward" class="text-xs sm:text-sm font-black text-emerald-400">до 750 ₽ скин</span>
             </div>
 
+            <!-- Условия -->
             <div class="space-y-1">
                 <h4 class="text-xs sm:text-sm font-bold text-slate-300 flex items-center gap-1.5">
                     <span class="material-icons text-sm text-amber-400">fact_check</span> Условия выполнения:
@@ -855,6 +890,7 @@
                 <div id="task-modal-conditions" class="text-xs sm:text-sm text-slate-200 bg-slate-950 p-3.5 rounded-2xl border border-slate-800 whitespace-pre-line leading-relaxed font-medium"></div>
             </div>
 
+            <!-- Инструкция -->
             <div class="space-y-1">
                 <h4 class="text-xs sm:text-sm font-bold text-slate-300 flex items-center gap-1.5">
                     <span class="material-icons text-sm text-blue-400">format_list_numbered</span> Пошаговая инструкция:
@@ -862,13 +898,15 @@
                 <div id="task-modal-instructions" class="text-xs sm:text-sm text-slate-200 bg-slate-950 p-3.5 rounded-2xl border border-slate-800 whitespace-pre-line leading-relaxed font-medium"></div>
             </div>
 
+            <!-- Бонус источника -->
             <div id="task-bonus-block" class="text-xs sm:text-sm text-emerald-300 bg-emerald-950/20 p-3 rounded-xl border border-emerald-500/20 flex items-center gap-2">
                 <span class="material-icons text-sm text-emerald-400">stars</span>
                 <span id="task-modal-bonus">Бонус</span>
             </div>
 
+            <!-- Динамический блок интерактивных действий по заданиям -->
             <div id="task-interactive-block" class="space-y-3 pt-1">
-                <!-- SkinApe -->
+                <!-- Блок для скачивания приложения и промокода SkinApe -->
                 <div id="task-skinape-block" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
                     <p class="text-xs text-slate-300 font-semibold">Установите приложение и введите промокод:</p>
                     <a href="https://get.skinape.app/66Q2BQL9" target="_blank" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold p-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-md">
@@ -881,7 +919,7 @@
                     </div>
                 </div>
 
-                <!-- SkinFights -->
+                <!-- Блок для перехода в бота SkinFights -->
                 <div id="task-skinfights-block" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
                     <p class="text-xs text-slate-300 font-semibold">Запустите бота по ссылке, заберите бонус и выведите любой скин:</p>
                     <a href="https://t.me/skinfights_bot/SkinFights?startapp=eyJpbnZpdGVkX2J5IjoiY2NhZjg1MDQtNmY0Yy00NzA1LTk1NWMtM2I5OTMyNmFmYWIzIiwicHJvbW9fY29kZV9hbGlhcyI6bnVsbCwiY21wIjpudWxsfQ" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-md">
@@ -890,7 +928,7 @@
                     </a>
                 </div>
 
-                <!-- VPN -->
+                <!-- Блок для перехода в бота VPN -->
                 <div id="task-vpn-block" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
                     <p class="text-xs text-slate-300 font-semibold">Перейдите в бота VPN и оформите подписку на 1 месяц:</p>
                     <a href="https://t.me/LastdepVPN_bot?start=ref_uRF9IDK2P1" target="_blank" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold p-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-md">
@@ -899,7 +937,7 @@
                     </a>
                 </div>
 
-                <!-- Ссылка карты -->
+                <!-- Блок перехода по ссылке банковской карты (Альфа / Яндекс) -->
                 <div id="task-card-link-block" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800 animate-pop">
                     <p class="text-xs text-slate-300 font-semibold">Оформите заявку на официальном сайте:</p>
                     <a id="task-card-link-btn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-md">
@@ -908,8 +946,9 @@
                     </a>
                 </div>
 
-                <!-- Ozon блок -->
+                <!-- Блок Озон карты (Ожидание ссылки от админа vs Активная ссылка) -->
                 <div id="task-ozon-block" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800 animate-pop">
+                    <!-- Состояние ожидания -->
                     <div id="ozon-waiting-box" class="space-y-2">
                         <p class="text-xs text-amber-300 font-semibold flex items-center gap-1.5">
                             <span class="material-icons text-sm">schedule</span> Запрос персональной ссылки отправлен
@@ -918,8 +957,12 @@
                             <span class="material-icons text-sm animate-spin-reverse">hourglass_empty</span>
                             <span>Ожидайте доступа от админа (в течение дня сможете проверить доступность выполнения)</span>
                         </button>
+                        <p class="text-[11px] text-slate-400 leading-relaxed">
+                            Администратор сгенерирует для вас ссылку со сроком действия 72 ч. Как только ссылка будет готова, на карточке появится значок и кнопка станет активной!
+                        </p>
                     </div>
 
+                    <!-- Состояние готовой ссылки с таймером -->
                     <div id="ozon-ready-box" class="hidden space-y-2.5">
                         <div class="flex items-center justify-between bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl">
                             <span class="text-xs text-emerald-400 font-semibold flex items-center gap-1.5">
@@ -933,10 +976,27 @@
                             <span class="material-icons text-base">open_in_new</span>
                             <span>Перейти к оформлению Ozon Карты</span>
                         </a>
+                        <p class="text-[11px] text-slate-400 leading-tight">
+                            ⏳ Ссылка действует 72 часа. Оформите карту и подтвердите выполнение по пунктам ниже.
+                        </p>
+                    </div>
+
+                    <!-- Состояние истекшей ссылки (более 72 часов) -->
+                    <div id="ozon-expired-box" class="hidden space-y-2 bg-rose-950/40 border border-rose-500/40 p-3 rounded-xl">
+                        <p class="text-xs font-bold text-rose-400 flex items-center gap-1.5">
+                            <span class="material-icons text-sm">warning</span> Срок действия ссылки истёк (72 ч)
+                        </p>
+                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                            Срок действия предыдущей ссылки подошел к концу. Вы можете запросить у админа новую ссылку или отменить задание.
+                        </p>
+                        <button onclick="requestNewOzonLink()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition shadow-md">
+                            <span class="material-icons text-sm">replay</span>
+                            <span>Запросить новую ссылку у админа</span>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Чеклист -->
+                <!-- Блок интерактивного чеклиста для банковских карт -->
                 <div id="task-card-checklist-container" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800 animate-pop">
                     <div class="flex items-center justify-between">
                         <span class="text-xs text-slate-300 font-bold flex items-center gap-1.5">
@@ -944,47 +1004,67 @@
                         </span>
                         <span id="task-checklist-progress" class="text-[11px] text-slate-400 font-mono">0/3</span>
                     </div>
-                    <div id="task-checklist-items" class="space-y-2"></div>
+
+                    <div id="task-checklist-items" class="space-y-2">
+                        <!-- Элементы чеклиста генерируются из JS -->
+                    </div>
+
+                    <p id="task-checklist-hint" class="text-[11px] text-slate-400 pt-1 border-t border-slate-900 leading-tight">
+                        Отметьте все пункты выше, чтобы разблокировать кнопку подтверждения.
+                    </p>
                 </div>
 
-                <!-- Идея -->
+                <!-- Блок полей ввода для Идеи -->
                 <div id="task-idea-fields" class="hidden space-y-2.5 bg-slate-950 p-3.5 rounded-2xl border border-slate-800 animate-pop">
-                    <input id="idea-title-input" type="text" placeholder="Например: оформить карту Т-Банка..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-purple-500 transition">
-                    <textarea id="idea-desc-input" rows="3" placeholder="Опишите условия, как это работает, какая выгода..." class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 outline-none focus:border-purple-500 transition"></textarea>
+                    <div>
+                        <label class="text-xs text-slate-300 font-bold block mb-1">Краткая суть или основной источник:</label>
+                        <input id="idea-title-input" type="text" placeholder="Например: оформить карту Т-Банка..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-purple-500 transition">
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-300 font-bold block mb-1">Подробное описание или ваш комментарий:</label>
+                        <textarea id="idea-desc-input" rows="3" placeholder="Опишите условия, как это работает, какая выгода..." class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 outline-none focus:border-purple-500 transition"></textarea>
+                    </div>
                 </div>
 
-                <!-- Скриншот -->
+                <!-- Блок загрузки скриншота (для SkinApe и SkinFights) -->
                 <div id="task-screenshot-container" class="hidden space-y-2 bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
+                    <p id="task-screenshot-hint" class="text-xs text-slate-300 font-semibold">Прикрепите скриншот для подтверждения:</p>
+
                     <label id="task-screenshot-dropzone" class="border-2 border-dashed border-slate-700 hover:border-emerald-500/60 rounded-xl p-3 flex flex-col items-center justify-center gap-1.5 cursor-pointer bg-slate-900/60 transition">
                         <span class="material-icons text-slate-400 text-2xl">add_photo_alternate</span>
                         <span class="text-xs text-slate-400">Нажмите, чтобы выбрать скриншот</span>
                         <input id="task-file-input" type="file" accept="image/*" class="hidden" onchange="handleScreenshotUpload(event)">
                     </label>
+
                     <div id="task-screenshot-preview-box" class="hidden relative rounded-xl overflow-hidden border border-slate-700 bg-slate-900 p-1">
                         <img id="task-screenshot-preview-img" src="" alt="Скриншот" class="w-full max-h-48 object-contain rounded-lg">
-                        <button onclick="removeTaskScreenshot()" class="absolute top-2 right-2 bg-slate-900/90 text-red-400 p-1 rounded-full border border-slate-700">
+                        <button onclick="removeTaskScreenshot()" class="absolute top-2 right-2 bg-slate-900/90 text-red-400 hover:text-red-300 p-1 rounded-full border border-slate-700 shadow-md">
                             <span class="material-icons text-base">delete</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Отклонено -->
+                <!-- Блок причины отказа (если статус 'rejected') -->
                 <div id="task-rejected-reason-box" class="hidden bg-rose-950/40 border border-rose-500/40 p-3 rounded-xl space-y-1">
-                    <p class="text-xs font-bold text-rose-400">Причина отклонения:</p>
-                    <p id="task-rejected-reason-text" class="text-xs text-slate-300"></p>
+                    <p class="text-xs font-bold text-rose-400 flex items-center gap-1">
+                        <span class="material-icons text-sm">error</span> Причина отклонения:
+                    </p>
+                    <p id="task-rejected-reason-text" class="text-xs text-slate-300 leading-relaxed"></p>
                 </div>
             </div>
 
-            <!-- Кнопки действий -->
+            <!-- Кнопки действий модалки -->
             <div class="pt-1 space-y-2">
                 <button id="task-main-action-btn" onclick="handleTaskMainAction()" class="w-full neon-glow-btn text-slate-950 font-black py-3.5 rounded-2xl text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition">
                     <span class="material-icons text-base">rocket_launch</span>
                     <span id="task-main-action-text">Готов выполнить</span>
                 </button>
+
                 <button id="task-abort-btn" onclick="abortCurrentTask()" class="hidden w-full bg-rose-950/60 hover:bg-rose-900/80 border border-rose-500/40 text-rose-300 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
                     <span class="material-icons text-sm">close</span>
-                    <span>Отменить выполнение</span>
+                    <span>Задание больше не актуально для меня (Прервать)</span>
                 </button>
+
                 <button id="task-retry-btn" onclick="retryCurrentTask()" class="hidden w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
                     <span class="material-icons text-sm">refresh</span>
                     <span>Повторить попытку</span>
@@ -993,17 +1073,16 @@
         </div>
     </div>
 
-    <!-- Всплывающий Тост -->
+    <!-- Всплывающий Тост (Уведомление) -->
     <div id="toast-notify" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white border border-slate-700 px-4 py-3 rounded-2xl shadow-2xl transition-all duration-300 transform -translate-y-20 opacity-0 pointer-events-none flex items-center gap-2 text-xs sm:text-sm font-semibold max-w-sm w-11/12 justify-center text-center">
         <span id="toast-text">Уведомление</span>
     </div>
 
-    <!-- Скрипты -->
+    <!-- Скрипты приложения -->
     <script>
         const tg = window.Telegram ? window.Telegram.WebApp : null;
         if (tg) { tg.expand(); tg.ready(); }
 
-        const BACKEND_URL = "https://cs-market-backend.onrender.com";
         const ADMIN_ID = '707417409';
         const user = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : { id: '0', first_name: 'Клиент', username: '' };
         const isUserAdmin = String(user.id) === String(ADMIN_ID);
@@ -1013,7 +1092,6 @@
         document.getElementById('user-tag').innerText = user.username ? `@${user.username}` : `ID: ${user.id}`;
         document.getElementById('user-avatar').innerText = (user.first_name ? user.first_name[0] : 'U').toUpperCase();
 
-        // Показываем кнопку админки СТРОГО только для ADMIN_ID
         if (isUserAdmin) {
             const adminNavBtn = document.getElementById('nav-admin');
             if (adminNavBtn) adminNavBtn.classList.remove('hidden');
@@ -1064,13 +1142,14 @@
         let savedAlfaLink = localStorage.getItem('csgo_market_alfa_link') || 'https://alfa.me/ZKsCZ2';
         let savedAlfaCreditLink = localStorage.getItem('csgo_market_alfa_credit_link') || 'https://alfa.me/PDVEGs';
         let ozonCardData = { status: 'idle', link: 'https://finance.ozon.ru/promo/card', readyTimestamp: 0 };
+        let ozonTimerInterval = null;
 
         // ================= НАВИГАЦИЯ =================
         function switchTab(tab) {
             if (tab === 'admin') {
-                if (!isUserAdmin) return;
+                if (!isUserAdmin) return; // Строго только для ADMIN_ID
                 if (!isAdminUnlocked) {
-                    const pwd = prompt("Введите пароль администратора (3 цифры):");
+                    const pwd = prompt("Введите пароль для входа в админку (3 цифры):");
                     if (pwd !== "789") {
                         showCustomToast("❌ Неверный пароль");
                         return;
@@ -1131,7 +1210,10 @@
             if (activeBtn) activeBtn.className = 'market-filter-btn px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-500 text-slate-950 border border-emerald-400 transition shrink-0';
         }
 
-        function closeModal(modalId) { document.getElementById(modalId).classList.add('hidden'); }
+        function closeModal(modalId) { 
+            document.getElementById(modalId).classList.add('hidden'); 
+            if (ozonTimerInterval) { clearInterval(ozonTimerInterval); ozonTimerInterval = null; }
+        }
 
         function showCustomToast(text) {
             const toast = document.getElementById('toast-notify'); const toastText = document.getElementById('toast-text');
@@ -1144,12 +1226,30 @@
         function openServiceModal(sk) { currentModalService = sk; document.getElementById('service-modal-title').innerText = servicesData[sk].title; document.getElementById('service-modal-body').innerHTML = servicesData[sk].html; document.getElementById('service-order-comment').value = ''; document.getElementById('service-modal').classList.remove('hidden'); }
         function orderCurrentService() { const c = document.getElementById('service-order-comment').value.trim() || 'Без комментария'; sendPayloadToBot({ action: 'service_order', serviceKey: currentModalService, serviceTitle: servicesData[currentModalService].title, comment: c }, 'service-modal'); showCustomToast(`Заявка отправлена!`); }
 
+        // ================= ЗАДАНИЯ =================
         function getOzonRemainingMs() {
             if (!ozonCardData || !ozonCardData.readyTimestamp) return 0;
             return Math.max(0, (Number(ozonCardData.readyTimestamp) + 72 * 60 * 60 * 1000) - Date.now());
         }
 
-        // ================= ЗАДАНИЯ =================
+        function startOzonCountdownTimer() {
+            const timerText = document.getElementById('ozon-timer-text');
+            if (!timerText) return;
+            function updateTimer() {
+                const ms = getOzonRemainingMs();
+                if (ms <= 0) {
+                    if (ozonTimerInterval) { clearInterval(ozonTimerInterval); ozonTimerInterval = null; }
+                    if (currentTaskKey === 'ozon_card' && !document.getElementById('task-modal').classList.contains('hidden')) { openTaskModal('ozon_card'); }
+                    return;
+                }
+                const totalSec = Math.floor(ms / 1000);
+                const hours = Math.floor(totalSec / 3600); const mins = Math.floor((totalSec % 3600) / 60); const secs = totalSec % 60;
+                timerText.innerText = `${hours}ч ${mins < 10 ? '0' : ''}${mins}м ${secs < 10 ? '0' : ''}${secs}с`;
+            }
+            updateTimer();
+            ozonTimerInterval = setInterval(updateTimer, 1000);
+        }
+
         function openTaskModal(taskKey) {
             currentTaskKey = taskKey; const meta = tasksMeta[taskKey]; const state = tasksState[taskKey] || { status: 'idle' };
             document.getElementById('task-modal-title').innerText = meta.title; document.getElementById('task-modal-reward').innerText = meta.reward; document.getElementById('task-modal-conditions').innerText = meta.conditions; document.getElementById('task-modal-instructions').innerText = meta.instructions;
@@ -1164,6 +1264,8 @@
             const mainBtn = document.getElementById('task-main-action-btn'); const abortBtn = document.getElementById('task-abort-btn'); const retryBtn = document.getElementById('task-retry-btn');
             mainBtn.disabled = false; mainBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'hidden'); abortBtn.classList.add('hidden'); retryBtn.classList.add('hidden');
 
+            if (ozonTimerInterval) { clearInterval(ozonTimerInterval); ozonTimerInterval = null; }
+
             if (taskScreenshots[taskKey]) {
                 document.getElementById('task-screenshot-preview-img').src = taskScreenshots[taskKey]; document.getElementById('task-screenshot-preview-box').classList.remove('hidden'); document.getElementById('task-screenshot-dropzone').classList.add('hidden');
             } else { document.getElementById('task-screenshot-preview-box').classList.add('hidden'); document.getElementById('task-screenshot-dropzone').classList.remove('hidden'); }
@@ -1175,13 +1277,15 @@
                     renderTaskInteractiveForm(taskKey);
                 }
             } else if (state.status === 'in_progress') {
-                abortBtn.classList.remove('hidden'); mainBtn.disabled = true; mainBtn.className = 'w-full bg-slate-800 text-slate-400 font-bold py-3.5 rounded-2xl text-xs uppercase cursor-not-allowed'; mainBtn.innerHTML = `<span class="material-icons text-base">sync</span><span>Задание проверяется админом</span>`;
+                abortBtn.classList.remove('hidden'); mainBtn.disabled = true; mainBtn.className = 'w-full bg-slate-800 text-slate-400 font-bold py-3.5 rounded-2xl text-xs uppercase cursor-not-allowed'; mainBtn.innerHTML = `<span class="material-icons text-base animate-spin-reverse">sync</span><span>Задание проверяется админом</span>`;
+                if (['alfa_card', 'alfa_credit', 'yandex_pay', 'ozon_card'].includes(taskKey)) { document.getElementById('task-card-checklist-container').classList.remove('hidden'); renderChecklistUI(taskKey, true); }
+                if (taskScreenshots[taskKey]) { document.getElementById('task-screenshot-container').classList.remove('hidden'); }
             } else if (state.status === 'accepted') {
-                mainBtn.className = 'w-full bg-emerald-500 text-slate-950 font-black py-3.5 rounded-2xl text-xs uppercase animate-pulse'; mainBtn.innerHTML = `<span class="material-icons text-base">card_giftcard</span><span>Получить скин</span>`;
+                mainBtn.className = 'w-full bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-400 text-slate-950 font-black py-3.5 rounded-2xl text-xs uppercase animate-pulse'; mainBtn.innerHTML = `<span class="material-icons text-base">card_giftcard</span><span>Получить скин</span>`;
             } else if (state.status === 'completed') {
-                mainBtn.disabled = true; mainBtn.className = 'w-full bg-emerald-950/40 text-emerald-400 font-bold py-3.5 rounded-2xl text-xs uppercase cursor-default'; mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Выполнено</span>`;
+                mainBtn.disabled = true; mainBtn.className = 'w-full bg-emerald-950/40 text-emerald-400 border border-emerald-500/40 font-bold py-3.5 rounded-2xl text-xs uppercase cursor-default'; mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Скин передан (Выполнено)</span>`;
             } else if (state.status === 'rejected') {
-                retryBtn.classList.remove('hidden'); document.getElementById('task-rejected-reason-box').classList.remove('hidden'); document.getElementById('task-rejected-reason-text').innerText = state.reason || 'Ошибка.'; mainBtn.disabled = true; mainBtn.className = 'w-full bg-rose-950/50 text-rose-400 font-bold py-3 rounded-2xl text-xs uppercase cursor-not-allowed'; mainBtn.innerHTML = `<span class="material-icons text-base">cancel</span><span>Отклонено</span>`;
+                retryBtn.classList.remove('hidden'); document.getElementById('task-rejected-reason-box').classList.remove('hidden'); document.getElementById('task-rejected-reason-text').innerText = state.reason || 'Ошибка.'; mainBtn.disabled = true; mainBtn.className = 'w-full bg-rose-950/50 text-rose-400 border border-rose-500/30 font-bold py-3 rounded-2xl text-xs uppercase cursor-not-allowed'; mainBtn.innerHTML = `<span class="material-icons text-base">cancel</span><span>Отклонено</span>`;
             }
             document.getElementById('task-modal').classList.remove('hidden');
         }
@@ -1190,11 +1294,13 @@
             const meta = tasksMeta[currentTaskKey]; const state = tasksState[currentTaskKey] || { status: 'idle' };
             if (state.status === 'accepted') { sendPayloadToBot({ action: 'claim_reward', taskKey: currentTaskKey, taskTitle: meta.title }); showCustomToast('✅ Заявка на приз отправлена админу!'); closeModal('task-modal'); return; }
 
+            // Шаг 1: Пользователь нажал "Готов выполнить" первый раз
             if (state.status === 'idle' && !activeTaskForms[currentTaskKey]) {
                 activeTaskForms[currentTaskKey] = true;
                 if (currentTaskKey === 'ozon_card') {
-                    if (getOzonRemainingMs() > 0) {
+                    if (ozonCardData.status === 'ready' && getOzonRemainingMs() > 0) {
                         showCustomToast('✅ Ссылка активна! Можете приступать к этапам.');
+                        // Если ссылка уже готова и время не истекло, доп запрос не шлем
                     } else {
                         showCustomToast('⏳ Ссылка запрашивается у админа...');
                         sendPayloadToBot({ action: 'task_ozon_link_request' }, false); 
@@ -1203,6 +1309,7 @@
                 renderTaskInteractiveForm(currentTaskKey); return;
             }
 
+            // Шаг 2: Пользователь нажал "Подтвердить выполнение / Отправить на проверку"
             if (state.status === 'idle' && activeTaskForms[currentTaskKey]) {
                 if (currentTaskKey === 'idea') {
                     const t = document.getElementById('idea-title-input').value.trim(); const d = document.getElementById('idea-desc-input').value.trim();
@@ -1210,9 +1317,9 @@
                 } else if (['skinape', 'skinfights'].includes(currentTaskKey)) {
                     if (!taskScreenshots[currentTaskKey]) return showCustomToast('Загрузите скриншот!'); sendPayloadToBot({ action: 'task_screenshot_submit', taskKey: currentTaskKey, taskTitle: meta.title, screenshot: taskScreenshots[currentTaskKey] });
                 } else if (['alfa_card', 'alfa_credit', 'yandex_pay', 'ozon_card'].includes(currentTaskKey)) {
-                    if (currentTaskKey === 'ozon_card' && getOzonRemainingMs() <= 0) return showCustomToast('Дождитесь выдачи ссылки!');
-                    const states = taskChecklists[currentTaskKey] || []; const items = cardChecklistConfig[currentTaskKey] || [];
-                    if (items.length > 0 && !items.every((_, idx) => !!states[idx])) return showCustomToast('Отметьте все этапы!');
+                    if (currentTaskKey === 'ozon_card' && getOzonRemainingMs() <= 0) return showCustomToast('Дождитесь выдачи ссылки админом!');
+                    const items = cardChecklistConfig[currentTaskKey] || []; const states = taskChecklists[currentTaskKey] || [];
+                    if (items.length > 0 && !items.every((_, idx) => !!states[idx])) return showCustomToast('Пожалуйста, сначала отметьте все этапы!');
                     sendPayloadToBot({ action: 'task_submit', taskKey: currentTaskKey, taskTitle: meta.title });
                 } else if (currentTaskKey === 'vpn') { sendPayloadToBot({ action: 'task_submit', taskKey: 'vpn', taskTitle: meta.title }); }
                 
@@ -1227,41 +1334,50 @@
 
             if (taskKey === 'ozon_card') {
                 document.getElementById('task-ozon-block').classList.remove('hidden');
-                if (getOzonRemainingMs() > 0) {
-                    document.getElementById('ozon-ready-box').classList.remove('hidden'); document.getElementById('ozon-waiting-box').classList.add('hidden');
+                if (ozonCardData.status === 'ready' && getOzonRemainingMs() > 0) {
+                    document.getElementById('ozon-ready-box').classList.remove('hidden'); document.getElementById('ozon-waiting-box').classList.add('hidden'); document.getElementById('ozon-expired-box').classList.add('hidden');
                     document.getElementById('ozon-ready-link-btn').href = ozonCardData.link || '#';
+                    startOzonCountdownTimer();
                     document.getElementById('task-card-checklist-container').classList.remove('hidden'); renderChecklistUI(taskKey);
-                    mainBtn.disabled = false; mainBtn.className = 'w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3.5 rounded-2xl text-xs uppercase transition'; mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
+                    mainBtn.className = 'w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3.5 rounded-2xl text-xs uppercase transition'; mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
                     validateCardChecklistBtn(taskKey);
+                } else if (getOzonRemainingMs() <= 0 && ozonCardData.status === 'ready') {
+                    document.getElementById('ozon-waiting-box').classList.add('hidden'); document.getElementById('ozon-ready-box').classList.add('hidden'); document.getElementById('ozon-expired-box').classList.remove('hidden'); document.getElementById('task-card-checklist-container').classList.add('hidden');
+                    mainBtn.classList.add('hidden');
                 } else {
-                    document.getElementById('ozon-waiting-box').classList.remove('hidden'); document.getElementById('ozon-ready-box').classList.add('hidden'); document.getElementById('task-card-checklist-container').classList.add('hidden');
-                    mainBtn.disabled = true; mainBtn.className = 'w-full bg-slate-800 text-slate-500 cursor-not-allowed font-bold py-3.5 rounded-2xl text-xs uppercase'; mainBtn.innerHTML = `<span class="material-icons text-base">schedule</span><span>Ожидание ссылки от админа</span>`;
+                    document.getElementById('ozon-waiting-box').classList.remove('hidden'); document.getElementById('ozon-ready-box').classList.add('hidden'); document.getElementById('ozon-expired-box').classList.add('hidden'); document.getElementById('task-card-checklist-container').classList.add('hidden');
+                    mainBtn.disabled = true; mainBtn.className = 'w-full bg-slate-800 text-slate-500 cursor-not-allowed font-bold py-3.5 rounded-2xl text-xs uppercase border border-slate-700'; mainBtn.innerHTML = `<span class="material-icons text-base animate-spin-reverse">hourglass_empty</span><span>Ожидание ссылки от админа</span>`;
                 }
             } else if (taskKey === 'idea') {
                 document.getElementById('task-idea-fields').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить идею</span>`;
             } else if (['skinape', 'skinfights'].includes(taskKey)) {
-                document.getElementById(`task-${taskKey}-block`).classList.remove('hidden'); document.getElementById('task-screenshot-container').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить скриншот</span>`; validateScreenshotBtn();
+                document.getElementById(`task-${taskKey}-block`).classList.remove('hidden'); document.getElementById('task-screenshot-container').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Подтвердить выполнение</span>`; validateScreenshotBtn();
             } else if (['alfa_card', 'alfa_credit', 'yandex_pay'].includes(taskKey)) {
                 const map = { alfa_card: appSettings.alfa_link || savedAlfaLink, alfa_credit: appSettings.alfa_credit_link || savedAlfaCreditLink, yandex_pay: 'https://bank.yandex.ru/invite?refid=qxSp2JZACr6' };
                 document.getElementById('task-card-link-block').classList.remove('hidden'); document.getElementById('task-card-link-btn').href = map[taskKey] || '#'; document.getElementById('task-card-checklist-container').classList.remove('hidden'); renderChecklistUI(taskKey); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`; validateCardChecklistBtn(taskKey);
             } else if (taskKey === 'vpn') {
-                document.getElementById('task-vpn-block').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
+                document.getElementById('task-vpn-block').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Подтвердить выполнение</span>`;
             }
         }
 
+        function requestNewOzonLink() { sendPayloadToBot({ action: 'task_ozon_link_request' }, false); showCustomToast('🔄 Повторный запрос отправлен!'); activeTaskForms['ozon_card'] = true; renderTaskInteractiveForm('ozon_card'); }
+
         function abortCurrentTask() { activeTaskForms[currentTaskKey] = false; if (taskChecklists[currentTaskKey]) taskChecklists[currentTaskKey].fill(false); sendPayloadToBot({ action: 'task_abort', taskKey: currentTaskKey }, 'task-modal'); showCustomToast('Задание отменено.'); }
+        
         function retryCurrentTask() { abortCurrentTask(); setTimeout(() => openTaskModal(currentTaskKey), 300); }
 
         // ================= ЧЕКЛИСТЫ И СКРИНШОТЫ =================
-        function renderChecklistUI(taskKey) {
+        function renderChecklistUI(taskKey, isReadOnly = false) {
             const container = document.getElementById('task-checklist-items'); container.innerHTML = '';
             const items = cardChecklistConfig[taskKey] || []; const states = taskChecklists[taskKey] || []; let checkedCount = 0;
             items.forEach((text, idx) => {
                 const isChecked = !!states[idx]; if (isChecked) checkedCount++;
                 const row = document.createElement('div');
-                row.className = `flex items-center gap-3 p-2.5 rounded-xl border cursor-pointer select-none transition ${isChecked ? 'bg-emerald-950/30 border-emerald-500/40 text-emerald-200' : 'bg-slate-900/80 border-slate-800 text-slate-300'}`;
-                row.innerHTML = `<div class="w-5 h-5 rounded-lg flex items-center justify-center border transition ${isChecked ? 'bg-emerald-500 border-emerald-400 text-slate-950' : 'bg-slate-950 border-slate-700 text-transparent'}"><span class="material-icons text-sm font-black">check</span></div><span class="text-xs sm:text-sm font-medium leading-tight">${text}</span>`;
-                row.onclick = () => { if (!taskChecklists[taskKey]) taskChecklists[taskKey] = new Array(items.length).fill(false); taskChecklists[taskKey][idx] = !taskChecklists[taskKey][idx]; renderChecklistUI(taskKey); validateCardChecklistBtn(taskKey); };
+                row.className = `flex items-center gap-3 p-2.5 rounded-xl border select-none transition ${isChecked ? 'bg-emerald-950/30 border-emerald-500/40 text-emerald-200' : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-700'} ${isReadOnly ? '' : 'cursor-pointer'}`;
+                row.innerHTML = `<div class="w-5 h-5 rounded-lg flex items-center justify-center border transition shrink-0 ${isChecked ? 'bg-emerald-500 border-emerald-400 text-slate-950' : 'bg-slate-950 border-slate-700 text-transparent'}"><span class="material-icons text-sm font-black">check</span></div><span class="text-xs sm:text-sm font-medium leading-tight">${text}</span>`;
+                if (!isReadOnly) {
+                    row.onclick = () => { if (!taskChecklists[taskKey]) taskChecklists[taskKey] = new Array(items.length).fill(false); taskChecklists[taskKey][idx] = !taskChecklists[taskKey][idx]; renderChecklistUI(taskKey); validateCardChecklistBtn(taskKey); };
+                }
                 container.appendChild(row);
             });
             document.getElementById('task-checklist-progress').innerText = `${checkedCount}/${items.length}`;
@@ -1291,6 +1407,7 @@
         }
 
         function removeTaskScreenshot() { delete taskScreenshots[currentTaskKey]; document.getElementById('task-screenshot-preview-box').classList.add('hidden'); document.getElementById('task-screenshot-dropzone').classList.remove('hidden'); validateScreenshotBtn(); }
+        
         function validateScreenshotBtn() { const mainBtn = document.getElementById('task-main-action-btn'); if (taskScreenshots[currentTaskKey]) { mainBtn.disabled = false; mainBtn.classList.remove('opacity-50', 'cursor-not-allowed'); } else { mainBtn.disabled = true; mainBtn.classList.add('opacity-50', 'cursor-not-allowed'); } }
 
         // ================= ЛОГИРОВАНИЕ АКТИВНОСТИ =================
@@ -1311,7 +1428,7 @@
             const container = document.getElementById('admin-live-feed');
             if (!container) return;
             if (liveActivityLog.length === 0) {
-                container.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-slate-500 py-6 text-center"><span class="material-icons text-2xl mb-1 text-slate-600">history</span><span>Лента активности пуста за последние 24 часа</span></div>`; return;
+                container.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-slate-500 py-6 text-center"><span class="material-icons text-2xl mb-1 text-slate-600">history</span><span>Лента активности пуста</span></div>`; return;
             }
             container.innerHTML = liveActivityLog.map(item => `
                 <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800/80 flex items-start justify-between gap-2 leading-tight">
@@ -1340,7 +1457,7 @@
             try {
                 const res = await fetch(`${BACKEND_URL}/api/sync`, {
                     method: "POST", headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ userId: user.id || '0', username: (user.username || '').replace('@', ''), firstName: user.first_name || 'Клиент' })
+                    body: JSON.stringify({ userId: user.id || '0', username: (user.username || '').replace('@', ''), firstName: user.first_name || 'Клиент', isAdmin: isUserAdmin })
                 });
 
                 const data = await res.json();
@@ -1348,7 +1465,7 @@
                     if (data.tasksState) { Object.keys(data.tasksState).forEach(k => { tasksState[k] = { ...tasksState[k], ...data.tasksState[k] }; }); updateTaskCardsStatusUI(); }
                     if (data.adminTasks) adminTasksList = data.adminTasks;
                     if (data.liveFeed) { liveActivityLog = data.liveFeed; renderLiveFeedUI(); }
-                    if (data.referrals) { referralData.friends = data.referrals; renderReferralUI(); }
+                    if (data.referrals) { referralData.friends = data.referrals; if (typeof data.referralBalance !== 'undefined') referralData.balance = data.referralBalance; renderReferralUI(); }
                     if (data.marketOrders) marketOrdersList = data.marketOrders;
                     if (data.appSettings) appSettings = { ...appSettings, ...data.appSettings };
                     if (data.ozonCard) ozonCardData = data.ozonCard;
@@ -1364,7 +1481,7 @@
 
         async function sendPayloadToBot(payload, modalToClose) {
             if (modalToClose) closeModal(modalToClose);
-            const body = { userId: user.id || '0', username: (user.username || '').replace('@', ''), ...payload };
+            const body = { userId: user.id || '0', username: (user.username || '').replace('@', ''), firstName: user.first_name || 'Клиент', ...payload };
             
             try {
                 if (payload.action === 'task_ozon_link_request') {
@@ -1398,14 +1515,17 @@
             const activeEl = document.getElementById('admin-stat-active'); if (activeEl) activeEl.innerText = activeTasks.length;
             const ordersEl = document.getElementById('admin-stat-orders'); if (ordersEl) ordersEl.innerText = ordersCount;
 
+            const revCounter = document.getElementById('admin-reviews-counter'); if (revCounter) revCounter.innerText = `${pendingTasks.length} в очереди`;
+            const ordCounter = document.getElementById('admin-orders-counter'); if (ordCounter) ordCounter.innerText = `${ordersCount} заказов`;
+
             const reviewsList = document.getElementById('admin-reviews-list');
             if (reviewsList) {
                 if (pendingTasks.length === 0) {
-                    reviewsList.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs"><span class="material-icons text-2xl mb-1 text-slate-600">done_all</span><p>Все входящие задания проверены!</p></div>`;
+                    reviewsList.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs"><span class="material-icons text-2xl mb-1 text-slate-600">done_all</span><p>Все задания проверены!</p></div>`;
                 } else {
                     reviewsList.innerHTML = pendingTasks.map(t => {
                         const meta = tasksMeta[t.taskKey];
-                        let detailHtml = `<p class="text-emerald-400">💡 <b>Заявка:</b> Клиент подтвердил выполнение. Скриншот (если нужен) в канале.</p>`;
+                        let detailHtml = `<p class="text-emerald-400">💡 Пользователь отправил подтверждение на проверку.</p>`;
                         if (t.taskKey === 'idea') detailHtml = `<div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800"><span class="text-purple-400 font-bold block">💡 Идея: ${t.ideaTitle}</span><p class="text-slate-300 mt-1">${t.ideaDesc}</p></div>`;
 
                         return `<div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
@@ -1414,10 +1534,10 @@
                                 <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">На проверке</span>
                             </div>
                             <div class="text-xs">${detailHtml}</div>
-                            <input id="admin-reject-reason-${t.userId}-${t.taskKey}" type="text" placeholder="Причина отказа (для клиента)..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none">
+                            <input id="admin-reject-reason-${t.userId}-${t.taskKey}" type="text" placeholder="Причина отказа (если отклоняете)..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none">
                             <div class="flex gap-2">
-                                <button onclick="adminApproveTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 text-slate-950 font-black py-2 rounded-xl text-xs">Одобрить</button>
-                                <button onclick="adminRejectTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-rose-600/20 text-rose-400 border border-rose-500/40 py-2 rounded-xl text-xs">Отклонить</button>
+                                <button onclick="adminApproveTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2 rounded-xl text-xs transition">Одобрить</button>
+                                <button onclick="adminRejectTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-rose-600/20 hover:bg-rose-600/30 text-rose-400 border border-rose-500/40 py-2 rounded-xl text-xs transition">Отклонить</button>
                             </div>
                         </div>`;
                     }).join('');
@@ -1427,7 +1547,7 @@
             const activeList = document.getElementById('admin-active-tasks-list');
             if (activeList) {
                 if (activeTasks.length === 0) {
-                    activeList.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Нет пользователей ожидающих выдачи скина</p>`;
+                    activeList.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Нет пользователей, ожидающих выдачи скина</p>`;
                 } else {
                     activeList.innerHTML = activeTasks.map(t => `
                         <div class="bg-slate-950 p-3.5 rounded-xl border border-emerald-500/50 shadow-lg space-y-2">
@@ -1436,8 +1556,8 @@
                                 <span class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-400 animate-pulse">🎁 ЖДЁТ ВЫДАЧИ</span>
                             </div>
                             <div class="flex gap-2">
-                                <a href="https://t.me/${t.username}" target="_blank" class="flex-1 bg-slate-900 text-blue-400 py-1.5 rounded-xl text-xs font-bold text-center">В ЛС</a>
-                                <button onclick="adminCompleteTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 text-slate-950 font-black py-1.5 rounded-xl text-xs">✅ Скин передан</button>
+                                <a href="https://t.me/${t.username}" target="_blank" class="flex-1 bg-slate-900 text-blue-400 py-1.5 rounded-xl text-xs font-bold text-center border border-slate-800">В ЛС</a>
+                                <button onclick="adminCompleteTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-1.5 rounded-xl text-xs transition">✅ Скин передан</button>
                             </div>
                         </div>
                     `).join('');
@@ -1446,32 +1566,37 @@
 
             const ordersContainer = document.getElementById('admin-market-orders-list');
             if (ordersContainer) {
-                if (marketOrdersList.length === 0) ordersContainer.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Нет заказов</p>`;
+                if (marketOrdersList.length === 0) ordersContainer.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Нет входящих заказов</p>`;
                 else ordersContainer.innerHTML = marketOrdersList.map((ord, idx) => `
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
                         <div class="flex justify-between"><span class="text-xs font-bold text-white">${ord.user} <span class="text-slate-400 font-normal">${ord.userTag}</span></span><span class="text-[10px] text-slate-500">${ord.time}</span></div>
                         <div class="text-xs font-semibold text-blue-400">${ord.serviceTitle}</div>
                         <div class="bg-slate-900 p-2 rounded text-xs text-slate-300">💬 ${ord.comment}</div>
-                        <button onclick="adminCompleteOrder(${ord.id}, ${idx})" class="w-full bg-emerald-600/20 text-emerald-400 border border-emerald-500/40 py-2 rounded-xl text-xs font-bold mt-1">Выполнено</button>
+                        <button onclick="adminCompleteOrder(${ord.id}, ${idx})" class="w-full bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/40 py-2 rounded-xl text-xs font-bold mt-1 transition">Заказ закрыт</button>
                     </div>`).join('');
             }
 
             const ozonBadge = document.getElementById('admin-ozon-status-badge');
             if (ozonBadge) {
-                if (getOzonRemainingMs() > 0) { ozonBadge.className = 'text-[10px] font-bold bg-emerald-500/20 text-emerald-400 px-2 rounded'; ozonBadge.innerText = 'Активна'; }
-                else { ozonBadge.className = 'text-[10px] font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse'; ozonBadge.innerText = 'Истекла!'; }
+                if (getOzonRemainingMs() > 0) { 
+                    ozonBadge.className = 'text-[10px] font-bold bg-emerald-500/20 text-emerald-400 px-2 rounded'; 
+                    ozonBadge.innerText = 'Активна'; 
+                } else { 
+                    ozonBadge.className = 'text-[10px] font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse'; 
+                    ozonBadge.innerText = (ozonCardData && ozonCardData.status === 'requested') ? 'Ждёт выдачи!' : 'Не активна'; 
+                }
             }
         }
 
         async function adminApproveTask(targetUserId, taskKey) { await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'accepted' }) }); showCustomToast('✅ Одобрено!'); syncWithBackend(); }
-        async function adminRejectTask(targetUserId, taskKey) { const r = document.getElementById(`admin-reject-reason-${targetUserId}-${taskKey}`).value || 'Отклонено.'; await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'rejected', reason: r }) }); showCustomToast('❌ Отклонено'); syncWithBackend(); }
-        async function adminCompleteTask(targetUserId, taskKey) { await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'completed' }) }); showCustomToast('🎉 Завершено!'); syncWithBackend(); }
+        async function adminRejectTask(targetUserId, taskKey) { const reasonInput = document.getElementById(`admin-reject-reason-${targetUserId}-${taskKey}`); const r = reasonInput ? reasonInput.value.trim() : 'Отклонено модератором.'; await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'rejected', reason: r }) }); showCustomToast('❌ Отклонено'); syncWithBackend(); }
+        async function adminCompleteTask(targetUserId, taskKey) { await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'completed' }) }); showCustomToast('🎉 Выполнено!'); syncWithBackend(); }
         async function adminCompleteOrder(orderId, idx) { await fetch(`${BACKEND_URL}/api/order/complete`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ orderId: orderId }) }); marketOrdersList.splice(idx, 1); syncWithBackend(); }
         
         async function adminIssueOzonLinkFromDashboard() {
-            const link = document.getElementById('admin-ozon-input').value || 'https://finance.ozon.ru/promo/card';
+            const link = document.getElementById('admin-ozon-input').value.trim() || 'https://finance.ozon.ru/promo/card';
             await fetch(`${BACKEND_URL}/api/ozon/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ status: 'ready', link: link, readyTimestamp: Date.now() }) });
-            showCustomToast('✅ Ссылка Ozon выдана! Клиенты могут приступать.');
+            showCustomToast('✅ Ссылка Ozon выдана на 72ч!');
             syncWithBackend();
         }
 
@@ -1490,14 +1615,17 @@
         }
 
         async function adminResetAlfaTimerFromDashboard() { 
-            const link = document.getElementById('admin-alfa-input').value || 'https://alfa.me/ZKsCZ2';
+            const link = document.getElementById('admin-alfa-input').value.trim() || 'https://alfa.me/ZKsCZ2';
             await fetch(`${BACKEND_URL}/api/admin/settings`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: user.id, alfa_link: link, alfa_time: Date.now().toString() }) });
-            showCustomToast('Обновлено'); syncWithBackend();
+            showCustomToast('Таймер Альфа-Карты сброшен'); 
+            syncWithBackend();
         }
+
         async function adminResetAlfaCreditTimerFromDashboard() { 
-            const link = document.getElementById('admin-alfa-credit-input').value || 'https://alfa.me/PDVEGs';
+            const link = document.getElementById('admin-alfa-credit-input').value.trim() || 'https://alfa.me/PDVEGs';
             await fetch(`${BACKEND_URL}/api/admin/settings`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: user.id, alfa_credit_link: link, alfa_credit_time: Date.now().toString() }) });
-            showCustomToast('Обновлено'); syncWithBackend();
+            showCustomToast('Таймер Альфа-Кредитки сброшен'); 
+            syncWithBackend();
         }
 
         // ================= РЕФЕРАЛЫ =================
@@ -1521,7 +1649,8 @@
         }
 
         async function addReferralFriend() {
-            let val = document.getElementById('ref-friend-input').value.trim();
+            const input = document.getElementById('ref-friend-input');
+            let val = input ? input.value.trim() : '';
             if (!val) return showCustomToast('Введите @username друга!');
             const cleanUser = val.replace('@', '').toLowerCase();
             const myUser = (user.username || '').replace('@', '').toLowerCase();
@@ -1538,18 +1667,21 @@
                 await fetch(`${BACKEND_URL}/api/referral/add`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: user.id, friendUsername: cleanUser, friendName: data.name }) });
                 
                 referralData.friends.unshift({ username: '@' + cleanUser, name: data.name, tasksCount: 0, earned: 0, date: new Date().toLocaleDateString('ru-RU') });
-                document.getElementById('ref-friend-input').value = '';
+                if (input) input.value = '';
                 renderReferralUI();
                 recordActivity(`Пригласил друга @${cleanUser} в реферальную программу`, 'referral', 'person_add');
                 showCustomToast(`✅ Друг привязан!`);
             } catch(e) { showCustomToast('Ошибка проверки'); }
         }
 
-        function withdrawReferralBonus() {
+        async function withdrawReferralBonus() {
             if (referralData.balance <= 0) return;
-            referralData.withdrawnTotal += referralData.balance; referralData.balance = 0;
-            renderReferralUI();
-            showCustomToast('Заявка на вывод бонуса отправлена!');
+            const amount = referralData.balance;
+            try {
+                await fetch(`${BACKEND_URL}/api/referral/withdraw`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: user.id, username: user.username, firstName: user.first_name, amount: amount }) });
+                showCustomToast('✅ Заявка на вывод отправлена админу!');
+                syncWithBackend();
+            } catch(e) { showCustomToast('Ошибка отправки заявки'); }
         }
 
         function updateTaskCardsStatusUI() {
@@ -1558,13 +1690,15 @@
                 if (!badge) return;
                 const state = tasksState[key];
                 
-                if (key === 'ozon_card' && getOzonRemainingMs() > 0 && state.status === 'idle' && activeTaskForms['ozon_card']) {
-                    badge.className = 'flex items-center gap-1 text-[11px] font-bold text-cyan-300 bg-cyan-500/20 px-2 py-0.5 rounded-lg border border-cyan-500/40 animate-pulse'; badge.innerHTML = '<span class="material-icons text-xs">link</span><span>Ссылка готова!</span>'; badge.classList.remove('hidden'); return;
+                if (key === 'ozon_card' && getOzonRemainingMs() > 0 && ozonCardData.status === 'ready' && state.status === 'idle') {
+                    if (activeTaskForms['ozon_card']) {
+                        badge.className = 'flex items-center gap-1 text-[11px] font-bold text-cyan-300 bg-cyan-500/20 px-2 py-0.5 rounded-lg border border-cyan-500/40 animate-pulse'; badge.innerHTML = '<span class="material-icons text-xs">link</span><span>Ссылка готова!</span>'; badge.classList.remove('hidden'); return;
+                    }
                 }
                 
                 if (state.status === 'idle') { badge.className = 'hidden'; }
-                else if (state.status === 'in_progress') { badge.className = 'flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-amber-500/15 px-2 py-0.5 rounded border border-amber-500/30'; badge.innerHTML = '<span class="material-icons text-xs">sync</span><span>В процессе</span>'; badge.classList.remove('hidden'); }
-                else if (state.status === 'accepted') { badge.className = 'flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded border border-emerald-500/30'; badge.innerHTML = '<span class="material-icons text-xs">check</span><span>Принято</span>'; badge.classList.remove('hidden'); }
+                else if (state.status === 'in_progress') { badge.className = 'flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-amber-500/15 px-2 py-0.5 rounded border border-amber-500/30'; badge.innerHTML = '<span class="material-icons text-xs animate-spin-reverse">sync</span><span>В процессе</span>'; badge.classList.remove('hidden'); }
+                else if (state.status === 'accepted') { badge.className = 'flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded border border-emerald-500/30'; badge.innerHTML = '<span class="material-icons text-xs">check_circle</span><span>Принято</span>'; badge.classList.remove('hidden'); }
                 else if (state.status === 'completed') { badge.className = 'flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded border border-emerald-500/30'; badge.innerHTML = '<span class="material-icons text-xs">verified</span><span>Выполнено</span>'; badge.classList.remove('hidden'); }
                 else if (state.status === 'rejected') { badge.className = 'flex items-center gap-1 text-[11px] font-bold text-rose-400 bg-rose-500/15 px-2 py-0.5 rounded border border-rose-500/30'; badge.innerHTML = '<span class="material-icons text-xs">cancel</span><span>Отклонено</span>'; badge.classList.remove('hidden'); }
             });
