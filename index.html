@@ -1078,15 +1078,13 @@
         <span id="toast-text">Уведомление</span>
     </div>
 
-    <!-- Логика и скрипты приложения -->
+   <!-- Логика и скрипты приложения -->
     <script>
         const tg = window.Telegram ? window.Telegram.WebApp : null;
         if (tg) { tg.expand(); tg.ready(); }
 
         const ADMIN_ID = '707417409';
-        // Убрана подмена ID. Обычные пользователи получают ID = 0, если Telegram не прислал данные.
         const user = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : { id: '0', first_name: 'Клиент', username: '' };
-        
         const isUserAdmin = String(user.id) === String(ADMIN_ID);
 
         document.getElementById('user-name').innerText = user.first_name || 'Клиент';
@@ -1099,125 +1097,42 @@
         }
 
         const servicesData = {
-            steam_topup: {
-                title: 'Пополнение Steam',
-                html: `Пополнение вашего кошелька Steam без входа в аккаунт (любой регион).\n\n<b>Оплата:</b> Работаем по 100% предоплате. Сначала происходит оплата, затем начисление средств на ваш аккаунт.\n<b>Минимальная сумма:</b> От 100 руб.`
-            },
-            steam_game: {
-                title: 'Покупка игр Steam',
-                html: `Отправка любой игры подарком (Gift) на ваш аккаунт без входа.\n\n<b>Условия:</b> Сделка строится на доверии — сначала вы переводите оплату, после чего я сразу отправляю вам игру подарком.\n<b>Цены:</b> Ниже конкурентов на Авито!`
-            },
-            cs_buy_stock: {
-                title: 'Покупка скинов CS2',
-                html: `Посмотреть инвентарь можно по ссылке:\n<a href="https://steamcommunity.com/profiles/76561198846881684/inventory/" target="_blank" class="text-amber-400 font-bold underline break-all">https://steamcommunity.com/profiles/76561198846881684/inventory/</a>\n\n<b>Условия:</b>\nСначала оплата, затем получение скина трейдом.\n\n<i>(Уточню статус и цену любого предмета сразу после заявки).</i>`
-            },
-            cs_buy_order: {
-                title: 'Заказ скинов CS2',
-                html: `<b>Условия оплаты и получения:</b>\nСначала оплата. Передача скина происходит в течение 10 дней (обычно до 8 дней из-за банов трейда).\n\n<i>(Уточню цену любого предмета сразу после заявки).</i>`
-            },
-            cs_sell: {
-                title: 'Выкуп ваших скинов CS2',
-                html: `Выкупаю любые предметы (скины, кейсы, ширп, наклейки, брелки).\n\n<b>Цена выкупа:</b> за 50% - 65% от цены на Торговой Площадке Steam.\n<b>Условия оплаты:</b> Сначала вы передаете предметы трейдом. Оплата происходит после прохождения защиты трейда (через 7 дней).`
-            },
-            cs_trade: {
-                title: 'Обмен скинов CS2',
-                html: `Обменивайте любые свои предметы на мои скины.\n\n<b>Условия:</b> обмены в – или = не рассматриваю. Есть предметы с переплатой!\n\n<b>Ссылка на создание трейда:</b>\n<a href="https://steamcommunity.com/tradeoffer/new/?partner=886615956&token=i8N4PgPo" target="_blank" class="text-cyan-400 font-bold underline break-all">https://steamcommunity.com/tradeoffer/new/?partner=886615956&token=i8N4PgPo</a>\n\n<b>Инструкция:</b> Перейдите по ссылке, отправьте готовый обмен в Steam, затем подтвердите отправку.`
-            },
-            tanks_donate: {
-                title: 'Донат Tanks Blitz',
-                html: `Пополнение вашего аккаунта Tanks Blitz любыми наборами из официального магазина без наценки (строго РУ-аккаунт, ПК или мобильная версия — без разницы).\n\n<b>В чём выгода:</b> Самые выгодные предложения в игре ограничены 1 покупкой на аккаунт. С моей помощью вы можете приобрести почти любой набор повторно до 3 раз подарком официально!\n<b>Примеры наборов:</b> «Доброжирные контейнеры» (1–35 шт), контейнеры «Т49 Защитник» (6 или 35 шт) или другие актуальные наборы.\n\n<b>Условия:</b> 100% предоплата.`
-            },
-            tanks_platoon: {
-                title: 'Взвод Tanks Blitz',
-                html: `<b>Условия:</b> Работаю по 100% предоплате.\n\n<b>Выберите подходящий пакет взвода:</b>\n\n<b>Стоимость: 10 руб / 1 бой</b>\n<b>Описание:</b> Формальный вариант совместной игры. Я заступаю к вам в лобби и играю бой самостоятельно.\n<b>В чем плюс:</b> В вашей команде гарантированно на одного «рака» меньше и гарантированно один опытный скилловый игрок, что пассивно значительно повышает общий процент побед.\n\n<b>Стоимость: 20 руб / 1 бой</b>\n<b>Описание:</b> Подбираю технику строго под ваш танк. Обязательно держусь рядом с вами и отыгрываю один флаг, помогаю продавливать позиции или удерживать оборону.\n\n<b>Стоимость: 40 руб / 1 бой</b>\n<b>Описание:</b> Берется самый подходящий танк под ваш заказ. Еду с вами вплотную, постоянно прикрываю от огня, каточу противников, чтобы вы наносили максимум урона, периодически закрываю собой от вражеских выстрелов. Не забираю фраги, оставляя противников вам на добив!\n<b>Идеально для:</b> Быстрого прохождения ивентов и набивания высокой статистики. С таким прикрытием рандом проходится в разы легче.`
-            },
-            tanks_marks: {
-                title: 'Отметки Tanks Blitz',
-                html: `<b>Описание:</b> Получение одной (первой) отметки на любом вашем танке.\n<b>Стоимость:</b> 1000 руб за одну отметку.\n<b>Условия:</b> Работаем по 100% предоплате. По срокам примерно 10дн.\n\n<i>(Обратите внимание: вторую и третью отметки на одном танке в работу не беру).</i>`
-            },
-            tanks_training: {
-                title: 'Обучение Tanks Blitz',
-                html: `Разбор тактики на картах, выбор позиций, разбор ТТХ техники, грамотный засвет и поведение в бою от опытного игрока.\n\n<b>Условия:</b> 100% предоплата.`
-            },
-            ai_gpt: {
-                title: 'Подписка GPT Plus',
-                html: `Готовый личный аккаунт OpenAI (30 дней). Выдается логин, пароль и почта.\n\n<b>Оплата:</b> Предоплата 100%.\n<b>Цена:</b> 1000 руб.`
-            },
-            ai_gemini: {
-                title: 'Подписка Gemini PRO',
-                html: `<b>Вид:</b> Начисление премиум-подписки на ваш личный аккаунт Google (12 месяцев). Отправка ссылки активатора.\n\n<b>Оплата:</b> Предоплата 100%.\n<b>Цена:</b> 290 руб.`
-            },
-            clash_boost: {
-                title: 'Буст Clash Royale',
-                html: `<b>Описание услуги:</b> Выполняю профессиональное поднятие кубков/арен на вашем аккаунте.\n\n<b>Важное примечание:</b> Я не занимаюсь фармом золота, сундуков или прокачкой колод. Услуга ориентирована строго на поднятие кубков и переход на новые арены!\n\n<b>Расчет стоимости:</b>\n• 1 руб = 1 апнутый кубок (около 30 руб за 1 победу).\n• Пример: Поднятие 1000 кубков (примерно 3 арены) = 1000 руб.\n\n<b>Условия:</b> Работа по предоплате. Точные сроки выполнения обсуждаются лично перед оплатой.`
-            }
+            steam_topup: { title: 'Пополнение Steam', html: `Пополнение вашего кошелька Steam без входа в аккаунт (любой регион).\n\n<b>Оплата:</b> Работаем по 100% предоплате.\n<b>Минимальная сумма:</b> От 100 руб.` },
+            steam_game: { title: 'Покупка игр Steam', html: `Отправка любой игры подарком (Gift) на ваш аккаунт без входа.\n\n<b>Условия:</b> 100% предоплата, затем отправка.` },
+            cs_buy_stock: { title: 'Покупка скинов CS2', html: `Сначала оплата, затем получение скина трейдом.\n\n<i>(Уточню статус и цену сразу после заявки).</i>` },
+            cs_buy_order: { title: 'Заказ скинов CS2', html: `Сначала оплата. Передача скина происходит в течение 10 дней (обычно до 8 дней из-за банов трейда).` },
+            cs_sell: { title: 'Выкуп ваших скинов CS2', html: `Выкупаю любые предметы (скины, кейсы, ширп, наклейки, брелки).\n\n<b>Цена выкупа:</b> за 50% - 65% от ТП Steam.` },
+            cs_trade: { title: 'Обмен скинов CS2', html: `Обменивайте любые свои предметы на мои скины.\n\n<b>Условия:</b> обмены в – или = не рассматриваю.` },
+            tanks_donate: { title: 'Донат Tanks Blitz', html: `Пополнение аккаунта Tanks Blitz наборами из официального магазина без наценки.\n\n<b>Условия:</b> 100% предоплата.` },
+            tanks_platoon: { title: 'Взвод Tanks Blitz', html: `<b>Условия:</b> Работаю по 100% предоплате.\n\nПакеты:\n10 руб / бой (формальный)\n20 руб / бой (помощь на фланге)\n40 руб / бой (полное прикрытие, без фрагов)` },
+            tanks_marks: { title: 'Отметки Tanks Blitz', html: `Получение одной (первой) отметки на любом вашем танке.\n<b>Стоимость:</b> 1000 руб за одну отметку.\nПо срокам примерно 10дн.` },
+            tanks_training: { title: 'Обучение Tanks Blitz', html: `Разбор тактики на картах, выбор позиций, разбор ТТХ техники.` },
+            ai_gpt: { title: 'Подписка GPT Plus', html: `Готовый личный аккаунт OpenAI (30 дней). Выдается логин, пароль и почта.\n\n<b>Цена:</b> 1000 руб.` },
+            ai_gemini: { title: 'Подписка Gemini PRO', html: `Начисление премиум-подписки на ваш личный аккаунт Google (12 месяцев).\n\n<b>Цена:</b> 290 руб.` },
+            clash_boost: { title: 'Буст Clash Royale', html: `Профессиональное поднятие кубков/арен.\n\n<b>Расчет стоимости:</b> 1 руб = 1 апнутый кубок.` }
         };
 
         const tasksMeta = {
-            alfa_card: {
-                title: 'Альфа-карта',
-                reward: 'до 750 ₽ скин',
-                conditions: `1) Вам не менее 14 лет.\n2) У вас не было продуктов Альфа-Банка последние 90 дней.\n3) Ранее не оформляли карту по реферальной ссылке.`,
-                instructions: `1. Оформить бесплатную дебетовую карту по ссылке.\n2. Забрать карту у курьера или в отделении банка.\n3. Совершить по карте любую первую покупку на любую сумму.`,
-                bonus: 'Кэшбэк до 100% по карте от банка'
-            },
-            alfa_credit: {
-                title: 'Альфа-кредитка',
-                reward: 'до 1 000 ₽ скин',
-                conditions: `1) Вам не менее 18 лет.\n2) У вас не было кредитной карты Альфа-Банка последние 90 дней.\n3) Ранее не оформляли кредитку по реферальной ссылке.\n4) ⚠️ Внимание: Обязательно самостоятельно ознакомьтесь с условиями кредитной карты и убедитесь, что она вам подходит!`,
-                instructions: `1. Ознакомьтесь с условиями кредитки (бесплатное обслуживание первый год, есть беспроцентный период).\n2. Оформить онлайн-заявку по ссылке.\n3. Получить карту у курьера или в отделении банка.\n4. Совершить покупку по карте на любую сумму в течение 3 месяцев.`,
-                bonus: 'Кэшбэк'
-            },
-            yandex_pay: {
-                title: 'Яндекс карта',
-                reward: 'до 300 ₽ скин',
-                conditions: `1) Вам не менее 14 лет.\n2) Ранее не оформляли карту по реферальной ссылке.`,
-                instructions: `1. Скачать приложение Яндекс Пэй по ссылке.\n2. Открыть карту Пэй в приложении.\n3. Подтвердить данные через Госуслуги.\n4. Совершить одну любую покупку вне сервисов Яндекса.`,
-                bonus: 'Кэшбэк 5% баллами Плюса за любые покупки вне Яндекса до 30 дней'
-            },
-            ozon_card: {
-                title: 'Озон карта',
-                reward: 'до 300 ₽ скин',
-                conditions: `1) Вам не менее 14 лет.\n2) Ранее не оформляли карту Ozon Банка.`,
-                instructions: `1. Нажмите «Готов выполнить», чтобы запросить ссылку у админа.\n2. После получения ссылки оформите пластиковую карту Ozon Банка.\n3. Совершите 5 любых покупок ЗА ПРЕДЕЛАМИ Ozon по данной карте.`,
-                bonus: 'Товары за 1 рубль или кэшбэк до 25%'
-            },
-            skinfights: {
-                title: 'Бот SkinFights',
-                reward: 'до 2.5 ₽ приз',
-                conditions: `1) Вы до этого ни разу не запускали данного бота.\n2) Первый запуск строго по выданной ссылке.`,
-                instructions: `1. Запустить бота по ссылке-приглашению.\n2. Забрать приветственный бонус и вывести любой скин в Steam.\n3. Сделать скриншот в разделе Steam внутри бота и загрузить сюда.`,
-                bonus: '500 внутриигровой валюты на кейсы и скины'
-            },
-            skinape: {
-                title: 'Приложение SkinApe',
-                reward: 'до 2.5 ₽ приз',
-                conditions: `1) Ранее не устанавливали приложение SkinApe CS2.`,
-                instructions: `1. Скачать приложение SkinApe CS2 на телефон.\n2. Пройти регистрацию и залогиниться.\n3. Ввести промокод 66Q2BQL9.\n4. Прикрепить скриншот приложения, где виден баланс после ввода кода.`,
-                bonus: '50 монет на вывод скинов'
-            },
-            vpn: {
-                title: 'Подписка VPN',
-                reward: 'до 40 ₽ скин',
-                conditions: `1) Ранее не пользовались данным VPN сервисом.`,
-                instructions: `1. Перейти в бота по выданной ссылке.\n2. Оплатить первую подписку на 1 месяц.`,
-                bonus: '+5 дней подписки и 1 ГБ трафика'
-            },
-            idea: {
-                title: 'Идея для задания',
-                reward: '10 - 500 ₽ скин',
-                conditions: `1) Легальность: Только законные сервисы.\n2) Безопасность: Без рисков для организатора и участников.\n3) Прибыльность: Задание должно приносить выгоду организатору.\n4) Адекватность: Выгода должна соответствовать приложенным усилиям.`,
-                instructions: `1. Нажмите «Готов выполнить» и заполните поля с вашей идеей.\n2. После проверки админ оценит качество идеи и свяжется для передачи скина.`,
-                bonus: ''
-            }
+            alfa_card: { title: 'Альфа-карта', reward: 'до 750 ₽ скин', conditions: `1) От 14 лет.\n2) Без продуктов Альфа-Банка 90 дней.\n3) Новая реф. ссылка.`, instructions: `Оформить карту, забрать, сделать 1 покупку.`, bonus: 'Кэшбэк до 100%' },
+            alfa_credit: { title: 'Альфа-кредитка', reward: 'до 1 000 ₽ скин', conditions: `1) От 18 лет.\n2) Без кредиток Альфы 90 дней.`, instructions: `Оформить кредитку, забрать, сделать 1 покупку.`, bonus: 'Кэшбэк' },
+            yandex_pay: { title: 'Яндекс карта', reward: 'до 300 ₽ скин', conditions: `1) От 14 лет.\n2) Новая реф. ссылка.`, instructions: `Скачать Пэй, открыть карту, подтвердить Госуслуги, 1 покупка вне Яндекса.`, bonus: 'Кэшбэк 5%' },
+            ozon_card: { title: 'Озон карта', reward: 'до 300 ₽ скин', conditions: `1) От 14 лет.\n2) Без карты Ozon Банка.`, instructions: `Получить ссылку, оформить карту, совершить 5 покупок ВНЕ Ozon.`, bonus: 'Кэшбэк до 25%' },
+            skinfights: { title: 'Бот SkinFights', reward: 'до 2.5 ₽ приз', conditions: `1) Первый запуск строго по ссылке.`, instructions: `Запустить бота, забрать бонус, вывести скин, прикрепить скрин.`, bonus: '500 гемов' },
+            skinape: { title: 'Приложение SkinApe', reward: 'до 2.5 ₽ приз', conditions: `1) Ранее не устанавливали приложение.`, instructions: `Скачать SkinApe, ввести код 66Q2BQL9, прикрепить скрин баланса.`, bonus: '50 монет' },
+            vpn: { title: 'Подписка VPN', reward: 'до 40 ₽ скин', conditions: `1) Ранее не пользовались сервисом.`, instructions: `Оплатить подписку VPN на 1 месяц.`, bonus: '+5 дней и 1 ГБ' },
+            idea: { title: 'Идея для задания', reward: '10 - 500 ₽ скин', conditions: `1) Легальность\n2) Безопасность\n3) Прибыльность`, instructions: `Заполнить поля с вашей идеей.`, bonus: '' }
         };
 
         const cardChecklistConfig = {
-            alfa_card: ['Я оформил карту', 'Я получил карту', 'Я совершил покупку по карте'],
-            alfa_credit: ['Я оформил карту', 'Я получил карту', 'Я совершил покупку по карте'],
+            alfa_card: ['Я оформил карту', 'Я получил карту', 'Я совершил покупку'],
+            alfa_credit: ['Я оформил карту', 'Я получил карту', 'Я совершил покупку'],
             yandex_pay: ['Скачал приложение', 'Открыл карту', 'Подтвердил данные', 'Сделал покупку'],
             ozon_card: ['Оформить карту', 'Получить карту', 'Выполнить 5 покупок вне Ozon']
         };
+
+        const BACKEND_URL = "https://cs-market-backend.onrender.com";
+        let isSyncInProgress = false;
+        let isAdminUnlocked = false;
 
         let tasksState = {}; Object.keys(tasksMeta).forEach(k => { tasksState[k] = { status: 'idle', reason: '', ideaTitle: '', ideaDesc: '', rewardRequested: false }; });
         let taskScreenshots = {}; let taskChecklists = {}; let activeTaskForms = {};
@@ -1225,14 +1140,13 @@
         let marketOrdersList = []; let liveActivityLog = []; let adminTasksList = [];
         let currentModalService = ''; let currentTaskKey = '';
         
-        let appSettings = {
-            ozon_link: 'https://finance.ozon.ru/promo/card', ozon_time: '0',
-            alfa_link: 'https://alfa.me/ZKsCZ2', alfa_time: Date.now().toString(),
-            alfa_credit_link: 'https://alfa.me/PDVEGs', alfa_credit_time: Date.now().toString()
-        };
+        let appSettings = { alfa_time: Date.now().toString(), alfa_credit_time: Date.now().toString() };
+        let savedAlfaLink = localStorage.getItem('csgo_market_alfa_link') || 'https://alfa.me/ZKsCZ2';
+        let savedAlfaCreditLink = localStorage.getItem('csgo_market_alfa_credit_link') || 'https://alfa.me/PDVEGs';
+        const cardTaskLinks = { alfa_card: savedAlfaLink, alfa_credit: savedAlfaCreditLink, yandex_pay: 'https://bank.yandex.ru/invite?refid=qxSp2JZACr6' };
+        let ozonCardData = { status: 'idle', link: 'https://finance.ozon.ru/promo/card', readyTimestamp: 0 };
 
-        let isAdminUnlocked = false;
-
+        // ================= ИНТЕРФЕЙС И ТАБЫ =================
         function switchTab(tab) {
             if (tab === 'admin') {
                 if (!isUserAdmin) return;
@@ -1281,12 +1195,13 @@
             setTimeout(() => { toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-20'); toast.classList.remove('opacity-100', 'translate-y-0'); }, 3000);
         }
 
+        // ================= ОПЕРАЦИИ ПОЛЬЗОВАТЕЛЯ =================
         function openServiceModal(sk) { currentModalService = sk; document.getElementById('service-modal-title').innerText = servicesData[sk].title; document.getElementById('service-modal-body').innerHTML = servicesData[sk].html; document.getElementById('service-order-comment').value = ''; document.getElementById('service-modal').classList.remove('hidden'); }
         function orderCurrentService() { const c = document.getElementById('service-order-comment').value.trim() || 'Без комментария'; sendPayloadToBot({ action: 'service_order', serviceKey: currentModalService, serviceTitle: servicesData[currentModalService].title, comment: c }, 'service-modal'); showCustomToast(`Заявка отправлена!`); }
 
         function getOzonRemainingMs() {
-            if (!appSettings.ozon_time || appSettings.ozon_time === '0') return 0;
-            return Math.max(0, (Number(appSettings.ozon_time) + 72 * 60 * 60 * 1000) - Date.now());
+            if (!ozonCardData || !ozonCardData.readyTimestamp) return 0;
+            return Math.max(0, (Number(ozonCardData.readyTimestamp) + 72 * 60 * 60 * 1000) - Date.now());
         }
 
         function openTaskModal(taskKey) {
@@ -1329,7 +1244,7 @@
             const meta = tasksMeta[currentTaskKey]; const state = tasksState[currentTaskKey] || { status: 'idle' };
             if (state.status === 'accepted') { sendPayloadToBot({ action: 'claim_reward', taskKey: currentTaskKey, taskTitle: meta.title }); showCustomToast('✅ Заявка на приз отправлена админу!'); closeModal('task-modal'); return; }
 
-            // ПЕРВЫЙ КЛИК: Раскрытие формы (не отправляем в in_progress!)
+            // ПЕРВЫЙ КЛИК: Раскрытие формы
             if (state.status === 'idle' && !activeTaskForms[currentTaskKey]) {
                 activeTaskForms[currentTaskKey] = true;
                 
@@ -1340,17 +1255,15 @@
                         showCustomToast('⏳ Ссылка запрашивается у админа...');
                         sendPayloadToBot({ action: 'task_ozon_link_request' }, false); 
                     }
-                    renderTaskInteractiveForm(currentTaskKey); 
-                    return; 
+                    renderTaskInteractiveForm(currentTaskKey); return;
                 }
                 
-                if (currentTaskKey === 'idea' || ['skinape', 'skinfights', 'alfa_card', 'alfa_credit', 'yandex_pay', 'vpn'].includes(currentTaskKey)) {
-                    renderTaskInteractiveForm(currentTaskKey); 
-                    return; 
+                if (['idea', 'skinape', 'skinfights', 'alfa_card', 'alfa_credit', 'yandex_pay', 'vpn'].includes(currentTaskKey)) {
+                    renderTaskInteractiveForm(currentTaskKey); return; 
                 }
             }
 
-            // ВТОРОЙ КЛИК: Финальная отправка (перевод в in_progress)
+            // ВТОРОЙ КЛИК: Финальная отправка
             if (state.status === 'idle' && activeTaskForms[currentTaskKey]) {
                 if (currentTaskKey === 'idea') {
                     const t = document.getElementById('idea-title-input').value.trim(); const d = document.getElementById('idea-desc-input').value.trim();
@@ -1358,9 +1271,9 @@
                 } else if (['skinape', 'skinfights'].includes(currentTaskKey)) {
                     if (!taskScreenshots[currentTaskKey]) return showCustomToast('Загрузите скриншот!'); sendPayloadToBot({ action: 'task_screenshot_submit', taskKey: currentTaskKey, taskTitle: meta.title, screenshot: taskScreenshots[currentTaskKey] });
                 } else if (['alfa_card', 'alfa_credit', 'yandex_pay', 'ozon_card'].includes(currentTaskKey)) {
-                    if (currentTaskKey === 'ozon_card' && getOzonRemainingMs() <= 0) { showCustomToast('Сначала дождитесь выдачи ссылки!'); return; }
+                    if (currentTaskKey === 'ozon_card' && getOzonRemainingMs() <= 0) return showCustomToast('Дождитесь выдачи ссылки!');
                     const states = taskChecklists[currentTaskKey] || []; const items = cardChecklistConfig[currentTaskKey] || [];
-                    if (items.length > 0 && !items.every((_, idx) => !!states[idx])) { showCustomToast('Отметьте все этапы!'); return; }
+                    if (items.length > 0 && !items.every((_, idx) => !!states[idx])) return showCustomToast('Отметьте все этапы!');
                     sendPayloadToBot({ action: 'task_submit', taskKey: currentTaskKey, taskTitle: meta.title });
                 } else if (currentTaskKey === 'vpn') { sendPayloadToBot({ action: 'task_submit', taskKey: 'vpn', taskTitle: meta.title }); }
                 
@@ -1377,7 +1290,7 @@
                 document.getElementById('task-ozon-block').classList.remove('hidden');
                 if (getOzonRemainingMs() > 0) {
                     document.getElementById('ozon-ready-box').classList.remove('hidden'); document.getElementById('ozon-waiting-box').classList.add('hidden'); document.getElementById('ozon-expired-box').classList.add('hidden');
-                    document.getElementById('ozon-ready-link-btn').href = appSettings.ozon_link || '#';
+                    document.getElementById('ozon-ready-link-btn').href = ozonCardData.link || '#';
                     document.getElementById('task-card-checklist-container').classList.remove('hidden'); renderChecklistUI(taskKey);
                     mainBtn.disabled = false; mainBtn.className = 'w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3.5 rounded-2xl text-xs uppercase transition'; mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
                     validateCardChecklistBtn(taskKey);
@@ -1390,7 +1303,7 @@
             } else if (['skinape', 'skinfights'].includes(taskKey)) {
                 document.getElementById(`task-${taskKey}-block`).classList.remove('hidden'); document.getElementById('task-screenshot-container').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить скриншот</span>`; validateScreenshotBtn();
             } else if (['alfa_card', 'alfa_credit', 'yandex_pay'].includes(taskKey)) {
-                const map = { alfa_card: appSettings.alfa_link, alfa_credit: appSettings.alfa_credit_link, yandex_pay: 'https://bank.yandex.ru/invite?refid=qxSp2JZACr6' };
+                const map = { alfa_card: appSettings.alfa_link || savedAlfaLink, alfa_credit: appSettings.alfa_credit_link || savedAlfaCreditLink, yandex_pay: 'https://bank.yandex.ru/invite?refid=qxSp2JZACr6' };
                 document.getElementById('task-card-link-block').classList.remove('hidden'); document.getElementById('task-card-link-btn').href = map[taskKey] || '#'; document.getElementById('task-card-checklist-container').classList.remove('hidden'); renderChecklistUI(taskKey); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`; validateCardChecklistBtn(taskKey);
             } else if (taskKey === 'vpn') {
                 document.getElementById('task-vpn-block').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
@@ -1442,9 +1355,43 @@
         function removeTaskScreenshot() { delete taskScreenshots[currentTaskKey]; document.getElementById('task-screenshot-preview-box').classList.add('hidden'); document.getElementById('task-screenshot-dropzone').classList.remove('hidden'); validateScreenshotBtn(); }
         function validateScreenshotBtn() { const mainBtn = document.getElementById('task-main-action-btn'); if (taskScreenshots[currentTaskKey]) { mainBtn.disabled = false; mainBtn.classList.remove('opacity-50', 'cursor-not-allowed'); } else { mainBtn.disabled = true; mainBtn.classList.add('opacity-50', 'cursor-not-allowed'); } }
 
+        // ================= ЛОГИРОВАНИЕ АКТИВНОСТИ =================
+        function recordActivity(actionText, tag = 'action', icon = 'bolt') {
+            const now = Date.now();
+            const timeStr = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            
+            const item = { id: now + Math.random(), time: timeStr, user: user.first_name || 'Клиент', userTag: user.username ? `@${user.username}` : `ID:${user.id}`, text: actionText, tag: tag, icon: icon, timestamp: now };
+            liveActivityLog.unshift(item); if (liveActivityLog.length > 50) liveActivityLog.pop();
+            try { localStorage.setItem('csgo_market_live_feed', JSON.stringify(liveActivityLog)); } catch(e) {}
+            renderLiveFeedUI();
+            
+            fetch(`${BACKEND_URL}/api/activity/log`, {
+                method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId: user.id || '0', username: (user.username || '').replace('@', ''), user: user.first_name || 'Клиент', text: actionText, tag: tag, icon: icon })
+            }).catch(() => {});
+        }
+
+        function renderLiveFeedUI() {
+            const container = document.getElementById('admin-live-feed');
+            if (!container) return;
+            if (liveActivityLog.length === 0) {
+                container.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-slate-500 py-6 text-center"><span class="material-icons text-2xl mb-1 text-slate-600">history</span><span>Лента активности пуста за последние 24 часа</span></div>`; return;
+            }
+            container.innerHTML = liveActivityLog.map(item => `
+                <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800/80 flex items-start justify-between gap-2 leading-tight">
+                    <div class="flex items-start gap-2 min-w-0">
+                        <span class="material-icons text-sm mt-0.5 text-slate-400">${item.icon}</span>
+                        <div class="min-w-0"><span class="font-bold text-white">${item.user}</span> <span class="text-[10px] text-slate-500 font-mono">${item.userTag}</span><p class="text-slate-300 text-[11px] mt-0.5">${item.text}</p></div>
+                    </div>
+                    <span class="text-[10px] text-slate-500 font-mono shrink-0">${item.time}</span>
+                </div>
+            `).join('');
+        }
+
+        function clearActivityLog() { liveActivityLog = []; try { localStorage.removeItem('csgo_market_live_feed'); } catch(e) {} renderLiveFeedUI(); showCustomToast('🧹 Лайв-лента очищена'); }
+
         // ================= ЦЕНТРАЛЬНАЯ СИНХРОНИЗАЦИЯ =================
         const BACKEND_URL = "https://cs-market-backend.onrender.com";
-        let isSyncInProgress = false;
 
         async function syncWithBackend() {
             if (isSyncInProgress) return;
@@ -1465,6 +1412,11 @@
                     if (data.referrals) { referralData.friends = data.referrals; renderReferralUI(); }
                     if (data.marketOrders) marketOrdersList = data.marketOrders;
                     if (data.appSettings) appSettings = { ...appSettings, ...data.appSettings };
+
+                    if (data.ozonCard) {
+                        ozonCardData = data.ozonCard;
+                        try { localStorage.setItem('csgo_market_ozon', JSON.stringify(ozonCardData)); } catch(e) {}
+                    }
 
                     updateAdminDashboardUI();
                     
@@ -1502,7 +1454,7 @@
 
             const pendingTasks = adminTasksList.filter(t => t.status === 'in_progress');
             const activeTasks = adminTasksList.filter(t => t.status === 'accepted' || t.rewardRequested);
-            const reqCount = getOzonRemainingMs() <= 0 ? 1 : 0;
+            const reqCount = (ozonCardData && ozonCardData.status === 'requested') ? 1 : 0;
             const ordersCount = marketOrdersList.length;
 
             const pendingEl = document.getElementById('admin-stat-pending'); if (pendingEl) pendingEl.innerText = pendingTasks.length;
@@ -1564,7 +1516,7 @@
                         <div class="flex justify-between"><span class="text-xs font-bold text-white">${ord.user} <span class="text-slate-400 font-normal">${ord.userTag}</span></span><span class="text-[10px] text-slate-500">${ord.time}</span></div>
                         <div class="text-xs font-semibold text-blue-400">${ord.serviceTitle}</div>
                         <div class="bg-slate-900 p-2 rounded text-xs text-slate-300">💬 ${ord.comment}</div>
-                        <button onclick="adminCompleteOrder(${ord.id})" class="w-full bg-emerald-600/20 text-emerald-400 border border-emerald-500/40 py-2 rounded-xl text-xs font-bold mt-1">Выполнено</button>
+                        <button onclick="adminCompleteOrder(${ord.id}, ${idx})" class="w-full bg-emerald-600/20 text-emerald-400 border border-emerald-500/40 py-2 rounded-xl text-xs font-bold mt-1">Выполнено</button>
                     </div>`).join('');
             }
 
@@ -1575,14 +1527,14 @@
             }
         }
 
-        async function adminApproveTask(userId, taskKey) { await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: userId, taskKey: taskKey, status: 'accepted' }) }); syncWithBackend(); }
-        async function adminRejectTask(userId, taskKey) { const r = document.getElementById(`admin-reject-reason-${userId}-${taskKey}`).value || 'Отклонено.'; await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: userId, taskKey: taskKey, status: 'rejected', reason: r }) }); syncWithBackend(); }
-        async function adminCompleteTask(userId, taskKey) { await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: userId, taskKey: taskKey, status: 'completed' }) }); syncWithBackend(); }
-        async function adminCompleteOrder(idx) { const order = marketOrdersList[idx]; if (order && order.id) { await fetch(`${BACKEND_URL}/api/order/complete`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ orderId: order.id }) }); } syncWithBackend(); }
+        async function adminApproveTask(targetUserId, taskKey) { await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'accepted' }) }); showCustomToast('✅ Одобрено!'); syncWithBackend(); }
+        async function adminRejectTask(targetUserId, taskKey) { const r = document.getElementById(`admin-reject-reason-${targetUserId}-${taskKey}`).value || 'Отклонено.'; await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'rejected', reason: r }) }); showCustomToast('❌ Отклонено'); syncWithBackend(); }
+        async function adminCompleteTask(targetUserId, taskKey) { await fetch(`${BACKEND_URL}/api/task/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: targetUserId, taskKey: taskKey, status: 'completed' }) }); showCustomToast('🎉 Завершено!'); syncWithBackend(); }
+        async function adminCompleteOrder(orderId, idx) { await fetch(`${BACKEND_URL}/api/order/complete`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ orderId: orderId }) }); marketOrdersList.splice(idx, 1); syncWithBackend(); }
         
         async function adminIssueOzonLinkFromDashboard() {
             const link = document.getElementById('admin-ozon-input').value || 'https://finance.ozon.ru/promo/card';
-            await fetch(`${BACKEND_URL}/api/admin/settings`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: user.id, ozon_link: link, ozon_time: Date.now().toString() }) });
+            await fetch(`${BACKEND_URL}/api/ozon/update`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ status: 'ready', link: link, readyTimestamp: Date.now() }) });
             showCustomToast('✅ Ссылка Ozon выдана! Клиенты могут приступать.');
             syncWithBackend();
         }
@@ -1592,15 +1544,14 @@
             const totalMs = 29 * 24 * 60 * 60 * 1000;
             const fmt = ms => ms <= 0 ? 'Истекло' : `${Math.floor(ms/86400000)}д ${Math.floor((ms/3600000)%24)}ч ${Math.floor((ms/60000)%60)}м`;
             
-            const dbMs = Math.max(0, totalMs - (Date.now() - Number(appSettings.alfa_time || alfaLinkTimestamp)));
+            const dbMs = Math.max(0, totalMs - (Date.now() - Number(appSettings.alfa_time || Date.now())));
             const bDb = document.getElementById('admin-alfa-badge');
             if (bDb) bDb.innerText = fmt(dbMs), bDb.className = dbMs < 86400000 ? 'text-[10px] font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse' : 'text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 px-2 rounded';
             
-            const crMs = Math.max(0, totalMs - (Date.now() - Number(appSettings.alfa_credit_time || alfaCreditLinkTimestamp)));
+            const crMs = Math.max(0, totalMs - (Date.now() - Number(appSettings.alfa_credit_time || Date.now())));
             const bCr = document.getElementById('admin-alfa-credit-badge');
             if (bCr) bCr.innerText = fmt(crMs), bCr.className = crMs < 86400000 ? 'text-[10px] font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse' : 'text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 px-2 rounded';
         }
-        setInterval(updateAlfaLiveTimers, 1000);
 
         async function adminResetAlfaTimerFromDashboard() { 
             const link = document.getElementById('admin-alfa-input').value || 'https://alfa.me/ZKsCZ2';
@@ -1645,8 +1596,13 @@
                 if (!data.exists) return showCustomToast(`❌ Пользователь @${cleanUser} не найден. Пусть нажмет /start в боте.`);
                 
                 await fetch(`${BACKEND_URL}/api/referral/add`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: user.id, friendUsername: cleanUser, friendName: data.name }) });
-                syncWithBackend();
+                
+                referralData.friends.unshift({ username: '@' + cleanUser, name: data.name, tasksCount: 0, earned: 0, date: new Date().toLocaleDateString('ru-RU') });
+                try { localStorage.setItem('csgo_market_referrals', JSON.stringify(referralData)); } catch(e) {}
+                
                 document.getElementById('ref-friend-input').value = '';
+                renderReferralUI();
+                recordActivity(`Пригласил друга @${cleanUser} в реферальную программу`, 'referral', 'person_add');
                 showCustomToast(`✅ Друг привязан!`);
             } catch(e) { showCustomToast('Ошибка проверки'); }
         }
@@ -1654,7 +1610,7 @@
         function withdrawReferralBonus() {
             if (referralData.balance <= 0) return;
             referralData.withdrawnTotal += referralData.balance; referralData.balance = 0;
-            saveReferralData();
+            try { localStorage.setItem('csgo_market_referrals', JSON.stringify(referralData)); } catch(e) {}
             showCustomToast('Заявка на вывод бонуса отправлена!');
         }
 
@@ -1678,8 +1634,10 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
+            if (liveActivityLog.length === 0) recordActivity('Открыл приложение CS:GO Market', 'app', 'login');
             syncWithBackend();
             setInterval(syncWithBackend, 4000);
+            setInterval(updateAlfaLiveTimers, 1000);
         });
     </script>
 </body>
