@@ -1098,7 +1098,7 @@
 
     <!-- Логика и скрипты приложения -->
      <script>
-    const tg = window.Telegram ? window.Telegram.WebApp : null;
+   const tg = window.Telegram ? window.Telegram.WebApp : null;
         if (tg) { tg.expand(); tg.ready(); }
 
         const ADMIN_ID = '707417409';
@@ -1177,9 +1177,13 @@
                 const el = document.getElementById(`tab-content-${t}`);
                 const btn = document.getElementById(`nav-${t}`);
                 if (el) el.classList.add('hidden');
-                if (btn) btn.className = t === 'admin' 
-                    ? 'flex flex-col items-center gap-1 text-amber-500/60 hover:text-amber-400 transition relative'
-                    : 'flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300 transition';
+                if (btn) {
+                    btn.className = t === 'admin' 
+                        ? 'flex flex-col items-center gap-1 text-amber-500/60 hover:text-amber-400 transition relative'
+                        : 'flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300 transition';
+                    // ПРИНУДИТЕЛЬНО ПРЯЧЕМ КНОПКУ ДЛЯ ОБЫЧНЫХ ЮЗЕРОВ
+                    if (t === 'admin' && !isUserAdmin) btn.classList.add('hidden');
+                }
             });
 
             const activeContent = document.getElementById(`tab-content-${tab}`);
@@ -1261,10 +1265,11 @@
                 
                 if (currentTaskKey === 'ozon_card') {
                     if (getOzonRemainingMs() > 0) {
-                        showCustomToast('✅ Ссылка активна! Можете приступать к этапам.');
+                        showCustomToast('✅ Актуальная ссылка уже доступна! Можете приступать.');
+                        // Не отправляем запрос админу, так как ссылка уже готова!
                     } else {
                         showCustomToast('⏳ Ссылка запрашивается у админа...');
-                        sendPayloadToBot({ action: 'task_ozon_link_request' }); // Запрос без проверки
+                        sendPayloadToBot({ action: 'task_ozon_link_request' }); 
                     }
                     renderTaskInteractiveForm(currentTaskKey); return;
                 }
@@ -1301,7 +1306,7 @@
                     document.getElementById('ozon-ready-box').classList.remove('hidden'); document.getElementById('ozon-waiting-box').classList.add('hidden'); document.getElementById('ozon-expired-box').classList.add('hidden');
                     document.getElementById('ozon-ready-link-btn').href = appSettings.ozon_link || '#';
                     document.getElementById('task-card-checklist-container').classList.remove('hidden'); renderChecklistUI(taskKey);
-                    mainBtn.disabled = false; mainBtn.className = 'w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3.5 rounded-2xl text-xs uppercase'; mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
+                    mainBtn.disabled = false; mainBtn.className = 'w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3.5 rounded-2xl text-xs uppercase transition'; mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
                     validateCardChecklistBtn(taskKey);
                 } else {
                     document.getElementById('ozon-waiting-box').classList.remove('hidden'); document.getElementById('ozon-ready-box').classList.add('hidden'); document.getElementById('ozon-expired-box').classList.add('hidden'); document.getElementById('task-card-checklist-container').classList.add('hidden');
@@ -1312,8 +1317,8 @@
             } else if (['skinape', 'skinfights'].includes(taskKey)) {
                 document.getElementById(`task-${taskKey}-block`).classList.remove('hidden'); document.getElementById('task-screenshot-container').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить скриншот</span>`; validateScreenshotBtn();
             } else if (['alfa_card', 'alfa_credit', 'yandex_pay'].includes(taskKey)) {
-                const map = { alfa_card: appSettings.alfa_link || savedAlfaLink, alfa_credit: appSettings.alfa_credit_link || savedAlfaCreditLink, yandex_pay: 'https://bank.yandex.ru/invite?refid=qxSp2JZACr6' };
-                document.getElementById('task-card-link-block').classList.remove('hidden'); document.getElementById('task-card-link-btn').href = map[taskKey]; document.getElementById('task-card-checklist-container').classList.remove('hidden'); renderChecklistUI(taskKey); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`; validateCardChecklistBtn(taskKey);
+                const map = { alfa_card: appSettings.alfa_link, alfa_credit: appSettings.alfa_credit_link, yandex_pay: 'https://bank.yandex.ru/invite?refid=qxSp2JZACr6' };
+                document.getElementById('task-card-link-block').classList.remove('hidden'); document.getElementById('task-card-link-btn').href = map[taskKey] || '#'; document.getElementById('task-card-checklist-container').classList.remove('hidden'); renderChecklistUI(taskKey); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`; validateCardChecklistBtn(taskKey);
             } else if (taskKey === 'vpn') {
                 document.getElementById('task-vpn-block').classList.remove('hidden'); mainBtn.innerHTML = `<span class="material-icons text-base">check_circle</span><span>Отправить на проверку</span>`;
             }
@@ -1516,11 +1521,11 @@
             
             const dbMs = Math.max(0, totalMs - (Date.now() - Number(appSettings.alfa_time || alfaLinkTimestamp)));
             const bDb = document.getElementById('admin-alfa-badge');
-            if (bDb) bDb.innerText = fmt(dbMs), bDb.className = dbMs < 86400000 ? 'text-[10px] font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse' : 'text-[10px] font-bold bg-emerald-500/10 text-emerald-400 px-2 rounded';
+            if (bDb) bDb.innerText = fmt(dbMs), bDb.className = dbMs < 86400000 ? 'text-[10px] font-mono font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse' : 'text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 px-2 rounded';
             
             const crMs = Math.max(0, totalMs - (Date.now() - Number(appSettings.alfa_credit_time || alfaCreditLinkTimestamp)));
             const bCr = document.getElementById('admin-alfa-credit-badge');
-            if (bCr) bCr.innerText = fmt(crMs), bCr.className = crMs < 86400000 ? 'text-[10px] font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse' : 'text-[10px] font-bold bg-emerald-500/10 text-emerald-400 px-2 rounded';
+            if (bCr) bCr.innerText = fmt(crMs), bCr.className = crMs < 86400000 ? 'text-[10px] font-mono font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse' : 'text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 px-2 rounded';
         }
         setInterval(updateAlfaLiveTimers, 1000);
 
@@ -1585,10 +1590,6 @@
                 if (!badge) return;
                 const state = tasksState[key];
                 
-                if (key === 'ozon_card' && getOzonRemainingMs() > 0 && state.status === 'idle' && activeTaskForms['ozon_card']) {
-                    badge.className = 'flex items-center gap-1 text-[11px] font-bold text-cyan-300 bg-cyan-500/20 px-2 py-0.5 rounded-lg border border-cyan-500/40 animate-pulse'; badge.innerHTML = '<span class="material-icons text-xs">link</span><span>Ссылка готова!</span>'; badge.classList.remove('hidden'); return;
-                }
-                
                 if (state.status === 'idle') { badge.className = 'hidden'; }
                 else if (state.status === 'in_progress') { badge.className = 'flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-amber-500/15 px-2 py-0.5 rounded border border-amber-500/30'; badge.innerHTML = '<span class="material-icons text-xs">sync</span><span>В процессе</span>'; badge.classList.remove('hidden'); }
                 else if (state.status === 'accepted') { badge.className = 'flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded border border-emerald-500/30'; badge.innerHTML = '<span class="material-icons text-xs">check</span><span>Принято</span>'; badge.classList.remove('hidden'); }
@@ -1602,6 +1603,7 @@
             syncWithBackend();
             setInterval(syncWithBackend, 4000);
         });
+    </script>
     </script>
 </body>
 </html>
