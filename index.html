@@ -60,7 +60,6 @@
             </div>
 
             <div id="market-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4 pt-1">
-                <!-- Карточки маркета -->
                 <div onclick="openServiceModal('steam_topup')" data-category="steam" class="service-card cursor-pointer bg-slate-900/80 hover:bg-slate-900 border border-blue-500/30 hover:border-blue-500/60 rounded-2xl p-4 sm:p-5 transition-all shadow-md flex flex-col justify-between gap-3 group">
                     <div class="space-y-2"><div class="flex items-start justify-between"><div class="w-11 h-11 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-400 flex items-center justify-center"><span class="material-icons text-2xl">account_balance_wallet</span></div><span class="text-[11px] font-bold text-blue-400 bg-blue-500/15 px-2.5 py-0.5 rounded-lg border border-blue-500/30">Без входа</span></div><h3 class="text-base sm:text-lg font-bold text-white group-hover:text-blue-300 transition">Пополнение Steam</h3><p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Пополнение кошелька любого региона по логину</p></div>
                     <div class="flex items-center justify-between pt-2 border-t border-slate-800/80"><span class="text-xs sm:text-sm font-extrabold text-blue-400">От 100 ₽</span><span class="text-xs font-bold bg-blue-500/15 group-hover:bg-blue-500 text-blue-300 group-hover:text-slate-950 px-3 py-1.5 rounded-xl border border-blue-500/40 transition">Заказать</span></div>
@@ -298,7 +297,6 @@
         </div>
     </div>
 
-    <!-- ПЕРЕПИСАННАЯ ЛОГИКА И СКРИПТЫ (Оптимизировано, исправлены баги таймеров и API) -->
     <script>
         const tg = window.Telegram ? window.Telegram.WebApp : null;
         if (tg) { tg.expand(); tg.ready(); }
@@ -357,7 +355,7 @@
             ozon_card: ['Оформить карту', 'Получить карту', 'Выполнить 5 покупок вне Ozon']
         };
 
-        // --- STATE MANAGEMENT ---
+        // --- УПРАВЛЕНИЕ СОСТОЯНИЕМ (SYNC ПУТЕМ ПЕРЕЗАПИСИ ИЗ БД) ---
         let AppState = {
             tasks: {},
             screenshots: {},
@@ -402,7 +400,6 @@
         };
 
         Storage.load();
-
         let timers = { ozon: null, alfaLive: null, sync: null };
 
         // --- УТИЛИТЫ ---
@@ -413,7 +410,6 @@
             setTimeout(() => { toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-20'); toast.classList.remove('opacity-100', 'translate-y-0'); }, 3000);
         }
 
-        // --- МОДАЛКИ И НАВИГАЦИЯ ---
         function closeModal(modalId) {
             document.getElementById(modalId).classList.add('hidden');
             if (modalId === 'task-modal') {
@@ -423,13 +419,11 @@
         }
 
         function switchTab(tab) {
-            if (tab === 'admin') {
-                if (!isAdminUnlocked) {
-                    document.getElementById('admin-auth-modal').classList.remove('hidden');
-                    const input = document.getElementById('admin-pwd-input');
-                    if (input) { input.value = ''; input.focus(); }
-                    return; 
-                }
+            if (tab === 'admin' && !isAdminUnlocked && !isUserAdmin) {
+                document.getElementById('admin-auth-modal').classList.remove('hidden');
+                document.getElementById('admin-pwd-input').value = '';
+                document.getElementById('admin-pwd-input').focus();
+                return; 
             }
             ['market', 'tasks', 'contacts', 'admin'].forEach(t => {
                 const el = document.getElementById(`tab-content-${t}`);
@@ -452,7 +446,7 @@
                     : 'flex flex-col items-center gap-1 text-emerald-400 font-bold transition';
                 if (tab === 'admin') updateAdminDashboardUI();
             }
-            if (tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred) tg.HapticFeedback.impactOccurred('light');
+            if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
         }
 
         function switchAdminSection(sec) {
@@ -464,11 +458,10 @@
                     ? 'px-3.5 py-2 rounded-xl bg-amber-500 text-slate-950 font-black shrink-0 transition'
                     : 'px-3.5 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white border border-slate-800 shrink-0 transition';
             });
-            if (tg && tg.HapticFeedback && tg.HapticFeedback.selectionChanged) tg.HapticFeedback.selectionChanged();
+            if (tg && tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
         }
 
         function closeAdminAuth() { document.getElementById('admin-auth-modal').classList.add('hidden'); }
-        
         function submitAdminAuth() {
             if (document.getElementById('admin-pwd-input').value === "789") {
                 isAdminUnlocked = true; isUserAdmin = true;
@@ -482,8 +475,8 @@
         function copyPromoCode(code) {
             navigator.clipboard.writeText(code).then(() => {
                 showCustomToast(`Промокод ${code} скопирован!`);
-                if (tg && tg.HapticFeedback && tg.HapticFeedback.notificationOccurred) tg.HapticFeedback.notificationOccurred('success');
-            }).catch(e => console.error("Copy fail", e));
+                if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+            });
         }
 
         function filterMarket(cat) {
@@ -524,7 +517,6 @@
         function startOzonCountdownTimer() {
             const timerText = document.getElementById('ozon-timer-text'); if (!timerText) return;
             if (timers.ozon) clearInterval(timers.ozon);
-            
             function update() {
                 const ms = getOzonRemainingMs();
                 if (ms <= 0) {
@@ -536,6 +528,31 @@
                 timerText.innerText = `${h}ч ${m < 10 ? '0' : ''}${m}м ${s < 10 ? '0' : ''}${s}с`;
             }
             update(); timers.ozon = setInterval(update, 1000);
+        }
+
+        function updateTaskCardsStatusUI() {
+            Object.keys(tasksMeta).forEach(tk => {
+                const state = AppState.tasks[tk];
+                const badge = document.getElementById(`badge-status-${tk}`);
+                if (!badge) return;
+                badge.classList.remove('hidden');
+                
+                if (state.status === 'in_progress') {
+                    badge.className = 'text-[10px] font-bold text-amber-400 bg-amber-500/15 px-2 py-0.5 rounded border border-amber-500/30 flex items-center gap-1';
+                    badge.innerHTML = '<span class="material-icons text-[10px] animate-spin-reverse">sync</span> Проверка';
+                } else if (state.status === 'accepted' || state.rewardRequested) {
+                    badge.className = 'text-[10px] font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded border border-emerald-500/30 flex items-center gap-1 animate-pulse';
+                    badge.innerHTML = '<span class="material-icons text-[10px]">card_giftcard</span> Выдача';
+                } else if (state.status === 'completed') {
+                    badge.className = 'text-[10px] font-bold text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/20 flex items-center gap-1';
+                    badge.innerHTML = '<span class="material-icons text-[10px]">done_all</span> Готово';
+                } else if (state.status === 'rejected') {
+                    badge.className = 'text-[10px] font-bold text-rose-400 bg-rose-500/15 px-2 py-0.5 rounded border border-rose-500/30 flex items-center gap-1';
+                    badge.innerHTML = '<span class="material-icons text-[10px]">cancel</span> Отказ';
+                } else {
+                    badge.className = 'hidden';
+                }
+            });
         }
 
         function openTaskModal(taskKey) {
@@ -550,7 +567,6 @@
             const bonusBlock = document.getElementById('task-bonus-block');
             if (meta.bonus) { bonusBlock.classList.remove('hidden'); document.getElementById('task-modal-bonus').innerText = `Бонус: ${meta.bonus}`; } else { bonusBlock.classList.add('hidden'); }
 
-            // Status label
             const sl = document.getElementById('task-modal-status-label');
             sl.className = 'hidden'; sl.innerHTML = '';
             if (state.status === 'in_progress') { sl.className = 'flex items-center gap-1 text-xs font-bold text-amber-400 bg-amber-500/15 px-2.5 py-1 rounded-xl border border-amber-500/30'; sl.innerHTML = `<span class="material-icons text-sm animate-spin-reverse">sync</span><span>В процессе</span>`; } 
@@ -558,7 +574,6 @@
             else if (state.status === 'completed') { sl.className = 'flex items-center gap-1 text-xs font-bold text-emerald-400 bg-emerald-500/15 px-2.5 py-1 rounded-xl border border-emerald-500/30'; sl.innerHTML = `<span class="material-icons text-sm">verified</span><span>Выполнено</span>`; } 
             else if (state.status === 'rejected') { sl.className = 'flex items-center gap-1 text-xs font-bold text-rose-400 bg-rose-500/15 px-2.5 py-1 rounded-xl border border-rose-500/30'; sl.innerHTML = `<span class="material-icons text-sm">cancel</span><span>Отклонено</span>`; }
 
-            // Hide dynamic blocks
             ['skinape','skinfights','vpn','idea-fields','screenshot-container','rejected-reason-box','card-link-block','ozon-block','card-checklist-container'].forEach(id => {
                 const el = document.getElementById(`task-${id}`); if(el) el.classList.add('hidden');
             });
@@ -620,7 +635,7 @@
             
             if (state.status === 'accepted') {
                 if (!state.claimed) { recordActivity(`Запросил выдачу скина за «${meta.title}»`, 'claim', 'card_giftcard'); API.send({ action: 'claim_reward', taskKey: tk, taskTitle: meta.title }, 'task-modal'); state.claimed = true; }
-                state.rewardRequested = true; Storage.save(); showCustomToast('✅ Заявка на приз отправлена!'); return;
+                state.rewardRequested = true; Storage.save(); updateTaskCardsStatusUI(); showCustomToast('✅ Заявка на приз отправлена!'); return;
             }
 
             if (!state.revealed) {
@@ -646,17 +661,16 @@
                 }
             }
 
-            // Submissions
             if (tk === 'idea') {
                 const title = document.getElementById('idea-title-input').value.trim(); const desc = document.getElementById('idea-desc-input').value.trim();
                 if (!title || !desc) { showCustomToast('Заполните оба поля!'); return; }
-                state.status = 'in_progress'; state.ideaTitle = title; state.ideaDesc = desc; Storage.save(); closeModal('task-modal');
+                state.status = 'in_progress'; state.ideaTitle = title; state.ideaDesc = desc; Storage.save(); updateTaskCardsStatusUI(); closeModal('task-modal');
                 recordActivity(`Отправил идею «${title}»`, 'task_submit', 'lightbulb');
                 API.send({ action: 'task_submit', taskKey: 'idea', ideaTitle: title, ideaDescription: desc }); showCustomToast('💡 Идея отправлена!'); return;
             }
 
             if (tk === 'vpn') {
-                state.status = 'in_progress'; Storage.save(); closeModal('task-modal');
+                state.status = 'in_progress'; Storage.save(); updateTaskCardsStatusUI(); closeModal('task-modal');
                 recordActivity('Отправил VPN', 'task_submit', 'hourglass_top');
                 API.send({ action: 'task_submit', taskKey: 'vpn', taskTitle: meta.title }); showCustomToast('✅ Отправлено!'); return;
             }
@@ -665,14 +679,14 @@
                 if (tk === 'ozon_card' && getOzonRemainingMs() <= 0) { showCustomToast('Дождитесь ссылки!'); return; }
                 const items = cardChecklistConfig[tk]; const checks = AppState.checklists[tk];
                 if (!items.every((_, i) => checks[i])) { showCustomToast('Отметьте все этапы!'); return; }
-                state.status = 'in_progress'; Storage.save(); closeModal('task-modal');
+                state.status = 'in_progress'; Storage.save(); updateTaskCardsStatusUI(); closeModal('task-modal');
                 recordActivity(`Отправил карту «${meta.title}»`, 'task_submit', 'checklist_rtl');
                 API.send({ action: 'task_submit', taskKey: tk, taskTitle: meta.title }); showCustomToast(`✅ Заявка отправлена!`); return;
             }
 
             if (tk === 'skinape' || tk === 'skinfights') {
                 if (!AppState.screenshots[tk]) { showCustomToast('Прикрепите скриншот!'); return; }
-                state.status = 'in_progress'; Storage.save(); closeModal('task-modal');
+                state.status = 'in_progress'; Storage.save(); updateTaskCardsStatusUI(); closeModal('task-modal');
                 recordActivity(`Отправил скриншот «${meta.title}»`, 'task_submit', 'image');
                 API.send({ action: 'task_screenshot_submit', taskKey: tk, taskTitle: meta.title, screenshot: AppState.screenshots[tk] }); showCustomToast('✅ Скриншот отправлен!'); return;
             }
@@ -691,7 +705,7 @@
             if (AppState.checklists[tk]) AppState.checklists[tk].fill(false);
             if (tk === 'ozon_card') { AppState.ozonCard = { status: 'idle', link: '', readyTimestamp: 0 }; if (timers.ozon) clearInterval(timers.ozon); }
             if (tk === 'idea') { document.getElementById('idea-title-input').value=''; document.getElementById('idea-desc-input').value=''; }
-            Storage.save(); recordActivity(`Отказался от «${tasksMeta[tk].title}»`, 'abort', 'close');
+            Storage.save(); updateTaskCardsStatusUI(); recordActivity(`Отказался от «${tasksMeta[tk].title}»`, 'abort', 'close');
             API.send({ action: 'task_abort', taskKey: tk }); openTaskModal(tk); showCustomToast('Задание отменено');
         }
 
@@ -881,10 +895,10 @@
             adminCompleteOrder: async (idx) => { const o = AppState.orders[idx]; if(o && o.id) { try { await fetch(`${BACKEND_URL}/api/order/complete`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({orderId:o.id})}); AppState.orders.splice(idx,1); Storage.save(); showCustomToast('✅ Заказ завершен'); syncWithBackend(); } catch(e){} } }
         };
 
-        // --- CORE СИНХРОНИЗАЦИЯ ---
+        // --- СИНХРОНИЗАЦИЯ ПК И МОБИЛКИ ---
         async function syncWithBackend() {
             if (AppState.flags.isSyncing) return;
-            if (document.activeElement && ['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return; // Не прерываем ввод текста
+            if (document.activeElement && ['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
             AppState.flags.isSyncing = true;
             try {
                 const res = await fetch(`${BACKEND_URL}/api/sync`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({userId:user.id, username:user.username, firstName:user.first_name, isAdmin:isAdminUnlocked})});
@@ -904,8 +918,8 @@
                     if (data.ozonCard) AppState.ozonCard = data.ozonCard;
                     
                     updateAdminDashboardUI();
+                    updateTaskCardsStatusUI(); // Обновление бейджиков заданий в сетке
                     
-                    // Обновление модалки, если она открыта (и мы не печатаем текст)
                     if (AppState.flags.currentTaskKey && !document.getElementById('task-modal').classList.contains('hidden')) {
                         openTaskModal(AppState.flags.currentTaskKey);
                     }
