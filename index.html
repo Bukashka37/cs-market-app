@@ -1126,7 +1126,7 @@
             id: '0'
         };
 
-        const isUserAdmin = String(user.id) === String(ADMIN_ID);
+        let isUserAdmin = String(user.id) === String(ADMIN_ID);
         let isAdminUnlocked = false;
 
         document.getElementById('user-name').innerText = user.first_name || 'Клиент';
@@ -1232,10 +1232,6 @@
 
         function switchTab(tab) {
             if (tab === 'admin') {
-                if (!isUserAdmin) {
-                    showCustomToast("❌ Отказано в доступе");
-                    return;
-                }
                 if (!isAdminUnlocked) {
                     document.getElementById('admin-auth-modal').classList.remove('hidden');
                     const input = document.getElementById('admin-pwd-input');
@@ -1254,8 +1250,11 @@
             const pwd = document.getElementById('admin-pwd-input').value;
             if (pwd === "789") {
                 isAdminUnlocked = true;
+                isUserAdmin = true;
                 closeAdminAuth();
                 showCustomToast("✅ Доступ открыт");
+                const adminNavBtn = document.getElementById('nav-admin');
+                if (adminNavBtn) adminNavBtn.classList.remove('hidden');
                 executeTabSwitch('admin');
                 syncWithBackend();
             } else {
@@ -1272,7 +1271,7 @@
                     btn.className = t === 'admin' 
                         ? 'flex flex-col items-center gap-1 text-amber-500/60 hover:text-amber-400 transition relative'
                         : 'flex flex-col items-center gap-1 text-slate-500 hover:text-slate-300 transition';
-                    if (t === 'admin' && !isUserAdmin) btn.classList.add('hidden');
+                    if (t === 'admin' && !isUserAdmin && !isAdminUnlocked) btn.classList.add('hidden');
                 }
             });
 
@@ -1465,6 +1464,7 @@
             }
 
             if (['alfa_card', 'alfa_credit', 'yandex_pay', 'ozon_card'].includes(currentTaskKey)) {
+                if (currentTaskKey === 'ozon_card' && getOzonRemainingMs() <= 0) { showCustomToast('Дождитесь выдачи ссылки админом!'); return; }
                 const items = cardChecklistConfig[currentTaskKey] || []; const states = taskChecklists[currentTaskKey] || [];
                 const allChecked = items.length > 0 && items.every((_, idx) => !!states[idx]);
                 if (!allChecked) { showCustomToast('Пожалуйста, сначала отметьте все этапы!'); return; }
@@ -1587,7 +1587,7 @@
 
         // ================= АДМИН ПАНЕЛЬ =================
         function updateAdminDashboardUI() {
-            if (!isUserAdmin || !isAdminUnlocked) return;
+            if (!isUserAdmin && !isAdminUnlocked) return;
             try {
                 const safeAdminTasks = adminTasksList || [];
                 const safeOrders = marketOrdersList || [];
@@ -1676,7 +1676,7 @@
         }
 
         function updateAlfaLiveTimers() {
-            if (!isUserAdmin || !isAdminUnlocked) return;
+            if (!isUserAdmin && !isAdminUnlocked) return;
             const totalMs = 29 * 24 * 60 * 60 * 1000; const fmt = ms => ms <= 0 ? 'Истекло' : `${Math.floor(ms/86400000)}д ${Math.floor((ms/3600000)%24)}ч ${Math.floor((ms/60000)%60)}м`;
             const dbMs = Math.max(0, totalMs - (Date.now() - Number(alfaLinkTimestamp))); const bDb = document.getElementById('admin-alfa-badge');
             if (bDb) { bDb.innerText = fmt(dbMs); bDb.className = dbMs < 86400000 ? 'text-[10px] font-bold bg-rose-500/20 text-rose-400 px-2 rounded animate-pulse' : 'text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 px-2 rounded'; }
