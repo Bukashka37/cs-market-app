@@ -625,7 +625,7 @@
                         <span class="material-icons text-slate-500 group-hover:text-emerald-400 transition">open_in_new</span>
                     </a>
 
-                    <a href="https://www.avito.ru/user/14c95a1573cc173662b54e0d164ea522/profile" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-purple-500/40 transition group">
+                    <a href="https://www.avito.ru/user/dda58bae4f033c96c7952c2309d806a2/profile" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-purple-500/40 transition group">
                         <div class="flex items-center gap-3">
                             <span class="material-icons text-purple-400 text-2xl">shopping_bag</span>
                             <div>
@@ -1096,21 +1096,30 @@
         <span id="toast-text">Уведомление</span>
     </div>
 
-    <!-- Скрипты приложения -->
+    <!-- Модальное окно ввода пароля для админки -->
+    <div id="admin-auth-modal" class="hidden fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-sm rounded-3xl p-6 space-y-5 shadow-2xl animate-pop">
+            <div class="text-center space-y-1.5">
+                <span class="material-icons text-4xl text-amber-400">admin_panel_settings</span>
+                <h3 class="text-lg font-black text-white">Доступ в панель</h3>
+                <p class="text-xs text-slate-400">Введите PIN-код для разблокировки</p>
+            </div>
+            <input type="password" id="admin-pwd-input" placeholder="***" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-center text-lg tracking-[0.5em] focus:border-amber-500 outline-none transition">
+            <div class="flex gap-2 pt-2">
+                <button onclick="closeAdminAuth()" class="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-sm font-bold transition">Отмена</button>
+                <button onclick="submitAdminAuth()" class="flex-1 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl text-sm font-black transition shadow">Войти</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Логика и скрипты приложения -->
     <script>
-        // Инициализация Telegram WebApp
         const tg = window.Telegram ? window.Telegram.WebApp : null;
-        if (tg) {
-            tg.expand();
-            tg.ready();
-        }
+        if (tg) { tg.expand(); tg.ready(); }
 
         const BACKEND_URL = "https://cs-market-backend.onrender.com";
-
-        // Цифровой ID администратора
         const ADMIN_ID = '707417409';
 
-        // Данные пользователя
         const user = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) || {
             first_name: 'Пользователь',
             username: 'bukashka_37',
@@ -1129,120 +1138,31 @@
             if (adminNavBtn) adminNavBtn.classList.remove('hidden');
         }
 
-        // База текстов услуг маркета
         const servicesData = {
-            steam_topup: {
-                title: 'Пополнение Steam',
-                html: `Пополнение вашего кошелька Steam без входа в аккаунт (любой регион).\n\n<b>Оплата:</b> Работаем по 100% предоплате. Сначала происходит оплата, затем начисление средств на ваш аккаунт.\n<b>Минимальная сумма:</b> От 100 руб.`
-            },
-            steam_game: {
-                title: 'Покупка игр Steam',
-                html: `Отправка любой игры подарком (Gift) на ваш аккаунт без входа.\n\n<b>Условия:</b> Сделка строится на доверии — сначала вы переводите оплату, после чего я сразу отправляю вам игру подарком.\n<b>Цены:</b> Ниже конкурентов на Авито!`
-            },
-            cs_buy_stock: {
-                title: 'Покупка скинов CS2',
-                html: `Посмотреть инвентарь можно по ссылке:\n<a href="https://steamcommunity.com/profiles/76561198846881684/inventory/" target="_blank" class="text-amber-400 font-bold underline break-all">https://steamcommunity.com/profiles/76561198846881684/inventory/</a>\n\n<b>Условия:</b>\nСначала оплата, затем получение скина трейдом.\n\n<i>(Уточню статус и цену любого предмета сразу после заявки).</i>`
-            },
-            cs_buy_order: {
-                title: 'Заказ скинов CS2',
-                html: `<b>Условия оплаты и получения:</b>\nСначала оплата. Передача скина происходит в течение 10 дней (обычно до 8 дней из-за банов трейда).\n\n<i>(Уточню цену любого предмета сразу после заявки).</i>`
-            },
-            cs_sell: {
-                title: 'Выкуп ваших скинов CS2',
-                html: `Выкупаю любые предметы (скины, кейсы, ширп, наклейки, брелки).\n\n<b>Цена выкупа:</b> за 50% - 65% от цены на Торговой Площадке Steam.\n<b>Условия оплаты:</b> Сначала вы передаете предметы трейдом. Оплата происходит после прохождения защиты трейда (через 7 дней).`
-            },
-            cs_trade: {
-                title: 'Обмен скинов CS2',
-                html: `Обменивайте любые свои предметы на мои скины.\n\n<b>Условия:</b> обмены в – или = не рассматриваю. Есть предметы с переплатой!\n\n<b>Ссылка на создание трейда:</b>\n<a href="https://steamcommunity.com/tradeoffer/new/?partner=886615956&token=i8N4PgPo" target="_blank" class="text-cyan-400 font-bold underline break-all">https://steamcommunity.com/tradeoffer/new/?partner=886615956&token=i8N4PgPo</a>\n\n<b>Инструкция:</b> Перейдите по ссылке, отправьте готовый обмен в Steam, затем подтвердите отправку.`
-            },
-            tanks_donate: {
-                title: 'Донат Tanks Blitz',
-                html: `Пополнение вашего аккаунта Tanks Blitz любыми наборами из официального магазина без наценки (строго РУ-аккаунт, ПК или мобильная версия — без разницы).\n\n<b>В чём выгода:</b> Самые выгодные предложения в игре ограничены 1 покупкой на аккаунт. С моей помощью вы можете приобрести почти любой набор повторно до 3 раз подарком официально!\n<b>Примеры наборов:</b> «Доброжирные контейнеры» (1–35 шт), контейнеры «Т49 Защитник» (6 или 35 шт) или другие актуальные наборы.\n\n<b>Условия:</b> 100% предоплата.`
-            },
-            tanks_platoon: {
-                title: 'Взвод Tanks Blitz',
-                html: `<b>Условия:</b> Работаю по 100% предоплате.\n\n<b>Выберите подходящий пакет взвода:</b>\n\n<b>Стоимость: 10 руб / 1 бой</b>\n<b>Описание:</b> Формальный вариант совместной игры. Я заступаю к вам в лобби и играю бой самостоятельно.\n<b>В чем плюс:</b> В вашей команде гарантированно на одного «рака» меньше и гарантированно один опытный скилловый игрок, что пассивно значительно повышает общий процент побед.\n\n<b>Стоимость: 20 руб / 1 бой</b>\n<b>Описание:</b> Подбираю технику строго под ваш танк. Обязательно держусь рядом с вами и отыгрываю один флаг, помогаю продавливать позиции или удерживать оборону.\n\n<b>Стоимость: 40 руб / 1 бой</b>\n<b>Описание:</b> Берется самый подходящий танк под ваш заказ. Еду с вами вплотную, постоянно прикрываю от огня, каточу противников, чтобы вы наносили максимум урона, периодически закрываю собой от вражеских выстрелов. Не забираю фраги, оставляя противников вам на добив!\n<b>Идеально для:</b> Быстрого прохождения ивентов и набивания высокой статистики. С таким прикрытием рандом проходится в разы легче.`
-            },
-            tanks_marks: {
-                title: 'Отметки Tanks Blitz',
-                html: `<b>Описание:</b> Получение одной (первой) отметки на любом вашем танке.\n<b>Стоимость:</b> 1000 руб за одну отметку.\n<b>Условия:</b> Работаем по 100% предоплате. По срокам примерно 10дн.\n\n<i>(Обратите внимание: вторую и третью отметки на одном танке в работу не беру).</i>`
-            },
-            tanks_training: {
-                title: 'Обучение Tanks Blitz',
-                html: `Разбор тактики на картах, выбор позиций, разбор ТТХ техники, грамотный засвет и поведение в бою от опытного игрока.\n\n<b>Условия:</b> 100% предоплата.`
-            },
-            ai_gpt: {
-                title: 'Подписка GPT Plus',
-                html: `Готовый личный аккаунт OpenAI (30 дней). Выдается логин, пароль и почта.\n\n<b>Оплата:</b> Предоплата 100%.\n<b>Цена:</b> 1000 руб.`
-            },
-            ai_gemini: {
-                title: 'Подписка Gemini PRO',
-                html: `<b>Вид:</b> Начисление премиум-подписки на ваш личный аккаунт Google (12 месяцев). Отправка ссылки активатора.\n\n<b>Оплата:</b> Предоплата 100%.\n<b>Цена:</b> 290 руб.`
-            },
-            clash_boost: {
-                title: 'Буст Clash Royale',
-                html: `<b>Описание услуги:</b> Выполняю профессиональное поднятие кубков/арен на вашем аккаунте.\n\n<b>Важное примечание:</b> Я не занимаюсь фармом золота, сундуков или прокачкой колод. Услуга ориентирована строго на поднятие кубков и переход на новые арены!\n\n<b>Расчет стоимости:</b>\n• 1 руб = 1 апнутый кубок (около 30 руб за 1 победу).\n• Пример: Поднятие 1000 кубков (примерно 3 арены) = 1000 руб.\n\n<b>Условия:</b> Работа по предоплате. Точные сроки выполнения обсуждаются лично перед оплатой.`
-            }
+            steam_topup: { title: 'Пополнение Steam', html: `Пополнение вашего кошелька Steam без входа в аккаунт (любой регион).\n\n<b>Оплата:</b> Работаем по 100% предоплате. Сначала происходит оплата, затем начисление средств на ваш аккаунт.\n<b>Минимальная сумма:</b> От 100 руб.` },
+            steam_game: { title: 'Покупка игр Steam', html: `Отправка любой игры подарком (Gift) на ваш аккаунт без входа.\n\n<b>Условия:</b> Сделка строится на доверии — сначала вы переводите оплату, после чего я сразу отправляю вам игру подарком.\n<b>Цены:</b> Ниже конкурентов на Авито!` },
+            cs_buy_stock: { title: 'Покупка скинов CS2', html: `Посмотреть инвентарь можно по ссылке:\n<a href="https://steamcommunity.com/profiles/76561198846881684/inventory/" target="_blank" class="text-amber-400 font-bold underline break-all">https://steamcommunity.com/profiles/76561198846881684/inventory/</a>\n\n<b>Условия:</b>\nСначала оплата, затем получение скина трейдом.\n\n<i>(Уточню статус и цену любого предмета сразу после заявки).</i>` },
+            cs_buy_order: { title: 'Заказ скинов CS2', html: `<b>Условия оплаты и получения:</b>\nСначала оплата. Передача скина происходит в течение 10 дней (обычно до 8 дней из-за банов трейда).\n\n<i>(Уточню цену любого предмета сразу после заявки).</i>` },
+            cs_sell: { title: 'Выкуп ваших скинов CS2', html: `Выкупаю любые предметы (скины, кейсы, ширп, наклейки, брелки).\n\n<b>Цена выкупа:</b> за 50% - 65% от цены на Торговой Площадке Steam.\n<b>Условия оплаты:</b> Сначала вы передаете предметы трейдом. Оплата происходит после прохождения защиты трейда (через 7 дней).` },
+            cs_trade: { title: 'Обмен скинов CS2', html: `Обменивайте любые свои предметы на мои скины.\n\n<b>Условия:</b> обмены в – или = не рассматриваю. Есть предметы с переплатой!\n\n<b>Ссылка на создание трейда:</b>\n<a href="https://steamcommunity.com/tradeoffer/new/?partner=886615956&token=i8N4PgPo" target="_blank" class="text-cyan-400 font-bold underline break-all">https://steamcommunity.com/tradeoffer/new/?partner=886615956&token=i8N4PgPo</a>\n\n<b>Инструкция:</b> Перейдите по ссылке, отправьте готовый обмен в Steam, затем подтвердите отправку.` },
+            tanks_donate: { title: 'Донат Tanks Blitz', html: `Пополнение вашего аккаунта Tanks Blitz любыми наборами из официального магазина без наценки (строго РУ-аккаунт, ПК или мобильная версия — без разницы).\n\n<b>В чём выгода:</b> Самые выгодные предложения в игре ограничены 1 покупкой на аккаунт. С моей помощью вы можете приобрести почти любой набор повторно до 3 раз подарком официально!\n<b>Примеры наборов:</b> «Доброжирные контейнеры» (1–35 шт), контейнеры «Т49 Защитник» (6 или 35 шт) или другие актуальные наборы.\n\n<b>Условия:</b> 100% предоплата.` },
+            tanks_platoon: { title: 'Взвод Tanks Blitz', html: `<b>Условия:</b> Работаю по 100% предоплате.\n\n<b>Выберите подходящий пакет взвода:</b>\n\n<b>Стоимость: 10 руб / 1 бой</b>\n<b>Описание:</b> Формальный вариант совместной игры. Я заступаю к вам в лобби и играю бой самостоятельно.\n<b>В чем плюс:</b> В вашей команде гарантированно на одного «рака» меньше и гарантированно один опытный скилловый игрок, что пассивно значительно повышает общий процент побед.\n\n<b>Стоимость: 20 руб / 1 бой</b>\n<b>Описание:</b> Подбираю технику строго под ваш танк. Обязательно держусь рядом с вами и отыгрываю один флаг, помогаю продавливать позиции или удерживать оборону.\n\n<b>Стоимость: 40 руб / 1 бой</b>\n<b>Описание:</b> Берется самый подходящий танк под ваш заказ. Еду с вами вплотную, постоянно прикрываю от огня, каточу противников, чтобы вы наносили максимум урона, периодически закрываю собой от вражеских выстрелов. Не забираю фраги, оставляя противников вам на добив!\n<b>Идеально для:</b> Быстрого прохождения ивентов и набивания высокой статистики. С таким прикрытием рандом проходится в разы легче.` },
+            tanks_marks: { title: 'Отметки Tanks Blitz', html: `<b>Описание:</b> Получение одной (первой) отметки на любом вашем танке.\n<b>Стоимость:</b> 1000 руб за одну отметку.\n<b>Условия:</b> Работаем по 100% предоплате. По срокам примерно 10дн.\n\n<i>(Обратите внимание: вторую и третью отметки на одном танке в работу не беру).</i>` },
+            tanks_training: { title: 'Обучение Tanks Blitz', html: `Разбор тактики на картах, выбор позиций, разбор ТТХ техники, грамотный засвет и поведение в бою от опытного игрока.\n\n<b>Условия:</b> 100% предоплата.` },
+            ai_gpt: { title: 'Подписка GPT Plus', html: `Готовый личный аккаунт OpenAI (30 дней). Выдается логин, пароль и почта.\n\n<b>Оплата:</b> Предоплата 100%.\n<b>Цена:</b> 1000 руб.` },
+            ai_gemini: { title: 'Подписка Gemini PRO', html: `<b>Вид:</b> Начисление премиум-подписки на ваш личный аккаунт Google (12 месяцев). Отправка ссылки активатора.\n\n<b>Оплата:</b> Предоплата 100%.\n<b>Цена:</b> 290 руб.` },
+            clash_boost: { title: 'Буст Clash Royale', html: `<b>Описание услуги:</b> Выполняю профессиональное поднятие кубков/арен на вашем аккаунте.\n\n<b>Важное примечание:</b> Я не занимаюсь фармом золота, сундуков или прокачкой колод. Услуга ориентирована строго на поднятие кубков и переход на новые арены!\n\n<b>Расчет стоимости:</b>\n• 1 руб = 1 апнутый кубок (около 30 руб за 1 победу).\n• Пример: Поднятие 1000 кубков (примерно 3 арены) = 1000 руб.\n\n<b>Условия:</b> Работа по предоплате. Точные сроки выполнения обсуждаются лично перед оплатой.` }
         };
 
-        // База заданий
         const tasksMeta = {
-            alfa_card: {
-                title: 'Альфа-карта',
-                reward: 'до 750 ₽ скин',
-                conditions: `1) Вам не менее 14 лет.\n2) У вас не было продуктов Альфа-Банка последние 90 дней.\n3) Ранее не оформляли карту по реферальной ссылке.`,
-                instructions: `1. Оформить бесплатную дебетовую карту по ссылке.\n2. Забрать карту у курьера или в отделении банка.\n3. Совершить по карте любую первую покупку на любую сумму.`,
-                bonus: 'Кэшбэк до 100% по карте от банка'
-            },
-            alfa_credit: {
-                title: 'Альфа-кредитка',
-                reward: 'до 1 000 ₽ скин',
-                conditions: `1) Вам не менее 18 лет.\n2) У вас не было кредитной карты Альфа-Банка последние 90 дней.\n3) Ранее не оформляли кредитку по реферальной ссылке.\n4) ⚠️ Внимание: Обязательно самостоятельно ознакомьтесь с условиями кредитной карты и убедитесь, что она вам подходит!`,
-                instructions: `1. Ознакомьтесь с условиями кредитки (бесплатное обслуживание первый год, есть беспроцентный период).\n2. Оформить онлайн-заявку по ссылке.\n3. Получить карту у курьера или в отделении банка.\n4. Совершить покупку по карте на любую сумму в течение 3 месяцев.`,
-                bonus: 'Кэшбэк'
-            },
-            yandex_pay: {
-                title: 'Яндекс карта',
-                reward: 'до 300 ₽ скин',
-                conditions: `1) Вам не менее 14 лет.\n2) Ранее не оформляли карту по реферальной ссылке.`,
-                instructions: `1. Скачать приложение Яндекс Пэй по ссылке.\n2. Открыть карту Пэй в приложении.\n3. Подтвердить данные через Госуслуги.\n4. Совершить одну любую покупку вне сервисов Яндекса.`,
-                bonus: 'Кэшбэк 5% баллами Плюса за любые покупки вне Яндекса до 30 дней'
-            },
-            ozon_card: {
-                title: 'Озон карта',
-                reward: 'до 300 ₽ скин',
-                conditions: `1) Вам не менее 14 лет.\n2) Ранее не оформляли карту Ozon Банка.`,
-                instructions: `1. Нажмите «Готов выполнить», чтобы запросить ссылку у админа.\n2. После получения ссылки оформите пластиковую карту Ozon Банка.\n3. Совершите 5 любых покупок ЗА ПРЕДЕЛАМИ Ozon по данной карте.`,
-                bonus: 'Товары за 1 рубль или кэшбэк до 25%'
-            },
-            skinfights: {
-                title: 'Бот SkinFights',
-                reward: 'до 2.5 ₽ приз',
-                conditions: `1) Вы до этого ни разу не запускали данного бота.\n2) Первый запуск строго по выданной ссылке.`,
-                instructions: `1. Запустить бота по ссылке-приглашению.\n2. Забрать приветственный бонус и вывести любой скин в Steam.\n3. Сделать скриншот в разделе Steam внутри бота и загрузить сюда.`,
-                bonus: '500 внутриигровой валюты на кейсы и скины'
-            },
-            skinape: {
-                title: 'Приложение SkinApe',
-                reward: 'до 2.5 ₽ приз',
-                conditions: `1) Ранее не устанавливали приложение SkinApe CS2.`,
-                instructions: `1. Скачать приложение SkinApe CS2 на телефон.\n2. Пройти регистрацию и залогиниться.\n3. Ввести промокод 66Q2BQL9.\n4. Прикрепить скриншот приложения, где виден баланс после ввода кода.`,
-                bonus: '50 монет на вывод скинов'
-            },
-            vpn: {
-                title: 'Подписка VPN',
-                reward: 'до 40 ₽ скин',
-                conditions: `1) Ранее не пользовались данным VPN сервисом.`,
-                instructions: `1. Перейти в бота по выданной ссылке.\n2. Оплатить первую подписку на 1 месяц.`,
-                bonus: '+5 дней подписки и 1 ГБ трафика'
-            },
-            idea: {
-                title: 'Идея для задания',
-                reward: '10 - 500 ₽ скин',
-                conditions: `1) Легальность: Только законные сервисы.\n2) Безопасность: Без рисков для организатора и участников.\n3) Прибыльность: Задание должно приносить выгоду организатору.\n4) Адекватность: Выгода должна соответствовать приложенным усилиям.`,
-                instructions: `1. Нажмите «Готов выполнить» и заполните поля с вашей идеей.\n2. После проверки админ оценит качество идеи и свяжется для передачи скина.`,
-                bonus: ''
-            }
+            alfa_card: { title: 'Альфа-карта', reward: 'до 750 ₽ скин', conditions: `1) Вам не менее 14 лет.\n2) У вас не было продуктов Альфа-Банка последние 90 дней.\n3) Ранее не оформляли карту по реферальной ссылке.`, instructions: `1. Оформить бесплатную дебетовую карту по ссылке.\n2. Забрать карту у курьера или в отделении банка.\n3. Совершить по карте любую первую покупку на любую сумму.`, bonus: 'Кэшбэк до 100% по карте от банка' },
+            alfa_credit: { title: 'Альфа-кредитка', reward: 'до 1 000 ₽ скин', conditions: `1) Вам не менее 18 лет.\n2) У вас не было кредитной карты Альфа-Банка последние 90 дней.\n3) Ранее не оформляли кредитку по реферальной ссылке.\n4) ⚠️ Внимание: Обязательно самостоятельно ознакомьтесь с условиями кредитной карты и убедитесь, что она вам подходит!`, instructions: `1. Ознакомьтесь с условиями кредитки (бесплатное обслуживание первый год, есть беспроцентный период).\n2. Оформить онлайн-заявку по ссылке.\n3. Получить карту у курьера или в отделении банка.\n4. Совершить покупку по карте на любую сумму в течение 3 месяцев.`, bonus: 'Кэшбэк' },
+            yandex_pay: { title: 'Яндекс карта', reward: 'до 300 ₽ скин', conditions: `1) Вам не менее 14 лет.\n2) Ранее не оформляли карту по реферальной ссылке.`, instructions: `1. Скачать приложение Яндекс Пэй по ссылке.\n2. Открыть карту Пэй в приложении.\n3. Подтвердить данные через Госуслуги.\n4. Совершить одну любую покупку вне сервисов Яндекса.`, bonus: 'Кэшбэк 5% баллами Плюса за любые покупки вне Яндекса до 30 дней' },
+            ozon_card: { title: 'Озон карта', reward: 'до 300 ₽ скин', conditions: `1) Вам не менее 14 лет.\n2) Ранее не оформляли карту Ozon Банка.`, instructions: `1. Нажмите «Готов выполнить», чтобы запросить ссылку у админа.\n2. После получения ссылки оформите пластиковую карту Ozon Банка.\n3. Совершите 5 любых покупок ЗА ПРЕДЕЛАМИ Ozon по данной карте.`, bonus: 'Товары за 1 рубль или кэшбэк до 25%' },
+            skinfights: { title: 'Бот SkinFights', reward: 'до 2.5 ₽ приз', conditions: `1) Вы до этого ни разу не запускали данного бота.\n2) Первый запуск строго по выданной ссылке.`, instructions: `1. Запустить бота по ссылке-приглашению.\n2. Забрать приветственный бонус и вывести любой скин в Steam.\n3. Сделать скриншот в разделе Steam внутри бота и загрузить сюда.`, bonus: '500 внутриигровой валюты на кейсы и скины' },
+            skinape: { title: 'Приложение SkinApe', reward: 'до 2.5 ₽ приз', conditions: `1) Ранее не устанавливали приложение SkinApe CS2.`, instructions: `1. Скачать приложение SkinApe CS2 на телефон.\n2. Пройти регистрацию и залогиниться.\n3. Ввести промокод 66Q2BQL9.\n4. Прикрепить скриншот приложения, где виден баланс после ввода кода.`, bonus: '50 монет на вывод скинов' },
+            vpn: { title: 'Подписка VPN', reward: 'до 40 ₽ скин', conditions: `1) Ранее не пользовались данным VPN сервисом.`, instructions: `1. Перейти в бота по выданной ссылке.\n2. Оплатить первую подписку на 1 месяц.`, bonus: '+5 дней подписки и 1 ГБ трафика' },
+            idea: { title: 'Идея для задания', reward: '10 - 500 ₽ скин', conditions: `1) Легальность: Только законные сервисы.\n2) Безопасность: Без рисков для организатора и участников.\n3) Прибыльность: Задание должно приносить выгоду организатору.\n4) Адекватность: Выгода должна соответствовать приложенным усилиям.`, instructions: `1. Нажмите «Готов выполнить» и заполните поля с вашей идеей.\n2. После проверки админ оценит качество идеи и свяжется для передачи скина.`, bonus: '' }
         };
 
         const cardChecklistConfig = {
@@ -1273,9 +1193,9 @@
 
         let taskChecklists = {};
         try { taskChecklists = JSON.parse(localStorage.getItem('csgo_market_checklists')) || {}; } catch(e) {}
-        Object.keys(cardChecklistConfig).forEach(k => {
-            if (!taskChecklists[k] || !Array.isArray(taskChecklists[key])) {
-                taskChecklists[k] = new Array(cardChecklistConfig[k].length).fill(false);
+        Object.keys(cardChecklistConfig).forEach(key => {
+            if (!taskChecklists[key] || !Array.isArray(taskChecklists[key])) {
+                taskChecklists[key] = new Array(cardChecklistConfig[key].length).fill(false);
             }
         });
 
@@ -1317,17 +1237,33 @@
                     return;
                 }
                 if (!isAdminUnlocked) {
-                    const pwd = prompt("Введите пароль для входа (3 цифры):");
-                    if (pwd === "789") {
-                        isAdminUnlocked = true;
-                        showCustomToast("✅ Доступ открыт");
-                    } else {
-                        showCustomToast("❌ Неверный пароль");
-                        return;
-                    }
+                    document.getElementById('admin-auth-modal').classList.remove('hidden');
+                    const input = document.getElementById('admin-pwd-input');
+                    if (input) { input.value = ''; input.focus(); }
+                    return; 
                 }
             }
+            executeTabSwitch(tab);
+        }
 
+        function closeAdminAuth() {
+            document.getElementById('admin-auth-modal').classList.add('hidden');
+        }
+
+        function submitAdminAuth() {
+            const pwd = document.getElementById('admin-pwd-input').value;
+            if (pwd === "789") {
+                isAdminUnlocked = true;
+                closeAdminAuth();
+                showCustomToast("✅ Доступ открыт");
+                executeTabSwitch('admin');
+                syncWithBackend();
+            } else {
+                showCustomToast("❌ Неверный пароль");
+            }
+        }
+
+        function executeTabSwitch(tab) {
             ['market', 'tasks', 'contacts', 'admin'].forEach(t => {
                 const el = document.getElementById(`tab-content-${t}`);
                 const btn = document.getElementById(`nav-${t}`);
@@ -1351,7 +1287,7 @@
                     activeNavBtn.className = 'flex flex-col items-center gap-1 text-emerald-400 font-bold transition';
                 }
             }
-            if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            if (tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred) tg.HapticFeedback.impactOccurred('light');
         }
 
         function switchAdminSection(sec) {
@@ -1366,14 +1302,14 @@
                         : 'px-3.5 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white border border-slate-800 shrink-0 transition';
                 }
             });
-            if (tg && tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
+            if (tg && tg.HapticFeedback && tg.HapticFeedback.selectionChanged) tg.HapticFeedback.selectionChanged();
         }
 
         function copyPromoCode(code) {
             const temp = document.createElement('textarea');
             temp.value = code; document.body.appendChild(temp); temp.select(); document.execCommand('copy'); document.body.removeChild(temp);
             showCustomToast(`Промокод ${code} скопирован!`);
-            if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+            if (tg && tg.HapticFeedback && tg.HapticFeedback.notificationOccurred) tg.HapticFeedback.notificationOccurred('success');
         }
 
         function filterMarket(cat) {
@@ -1384,8 +1320,9 @@
         }
 
         // ================= МАРКЕТ =================
-        function openServiceModal(sk) { currentModalService = sk; const s = servicesData[sk]; if(!s) return; document.getElementById('service-modal-title').innerText = s.title; document.getElementById('service-modal-body').innerHTML = s.html; const c = document.getElementById('service-order-comment'); if(c) c.value = ''; document.getElementById('service-modal').classList.remove('hidden'); if(tg) tg.HapticFeedback.impactOccurred('medium'); }
+        function openServiceModal(sk) { currentModalService = sk; const s = servicesData[sk]; if(!s) return; document.getElementById('service-modal-title').innerText = s.title; document.getElementById('service-modal-body').innerHTML = s.html; const c = document.getElementById('service-order-comment'); if(c) c.value = ''; document.getElementById('service-modal').classList.remove('hidden'); if(tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred) tg.HapticFeedback.impactOccurred('medium'); }
         function orderCurrentService() { const s = servicesData[currentModalService]; if(!s) return; const c = document.getElementById('service-order-comment'); const cText = (c && c.value.trim()) || 'Без комментария';
+            marketOrdersList = marketOrdersList || [];
             marketOrdersList.unshift({ id: Date.now(), time: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }), serviceKey: currentModalService, serviceTitle: s.title, user: user.first_name || 'Клиент', userTag: user.username ? `@${user.username}` : `ID:${user.id}`, comment: cText, status: 'new' });
             try { localStorage.setItem('csgo_market_orders', JSON.stringify(marketOrdersList)); } catch(e) {}
             recordActivity(`Оформил заказ в Маркете: «${s.title}»`, 'order', 'shopping_cart');
@@ -1482,7 +1419,7 @@
                 retryBtn.classList.remove('hidden'); document.getElementById('task-rejected-reason-box').classList.remove('hidden'); document.getElementById('task-rejected-reason-text').innerText = state.reason || 'Условия задания были выполнены не полностью.'; mainBtn.disabled = true; mainBtn.className = 'w-full bg-rose-950/50 text-rose-400 border border-rose-500/30 font-bold py-3 rounded-2xl text-xs uppercase cursor-not-allowed'; mainBtn.innerHTML = `<span class="material-icons text-base">cancel</span><span>Отклонено</span>`;
             }
             document.getElementById('task-modal').classList.remove('hidden');
-            if (tg) tg.HapticFeedback.impactOccurred('medium');
+            if (tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred) tg.HapticFeedback.impactOccurred('medium');
         }
 
         function handleTaskMainAction() {
@@ -1592,7 +1529,7 @@
             taskChecklists[taskKey][index] = !taskChecklists[taskKey][index];
             try { localStorage.setItem('csgo_market_checklists', JSON.stringify(taskChecklists)); } catch(e) {}
             renderChecklistUI(taskKey); validateCardActionBtn(taskKey);
-            if (tg) tg.HapticFeedback.selectionChanged();
+            if (tg && tg.HapticFeedback && tg.HapticFeedback.selectionChanged) tg.HapticFeedback.selectionChanged();
         }
 
         function validateCardActionBtn(taskKey) {
@@ -1651,55 +1588,69 @@
         // ================= АДМИН ПАНЕЛЬ =================
         function updateAdminDashboardUI() {
             if (!isUserAdmin || !isAdminUnlocked) return;
-            let pendingCount = 0; let activeCount = 0;
-            Object.keys(tasksState).forEach(k => { const st = tasksState[k]; if (st.status === 'in_progress') pendingCount++; if (st.status !== 'completed' && (taskActionRevealed[k] || st.status === 'in_progress' || st.status === 'accepted' || st.rewardRequested)) activeCount++; });
-            const reqCount = ozonCardData.status === 'requested' ? 1 : 0; const ordersCount = marketOrdersList.filter(o => o.status === 'new').length;
-            
-            const pendingEl = document.getElementById('admin-stat-pending'); const requestsEl = document.getElementById('admin-stat-requests'); const activeEl = document.getElementById('admin-stat-active'); const ordersEl = document.getElementById('admin-stat-orders');
-            if (pendingEl) pendingEl.innerText = pendingCount; if (requestsEl) requestsEl.innerText = reqCount; if (activeEl) activeEl.innerText = activeCount; if (ordersEl) ordersEl.innerText = ordersCount;
-            const revCounter = document.getElementById('admin-reviews-counter'); if (revCounter) revCounter.innerText = `${pendingCount} в очереди`;
-            const ordCounter = document.getElementById('admin-orders-counter'); if (ordCounter) ordCounter.innerText = `${ordersCount} заказов`;
-            renderLiveFeedUI();
+            try {
+                const safeAdminTasks = adminTasksList || [];
+                const safeOrders = marketOrdersList || [];
 
-            const reviewsList = document.getElementById('admin-reviews-list');
-            if (reviewsList) {
-                const pendingTasks = adminTasksList.filter(t => t.status === 'in_progress');
-                if (pendingTasks.length === 0) {
-                    reviewsList.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs"><span class="material-icons text-2xl mb-1 text-slate-600">done_all</span><p>Все задания проверены!</p></div>`;
-                } else {
-                    reviewsList.innerHTML = pendingTasks.map(t => {
-                        const meta = tasksMeta[t.taskKey];
-                        let detailHtml = `<p class="text-emerald-400">💡 Пользователь отправил подтверждение на проверку.</p>`;
-                        if (t.taskKey === 'idea') detailHtml = `<div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800"><span class="text-purple-400 font-bold block mb-0.5">💡 Суть идеи:</span><span class="text-white font-semibold text-sm">${t.ideaTitle}</span></div><div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 mt-1"><span class="text-slate-400 font-bold block mb-0.5">📝 Описание:</span><p class="text-slate-200">${t.ideaDesc}</p></div>`;
-                        return `<div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3"><div class="flex items-start justify-between"><div><div class="flex items-center gap-2"><span class="text-xs font-bold text-white">${t.firstName}</span><span class="text-[11px] text-slate-400 font-mono">${t.username ? '@'+t.username : ''}</span></div><span class="text-xs font-semibold text-amber-400">Задание: ${meta ? meta.title : t.taskKey}</span></div><span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">На проверке</span></div><div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-xs">${detailHtml}</div><input id="admin-reject-reason-${t.userId}-${t.taskKey}" type="text" placeholder="Укажите причину отказа..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none transition"><div class="flex gap-2"><button onclick="adminApproveTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 px-3 rounded-xl text-xs transition">Одобрить</button><button onclick="adminRejectTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-rose-600/20 hover:bg-rose-600/30 text-rose-400 border border-rose-500/40 font-bold py-2.5 px-3 rounded-xl text-xs transition">Отклонить</button><a href="https://t.me/${t.username}" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs transition border border-slate-700 text-center">В ЛС</a></div></div>`;
-                    }).join('');
+                let pendingCount = 0; let activeCount = 0;
+                Object.keys(tasksState).forEach(k => { 
+                    const st = tasksState[k]; 
+                    if (st.status === 'in_progress') pendingCount++; 
+                    if (st.status !== 'completed' && (taskActionRevealed[k] || st.status === 'in_progress' || st.status === 'accepted' || st.rewardRequested)) activeCount++; 
+                });
+                
+                const reqCount = ozonCardData.status === 'requested' ? 1 : 0; 
+                const ordersCount = safeOrders.filter(o => o.status === 'new').length;
+                
+                const pendingEl = document.getElementById('admin-stat-pending'); const requestsEl = document.getElementById('admin-stat-requests'); const activeEl = document.getElementById('admin-stat-active'); const ordersEl = document.getElementById('admin-stat-orders');
+                if (pendingEl) pendingEl.innerText = pendingCount; if (requestsEl) requestsEl.innerText = reqCount; if (activeEl) activeEl.innerText = activeCount; if (ordersEl) ordersEl.innerText = ordersCount;
+                const revCounter = document.getElementById('admin-reviews-counter'); if (revCounter) revCounter.innerText = `${pendingCount} в очереди`;
+                const ordCounter = document.getElementById('admin-orders-counter'); if (ordCounter) ordCounter.innerText = `${ordersCount} заказов`;
+                
+                renderLiveFeedUI();
+
+                const reviewsList = document.getElementById('admin-reviews-list');
+                if (reviewsList) {
+                    const pendingTasks = safeAdminTasks.filter(t => t.status === 'in_progress');
+                    if (pendingTasks.length === 0) {
+                        reviewsList.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs"><span class="material-icons text-2xl mb-1 text-slate-600">done_all</span><p>Все задания проверены!</p></div>`;
+                    } else {
+                        reviewsList.innerHTML = pendingTasks.map(t => {
+                            const meta = tasksMeta[t.taskKey];
+                            let detailHtml = `<p class="text-emerald-400">💡 Пользователь подтвердил выполнение по инструкции (скриншот выслан в Telegram канал).</p>`;
+                            if (t.taskKey === 'idea') detailHtml = `<div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800"><span class="text-purple-400 font-bold block mb-0.5">💡 Суть идеи:</span><span class="text-white font-semibold text-sm">${t.ideaTitle}</span></div><div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 mt-1"><span class="text-slate-400 font-bold block mb-0.5">📝 Описание:</span><p class="text-slate-200">${t.ideaDesc}</p></div>`;
+                            return `<div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3"><div class="flex items-start justify-between"><div><div class="flex items-center gap-2"><span class="text-xs font-bold text-white">${t.firstName}</span><span class="text-[11px] text-slate-400 font-mono">${t.username ? '@'+t.username : ''}</span></div><span class="text-xs font-semibold text-amber-400">Задание: ${meta ? meta.title : t.taskKey}</span></div><span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">На проверке</span></div><div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-xs">${detailHtml}</div><input id="admin-reject-reason-${t.userId}-${t.taskKey}" type="text" placeholder="Укажите причину отказа..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none transition"><div class="flex gap-2"><button onclick="adminApproveTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 px-3 rounded-xl text-xs transition">Одобрить</button><button onclick="adminRejectTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-rose-600/20 hover:bg-rose-600/30 text-rose-400 border border-rose-500/40 font-bold py-2.5 px-3 rounded-xl text-xs transition">Отклонить</button><a href="https://t.me/${t.username}" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs transition border border-slate-700 text-center flex items-center justify-center gap-1"><span class="material-icons text-sm">chat</span> В ЛС</a></div></div>`;
+                        }).join('');
+                    }
                 }
-            }
 
-            const activeList = document.getElementById('admin-active-tasks-list');
-            if (activeList) {
-                const activeTasks = adminTasksList.filter(t => t.status === 'accepted' || t.rewardRequested);
-                if (activeTasks.length === 0) {
-                    activeList.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Нет пользователей, ожидающих выдачи скина</p>`;
-                } else {
-                    activeList.innerHTML = activeTasks.map(t => {
-                        const meta = tasksMeta[t.taskKey]; const isReward = !!t.rewardRequested;
-                        return `<div class="bg-slate-950 p-3.5 rounded-xl border ${isReward ? 'border-emerald-500/50 shadow-lg shadow-emerald-950/30' : 'border-slate-800'} space-y-2.5"><div class="flex items-start justify-between gap-2"><div><div class="flex items-center gap-2"><span class="text-xs font-bold text-white">${meta ? meta.title : t.taskKey}</span><span class="text-[11px] text-amber-400 font-mono font-bold">${meta ? meta.reward : ''}</span></div><div class="text-[11px] text-slate-400 font-mono mt-0.5">Клиент: <span class="text-slate-200">${t.firstName}</span> (@${t.username})</div></div>${isReward ? '<span class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-400 animate-pulse">🎁 ЖДЁТ ВЫДАЧИ</span>' : '<span class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-teal-500/20 text-teal-300">Одобрено (ждёт клика)</span>'}</div><div class="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-800/80"><a href="https://t.me/${t.username}" target="_blank" class="flex-1 bg-slate-900 text-blue-400 border border-blue-500/30 py-1.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5"><span class="material-icons text-sm">chat</span><span>В ЛС</span></a>${isReward ? `<button onclick="adminCompleteTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 text-slate-950 font-black py-1.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5"><span class="material-icons text-sm">check_circle</span><span>✅ Скин передан</span></button>` : ''}</div></div>`;
-                    }).join('');
+                const activeList = document.getElementById('admin-active-tasks-list');
+                if (activeList) {
+                    const activeTasks = safeAdminTasks.filter(t => t.status === 'accepted' || t.rewardRequested);
+                    if (activeTasks.length === 0) {
+                        activeList.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Нет пользователей, ожидающих выдачи скина</p>`;
+                    } else {
+                        activeList.innerHTML = activeTasks.map(t => {
+                            const meta = tasksMeta[t.taskKey]; const isReward = !!t.rewardRequested;
+                            return `<div class="bg-slate-950 p-3.5 rounded-xl border ${isReward ? 'border-emerald-500/50 shadow-lg shadow-emerald-950/30' : 'border-slate-800'} space-y-2.5"><div class="flex items-start justify-between gap-2"><div><div class="flex items-center gap-2"><span class="text-xs font-bold text-white">${meta ? meta.title : t.taskKey}</span><span class="text-[11px] text-amber-400 font-mono font-bold">${meta ? meta.reward : ''}</span></div><div class="text-[11px] text-slate-400 font-mono mt-0.5">Клиент: <span class="text-slate-200">${t.firstName}</span> (@${t.username})</div></div>${isReward ? '<span class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-400 animate-pulse">🎁 ЖДЁТ ВЫДАЧИ</span>' : '<span class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-teal-500/20 text-teal-300">Одобрено (ждёт клика)</span>'}</div><div class="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-800/80"><a href="https://t.me/${t.username}" target="_blank" class="flex-1 bg-slate-900 text-blue-400 border border-blue-500/30 py-1.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5"><span class="material-icons text-sm">chat</span><span>В ЛС</span></a>${isReward ? `<button onclick="adminCompleteTask('${t.userId}', '${t.taskKey}')" class="flex-1 bg-emerald-600 text-slate-950 font-black py-1.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5"><span class="material-icons text-sm">check_circle</span><span>✅ Скин передан</span></button>` : ''}</div></div>`;
+                        }).join('');
+                    }
                 }
-            }
 
-            const ordersContainer = document.getElementById('admin-market-orders-list');
-            if (ordersContainer) {
-                if (marketOrdersList.length === 0) ordersContainer.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Пока нет заказов из Маркета</p>`;
-                else ordersContainer.innerHTML = marketOrdersList.map((ord, idx) => `<div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2.5"><div class="flex items-start justify-between"><div><div class="flex items-center gap-2"><span class="text-xs font-bold text-white">${ord.user}</span><span class="text-[11px] text-slate-400 font-mono">${ord.userTag}</span></div><span class="text-xs font-semibold text-blue-400">Услуга: ${ord.serviceTitle}</span></div><span class="text-[10px] font-mono text-slate-500">${ord.time}</span></div><div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800/80 text-xs text-slate-300 font-mono">💬 ${ord.comment}</div><div class="flex gap-2 pt-1"><a href="https://t.me/${ord.userTag.replace('@', '')}" target="_blank" class="flex-1 bg-blue-600/20 text-blue-400 border border-blue-500/40 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1">Написать в ЛС</a><button onclick="adminCompleteOrder(${idx})" class="bg-emerald-600/20 text-emerald-400 border border-emerald-500/40 py-2 px-3 rounded-xl text-xs font-bold transition">Выполнено</button></div></div>`).join('');
-            }
+                const ordersContainer = document.getElementById('admin-market-orders-list');
+                if (ordersContainer) {
+                    if (safeOrders.length === 0) ordersContainer.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Пока нет заказов из Маркета</p>`;
+                    else ordersContainer.innerHTML = safeOrders.map((ord, idx) => `<div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2.5"><div class="flex items-start justify-between"><div><div class="flex items-center gap-2"><span class="text-xs font-bold text-white">${ord.user}</span><span class="text-[11px] text-slate-400 font-mono">${ord.userTag}</span></div><span class="text-xs font-semibold text-blue-400">Услуга: ${ord.serviceTitle}</span></div><span class="text-[10px] font-mono text-slate-500">${ord.time}</span></div><div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800/80 text-xs text-slate-300 font-mono">💬 ${ord.comment}</div><div class="flex gap-2 pt-1"><a href="https://t.me/${ord.userTag.replace('@', '')}" target="_blank" class="flex-1 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/40 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1"><span class="material-icons text-sm">chat</span> В ЛС</a><button onclick="adminCompleteOrder(${idx})" class="bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/40 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1"><span class="material-icons text-sm">done</span> Выполнено</button></div></div>`).join('');
+                }
 
-            const ozonBadge = document.getElementById('admin-ozon-status-badge');
-            if (ozonBadge) {
-                if (ozonCardData.status === 'ready' && getOzonRemainingMs() > 0) { ozonBadge.className = 'text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded'; ozonBadge.innerText = 'Ссылка выдана (72ч)'; }
-                else if (ozonCardData.status === 'requested') { ozonBadge.className = 'text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded'; ozonBadge.innerText = 'Клиент ждёт ссылку!'; }
-                else { ozonBadge.className = 'text-[10px] font-mono font-bold bg-slate-800 text-slate-400 px-2 py-0.5 rounded'; ozonBadge.innerText = 'Не активна'; }
+                const ozonBadge = document.getElementById('admin-ozon-status-badge');
+                if (ozonBadge) {
+                    if (ozonCardData.status === 'ready' && getOzonRemainingMs() > 0) { ozonBadge.className = 'text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded'; ozonBadge.innerText = 'Ссылка выдана (72ч)'; }
+                    else if (ozonCardData.status === 'requested') { ozonBadge.className = 'text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded'; ozonBadge.innerText = 'Клиент ждёт ссылку!'; }
+                    else { ozonBadge.className = 'text-[10px] font-mono font-bold bg-slate-800 text-slate-400 px-2 py-0.5 rounded'; ozonBadge.innerText = 'Не активна'; }
+                }
+            } catch (err) {
+                console.error("Admin Render Error", err);
             }
         }
 
